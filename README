@@ -1,0 +1,36 @@
+Van homepagina naar :-logo (GET)
+                     -inloggen (POST)
+                     -registreren (POST & GET)
+                     -weekmenu (POST & GET)
+                     -opgeslagen (POST & GET)
+Van registreren naar: -logo
+                      -inloggen
+                      -weekmenu
+                      -profiel (voorkeuren)
+                      -submit (POST)
+Van weekmenu naar: -logo
+                   -inloggen
+                   -registreren
+                   -opgeslagen
+                   -recept (GET)
+                   -nieuw recept (POST & GET)
+                   -nieuw menu (POST & GET)
+Van recept naar: -beoordeling (POST & GET)
+                 -opslaan (POST & GET)
+                 -recensie posten (POST & GET)
+                 -logo
+                 -inloggen
+                 -registreren
+                 -opgeslagen
+Van opgeslagen naar: -logo
+                     -log uit (POST)
+                     -filters (GET)
+                     -lijst bewaard (GET)
+                     -lijst recensies (POST & GET)
+               
+               
+Potentieel hulpfunctie: filtervoorkeur (genereren)
+
+Plugins/framework: https://getbootstrap.com/
+                   SQL
+                   Flask
