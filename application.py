@@ -127,6 +127,14 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route("/profiel")
+def profiel():
+    if request.method =="POST":
+        a=1
+        a+=1
+    else:
+        return render_template("profiel.html")
+
 
 def errorhandler(e):
     """Handle error"""
