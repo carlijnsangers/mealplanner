@@ -50,7 +50,7 @@ def login():
             return #apology("must provide username", 403)
 
         # Ensure password was submitted
-        elif not #request.form.get("password"):
+        elif not request.form.get("password"):
             return #apology("must provide password", 403)
 
         # Query database for username
