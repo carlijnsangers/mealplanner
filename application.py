@@ -33,7 +33,8 @@ Session(app)
 
 @app.route("/")
 def hallo():
-    return "Hallo"
+    flash("hello")
+    return render_template("layout.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -111,16 +112,16 @@ def register():
         #    return apology("username is already taken", 400)
 
         # Puts username(UN) and password(PW) in database
-        else:
-            PW = generate_password_hash(request.form.get("password"))
+        # else:
+        PW = generate_password_hash(request.form.get("password"))
             #db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
 
             # Remember which user has logged in
             #session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
             #              username=request.form.get("username"))[0]['id']
 
-            flash('Registered')
-            return redirect("/")
+        flash('Registered')
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
