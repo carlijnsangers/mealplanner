@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+
   <checkboxes>
     <h4>
       Allergieën:
@@ -30,17 +31,17 @@
     </div>
   </checkboxes>
 
-  <form action="/register" method="post">
-          <div class="form-group">
-              <input autocomplete="off" autofocus class="form-control" id="username" name="username" placeholder="Username" type="text">
-          </div>
-          <div class="form-group">
-              <input class="form-control" name="password" placeholder="Password" type="password">
-          </div>
-          <div class= "form-group">
-              <input class="form-control" name="confirmation" placeholder="Repeat Password" type="password">
-          </div>
-          <button class="btn btn-primary" type="submit">Register</button>
-          </div>
-      </form>
+    <form action="/register" method="post" name="form">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="repeat password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+
 {% endblock %}
