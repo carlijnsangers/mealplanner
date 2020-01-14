@@ -127,13 +127,27 @@ def register():
     else:
         return render_template("register.html")
 
+####################################################
+# Nieuwe programma's
+####################################################
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+@app.route("/menu")
+def menu():
+    return render_template("menu.html")
+
 @app.route("/profiel")
 def profiel():
-    if request.method =="POST":
-        a=1
-        a+=1
-    else:
-        return render_template("profiel.html")
+    return render_template("profiel.html")
+
+@app.route("/recept")
+def recept():
+    return render_template("recept.html")
+
+
 
 
 def errorhandler(e):
