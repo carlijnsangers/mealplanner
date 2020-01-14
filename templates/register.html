@@ -5,30 +5,42 @@
 {% endblock %}
 
 {% block main %}
-<checkboxes>
-  <h4>
-    Allergieën:
-  </h4>
-  <div class="checkbox">
-    <label><input type="checkbox"> Noten</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox"> Pinda's</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox"> Eieren</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox"> Soja</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox"> Tarwe</label>
-  </div>
-  <div class="check">
-    <label><input type="checkbox"> Vis, schaal- en Schelpdieren</label>
-    <label><input type="checkbox"> Koemelk</label>
-  </div>
-</checkboxes>
+  <checkboxes>
+    <h4>
+      Allergieën:
+    </h4>
+    <div class="checkbox">
+      <label><input type="checkbox"> Noten</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Pinda's</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Eieren</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Soja</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Tarwe</label>
+    </div>
+    <div class="check">
+      <label><input type="checkbox"> Vis, schaal- en Schelpdieren</label>
+      <label><input type="checkbox"> Koemelk</label>
+    </div>
+  </checkboxes>
 
-  </tr>
+  <form action="/register" method="post">
+          <div class="form-group">
+              <input autocomplete="off" autofocus class="form-control" id="username" name="username" placeholder="Username" type="text">
+          </div>
+          <div class="form-group">
+              <input class="form-control" name="password" placeholder="Password" type="password">
+          </div>
+          <div class= "form-group">
+              <input class="form-control" name="confirmation" placeholder="Repeat Password" type="password">
+          </div>
+          <button class="btn btn-primary" type="submit">Register</button>
+          </div>
+      </form>
 {% endblock %}
