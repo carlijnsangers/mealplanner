@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Mogra-Regular
+font link: https://fonts.google.com/specimen/Mogra
+font author: Lipi Raval
+font author site: http://cargocollective.com/lipi
+
+
+icon designer: Iris Vidal
+icon designer link: /zomiga
+        
+{"bg-gradient-0":"#288B58","bg-gradient-1":"#1522F1","icon":"#ffffff","font":"#ffffff","slogan":"#ffffff"}
+      
