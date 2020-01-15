@@ -33,10 +33,10 @@ Session(app)
 # test database
 db = SQL("sqlite:///test.db")
 
+# geeft homepage weer
 @app.route("/")
-def hallo():
-    flash("hello")
-    return render_template("layout.html")
+def home():
+    return render_template("home.html")
 
 # geeft momenteel error met de huidige login pagina
 @app.route("/login", methods=["GET", "POST"])
@@ -138,9 +138,9 @@ def register():
 # Nieuwe programma's
 ####################################################
 
-@app.route("/")
-def home():
-    return render_template("home.html")
+# @app.route("/")
+# def home():
+#     return render_template("home.html")
 
 @app.route("/menu")
 def menu():

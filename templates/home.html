@@ -75,7 +75,28 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
   <h5>
     Budget
   </h5>
-  <div id="SPlaceHolder_0" style="position:relative;">
+  Slider 1 (html)
+  <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+<input type="range" id="a" value="50">100
+  +<input type="number" id="b" value="50">
+  =<output name="x" for="a b"></output>
+
+  slider 2 (html+js+css)
+  <div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  <p>Value: <span id="demo"></span></p>
+</div>
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+  <!-- <div id="SPlaceHolder_0" style="position:relative;">
 <table border="0" cellspacing="0" cellpadding="0"><tr>
   <td width="200" class="SliderBar">
     <div id="SButtonContainer_0" style="position:absolute; width:200px;
@@ -83,7 +104,7 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
     <img src="srule_b.gif" id="SliderButton_0" alt="" border="0"
       class="SliderButton"></div></td>
   <td width="10" class="SliderBar">&nbsp;</td>
-</tr></table></div>
+</tr></table></div> -->
 
 <div id="SPlaceHolder_1" style="position:relative;">
 </div>
