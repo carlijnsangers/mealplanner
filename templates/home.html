@@ -6,7 +6,7 @@
 
 {% block main %}
 
-
+<span style="text-align:left;">
 <h4><b>Welcome to Mealplanner!</b></h4>
 <p class="lead">
 A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
@@ -65,7 +65,8 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
   <h5>
     Budget
   </h5>
-  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+
+  <input type="range" min="1" max="100" value="50" class="slider" style="float:left;" id="myRange"><br>
   <p>Value: <span id="demo"></span></p>
 </div>
 
@@ -78,22 +79,11 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 </script>
-  <!-- <div id="SPlaceHolder_0" style="position:relative;">
-<table border="0" cellspacing="0" cellpadding="0"><tr>
-  <td width="200" class="SliderBar">
-    <div id="SButtonContainer_0" style="position:absolute; width:200px;
-      height:18px; z-index:1; left: 0px; top: 0px;">
-    <img src="srule_b.gif" id="SliderButton_0" alt="" border="0"
-      class="SliderButton"></div></td>
-  <td width="10" class="SliderBar">&nbsp;</td>
-</tr></table></div> -->
 
-<div id="SPlaceHolder_1" style="position:relative;">
-</div>
 
 <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
-</div class>
+</div></span>
 
 
 {% endblock %}
