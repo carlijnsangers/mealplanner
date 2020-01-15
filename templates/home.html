@@ -6,4 +6,88 @@
 
 {% block main %}
 
+    <form action="/homepage" method="post">
+          <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Repeat_Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+
+<h1><font size = "10"></font><b>Welkom bij Mealplanner!</b></font></h1>
+<h2>
+Een website die voor jou een heel weekmenu samenstelt. Een drukke week voor de boeg? Met een paar klikken komen er vijf (avond)gerechten op jouw beeldscherm te staan die naar jouw smaak en budget behoren. De bereidingswijze en de ingrediënten komen bij elk gerecht te staan. Het enige wat jij dus hoeft te doen is de boodschappen te halen. Met een persoonlijke pagina kun je jouw voorkeuren en favoriete gerechten van het weekmenu opslaan. Persoonlijk en simpel dus!
+</h2>
+
+<checkboxes>
+  <h3>
+    Allergieën:
+  </h3>
+  <div class="checkbox">
+    <label><input type="checkbox"> Noten</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Pinda's</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Eieren</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Soja</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Tarwe</label>
+  </div>
+  <div class="check">
+    <label><input type="checkbox"> Vis, schaal- en Schelpdieren</label>
+    <label><input type="checkbox"> Koemelk</label>
+  </div>
+</checkboxes>
+
+  </tr>
+
+<checkboxes>
+  <h4>
+    Keuken:
+  </h4>
+  <div class="checkbox">
+    <label><input type="checkbox"> Hollands</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Italiaans</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Mexicaans</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Aziatisch</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Vegetarisch</label>
+  </div>
+ </checkboxes>
+
+  <h5>
+    Budget
+  </h5>
+  <div id="SPlaceHolder_0" style="position:relative;">
+<table border="0" cellspacing="0" cellpadding="0"><tr>
+  <td width="200" class="SliderBar">
+    <div id="SButtonContainer_0" style="position:absolute; width:200px;
+      height:18px; z-index:1; left: 0px; top: 0px;">
+    <img src="srule_b.gif" id="SliderButton_0" alt="" border="0"
+      class="SliderButton"></div></td>
+  <td width="10" class="SliderBar">&nbsp;</td>
+</tr></table></div>
+
+<div id="SPlaceHolder_1" style="position:relative;">
+</div>
+
+
+
 {% endblock %}
