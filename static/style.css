@@ -61,7 +61,7 @@ td, tr
 }
 checkboxes
 {
-    text-align: center;
+    text-align: left;
 }
 .split{
     height:100%;
@@ -88,3 +88,4 @@ checkboxes
 .error {
     color: red
 }
+
