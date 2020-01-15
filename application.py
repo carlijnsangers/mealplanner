@@ -63,6 +63,7 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                          username=request.form.get("username"))
 
+        print(rows)
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             flash("Username not found")
@@ -105,10 +106,12 @@ def register():
         if not request.form.get("username"):
             return #apology("must provide username", 400)
         elif not request.form.get("password"):
+            flash("enter pw")
             return #apology("must provide password", 400)
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
+            flash("pw do not match")
             return #apology("passwords do not match", 400)
 
         # Checks if username is not taken
@@ -116,7 +119,8 @@ def register():
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         #print(len(rows))
         if len(rows) >= 1:
-            return "error"  #apology("username is already taken", 400)
+            flash("Username taken")
+            return   #apology("username is already taken", 400)
 
         # Puts username(UN) and password(PW) in database
         else:
