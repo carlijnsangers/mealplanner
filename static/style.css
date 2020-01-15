@@ -24,7 +24,6 @@ nav .navbar-brand
 }
 
 
-
 /* colors for brand */
 nav .navbar-brand .blue
 {
@@ -62,5 +61,21 @@ td, tr
 }
 checkboxes
 {
-    text-align: left;
+    text-align: center;
+}
+.split{
+    height:100%;
+    width:33%;
+    width: calc(100% /3);
+    position:fixed;
+    top:0;
+}
+.links{
+    background-color:red;
+}
+.midden{
+    background-color:green;
+}
+.rechts{
+    background-color:blue;
 }

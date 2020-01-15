@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profiel
+{% endblock %}
+
+{% block main %}
+    <div class="split links">
+        <div class="centered">
+            <img="avatar.png" alt="avatar">
+            <!--  Op klik/hover verander img-->
+        </div>
+        <div class="voorkeuren">
+            <!-- geeft huidige voorkeuren weer -->
+        </div>
+        <button> Voorkeuren veranderen</button>
+    </div>
+    <div class="split midden">
+        <div class="centered">
+            <div class="recepten"></div>
+        </div>
+    </div>
+    <div class="split rechts">
+        <div class="centered">
+            <div class="recensies"></div>
+        </div>
+    </div>
+
+{% endblock %}
