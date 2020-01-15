@@ -63,7 +63,6 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                          username=request.form.get("username"))
 
-        print(rows)
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             flash("Username not found")
@@ -71,7 +70,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-        print(session["user_id"])
 
         # Redirect user to home page
         flash('Logged in')
@@ -144,9 +142,6 @@ def register():
 # Nieuwe programma's
 ####################################################
 
-# @app.route("/")
-# def home():
-    # return render_template("home.html")
 
 @app.route("/menu")
 def menu():
