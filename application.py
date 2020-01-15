@@ -103,7 +103,7 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash('This is error message', 'error')
             return render_template("register.html")
         elif not request.form.get("password"):
             flash("Please enter password")
@@ -145,7 +145,7 @@ def register():
 
 # @app.route("/")
 # def home():
-#     return render_template("home.html")
+    # return render_template("home.html")
 
 @app.route("/menu")
 def menu():
