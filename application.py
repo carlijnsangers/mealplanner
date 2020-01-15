@@ -103,20 +103,25 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            return #apology("must provide username", 400)
+            flash("Please enter username")
+            return render_template("register.html")
         elif not request.form.get("password"):
-            return #apology("must provide password", 400)
+            flash("Please enter password")
+            return render_template("register.html")
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            return #apology("passwords do not match", 400)
+            flash("Passwords do not match")
+            return render_template("register.html")
+
 
         # Checks if username is not taken
         username = request.form.get("username")
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
-        #print(len(rows))
         if len(rows) >= 1:
-            return "error"  #apology("username is already taken", 400)
+            flash("Username taken")
+            return render_template("register.html")
+
 
         # Puts username(UN) and password(PW) in database
         else:
