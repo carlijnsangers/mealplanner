@@ -142,12 +142,16 @@ def register():
 # Nieuwe programma's
 ####################################################
 
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    return render_template("profile.html")
+
 
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
 
-@app.route("/profiel")
+@app.route("/profile")
 def profiel():
     return render_template("profiel.html")
 
