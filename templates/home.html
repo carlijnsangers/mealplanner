@@ -6,18 +6,6 @@
 
 {% block main %}
 
-    <form action="/homepage" method="post">
-          <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="confirmation" placeholder="Repeat_Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Register</button>
-    </form>
 
 <h1><font size = "10"></font><b>Welcome by Mealplanner!</b></font></h1>
 <h2>
@@ -45,6 +33,8 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
   </div>
   <div class="check">
     <label><input type="checkbox"> Fish, Shellfish and Crustaceans</label>
+  </div>
+  <div class="check">
     <label><input type="checkbox"> Cow's milk</label>
   </div>
 </checkboxes>
@@ -53,7 +43,7 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
 
 <checkboxes>
   <h4>
-    Keuken:
+    Kitchen:
   </h4>
   <div class="checkbox">
     <label><input type="checkbox"> Italian</label>
