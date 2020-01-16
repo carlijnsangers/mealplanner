@@ -134,16 +134,31 @@ def register():
 # Nieuwe programma's
 ####################################################
 # geeft homepage weer
-@app.route("/", methods=["GET", "POST"])
+@app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        print("Hallo")
+        preferences = {}
+        preferences['nuts'] = request.form.get("nuts")
+        preferences['eggs'] = request.form.get("eggs")
+        preferences['soya'] = request.form.get("soya")
+        preferences['wheat'] = request.form.get("wheat")
+        preferences['fish'] = request.form.get("fish")
+        preferences['milk'] = request.form.get("milk")
+        preferences['mexican'] = request.form.get("mexican")
+        preferences['dutch'] = request.form.get("dutch")
+        preferences['italian'] = request.form.get("italian")
+        preferences['vegetarian'] = request.form.get("vegetarian")
+        preferences['asian'] = request.form.get("asian")
+
+        print(preferences)
+
         return render_template("menu.html")
-    # preferences = {}
-    # preferences['nuts'] = request.form.get("nuts")
-    # print(preferences)
     else:
         return render_template("home.html")
+
+@app.route("/", methods=["GET"])
+def find_home():
+    return render_template("home.html")
 
 
 #app.route("/")
