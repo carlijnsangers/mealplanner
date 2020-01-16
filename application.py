@@ -138,17 +138,26 @@ def register():
 # Nieuwe programma's
 ####################################################
 
-# @app.route("/")
-# def home():
-#     return render_template("home.html")
+#app.route("/")
+#def home():
+     #return render_template("home.html")
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if request.method != "POST":
+        #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
+        # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
+        return render_template("profile.html")
+    else:
+        # voorkeuren['allergie'] = request.get("allergie)
+        # voorkeurn['kitchen']= request.get("kitchen")
+        # db.execute("UPDATE voorkeuren SET (allergie, kitchen) VALUES (:allergie, :kitchen)", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
+        # return render_template("profile.html", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
+        return render_template("profile.html")
 
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
 
-@app.route("/profiel")
-def profiel():
-    return render_template("profiel.html")
 
 @app.route("/recept")
 def recept():

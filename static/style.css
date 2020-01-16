@@ -1,9 +1,8 @@
-
-
 table{
     border-collapse:collapse;
     border:1px navy;
 }
+
 th, td{
     border:1px solid black;
 }
@@ -12,6 +11,7 @@ th, td{
     table-layout:auto;
     width:100%;
 }
+
 .dag45{
     table-layout:auto;
     width:67%;
@@ -22,7 +22,6 @@ nav .navbar-brand
     /* size for brand */
     font-size: xx-large;
 }
-
 
 /* colors for brand */
 nav .navbar-brand .blue
@@ -44,8 +43,6 @@ main
     /* scroll horizontally as needed */
     overflow-x: auto;
 
-    /* center contents */
-    text-align: center;
 }
 
 main img
@@ -59,27 +56,46 @@ td, tr
     text-align: left;
 
 }
+
 checkboxes
 {
     text-align: left;
 }
+
 .split{
     height:100%;
-    width:33%;
-    width: calc(100% /3);
+    /* width:33.3333333%;
+    width: calc(100% /3); */
     position:fixed;
-    top:0;
-}
-.links{
-    background-color:red;
-}
-.midden{
-    background-color:green;
-}
-.rechts{
-    background-color:blue;
+    top:82.5px;
+    z-index:-1;
 }
 
+.links{
+    background-color:red;
+    left:0;
+    width:25%;
+
+}
+
+.midden{
+    background-color:green;
+    left:25%;
+    width:37.5%;
+}
+
+.rechts{
+    background-color:blue;
+    right:0;
+    width:37.5%;
+}
+
+.spacer{
+    height:82.5px;
+    width:100%;
+    top:0;
+    left:0;
+}
 /* css slider 2 */
 .slidecontainer {
   width: 100%; /* Width of the outside container */
