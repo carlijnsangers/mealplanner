@@ -144,16 +144,18 @@ def register():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    return render_template("profile.html")
+    if request.method != "POST":
+        return render_template("profile.html")
+    else:
+        # voorkeuren['allergie'] = request.get("allergie)
+        # voorkeurn['kitchen']= request.get("kitchen")
+        return render_template("profile.html")
+
 
 
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
-
-@app.route("/profile")
-def profiel():
-    return render_template("profiel.html")
 
 @app.route("/recept")
 def recept():
