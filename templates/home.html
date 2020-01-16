@@ -11,31 +11,31 @@
 <p class="lead">
 A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
 </p>
-<form action="/menu" method="post">
+<form action="/home" method="post">
 <checkboxes>
   <h5>
     Allergies:
   </h5>
-  <div class="checkbox">
-    <label><input type="checkbox" name="nuts"> Nuts</label>
+  <div class="checkbox" name="nuts">
+    <label><input type="checkbox" name="nuts" value="true"> Nuts</label>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" name="peanuts"> Peanuts</label>
+    <label><input type="checkbox" name="peanuts" value="true"> Peanuts</label>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" name="eggs"> Eggs</label>
+    <label><input type="checkbox" name="eggs" value="true"> Eggs</label>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" name="soya"> Soya</label>
+    <label><input type="checkbox" name="soya" value="true"> Soya</label>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" name="wheat"> Wheat</label>
+    <label><input type="checkbox" name="wheat" value="true"> Wheat</label>
   </div>
   <div class="check">
-    <label><input type="checkbox" name="fish"> Fish, Shellfish and Crustaceans</label>
+    <label><input type="checkbox" name="fish" value="true"> Fish, Shellfish and Crustaceans</label>
   </div>
   <div class="check">
-    <label><input type="checkbox" name="milk"> Cow's milk</label>
+    <label><input type="checkbox" name="milk" value="true"> Cow's milk</label>
   </div>
 </checkboxes>
 
@@ -46,19 +46,19 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
     Kitchen:
   </h5></p>
   <div class="checkbox">
-    <label><input id="Italien" type="checkbox"> Italian</label>
+    <label><input type="checkbox" name="italian" value="true"> Italian</label>
   </div>
   <div class="checkbox">
-    <label><input id="Mexican" type="checkbox"> Mexican</label>
+    <label><input type="checkbox" name="mexican" value="true"> Mexican</label>
   </div>
   <div class="checkbox">
-    <label><input id="Dutch" type="checkbox"> Dutch</label>
+    <label><input type="checkbox" name="dutch" value="true"> Dutch</label>
   </div>
   <div class="checkbox">
-    <label><input id="Asian" type="checkbox"> Asian</label>
+    <label><input type="checkbox" name="asian" value="true"> Asian</label>
   </div>
   <div class="checkbox">
-    <label><input id="Vegetarian" type="checkbox"> Vegetarian</label>
+    <label><input type="checkbox" name= "vegetarian" value="true"> Vegetarian</label>
   </div>
  </checkboxes>
 
