@@ -151,16 +151,22 @@ def home():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    return render_template("profile.html")
+    if request.method != "POST":
+        #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
+        # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
+        return render_template("profile.html")
+    else:
+        # voorkeuren['allergie'] = request.get("allergie)
+        # voorkeurn['kitchen']= request.get("kitchen")
+        # db.execute("UPDATE voorkeuren SET (allergie, kitchen) VALUES (:allergie, :kitchen)", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
+        # return render_template("profile.html", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
+        return render_template("profile.html")
+
 
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     return render_template("menu.html")
-
-@app.route("/profile")
-def profiel():
-    return render_template("profiel.html")
 
 @app.route("/recept")
 def recept():
