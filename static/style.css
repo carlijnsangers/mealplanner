@@ -69,8 +69,6 @@ checkboxes
 
 .split{
     height:100%;
-    /* width:33.3333333%;
-    width: calc(100% /3); */
     position:fixed;
     top:82.5px;
     z-index:-1;
