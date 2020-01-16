@@ -29,6 +29,11 @@ nav .navbar-brand .blue
     color: #537fbe;
 }
 
+/* hex for kleur logo */
+nav {
+    background-color:#EADEFA;
+}
+
 main .form-control
 {
     /* center form controls */
