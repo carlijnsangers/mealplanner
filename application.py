@@ -137,6 +137,7 @@ def register():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
+        print("Hallo")
         return render_template("menu.html")
     # preferences = {}
     # preferences['nuts'] = request.form.get("nuts")
@@ -171,9 +172,10 @@ def menu():
     return render_template("menu.html")
 
 
-@app.route("/recept")
+@app.route("/recipe")
 def recept():
-    return render_template("recept.html")
+    return render_template("recipe.html")
+
 
 
 

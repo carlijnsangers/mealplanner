@@ -11,7 +11,7 @@
 <p class="lead">
 A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
 </p>
-
+<form action="/menu" method="post">
 <checkboxes>
   <h5>
     Allergies:
@@ -83,7 +83,9 @@ slider.oninput = function() {
 
 <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
-</div></span>
+</div>
+</form>
+</span>
 
 
 {% endblock %}
