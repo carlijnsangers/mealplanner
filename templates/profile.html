@@ -10,23 +10,32 @@
             <img src="/static/generic.jpg">
             <!--  Op klik/hover verander img-->
         </div>
-        <div class="preferences">
-            <!-- geeft huidige voorkeuren weer -->
-        </div>
         <button> Change preferences</button>
-    </div>
-    <div class="split midden">
-        <div class="centered">
-            <div class="recepten"></div>
-        </div>
-    </div>
-    <div class="split rechts">
-        <div class="centered">
-            <div class="recensies"></div>
+        <div class="preferences">
+        <!-- geeft huidige voorkeuren weer -->
+        Allergies:
+        <!-- {{allergie }} -->
+            <br>
+        Kitchen:
+        <!-- {{kitchen}} -->
         </div>
     </div>
 
-    <checkboxes>
+    <div class="split midden">
+        <div class="centered">
+            <h3>Favorite recipes </h3>
+            <div class="recepten"></div>
+        </div>
+    </div>
+
+    <div class="split rechts">
+        <div class="centered">
+            <h3>Recent reviews</h3>
+            <div class="recensies"></div>
+        </div>
+    </div>
+<!--
+<checkboxes>
   <h4>
     Allergies:
   </h4>
@@ -52,6 +61,6 @@
     <label><input type="checkbox"> Cow's milk</label>
   </div>
 </checkboxes>
-
+-->
 
 {% endblock %}

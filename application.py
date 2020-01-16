@@ -66,6 +66,7 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        print(session["user_id"])
 
         # Redirect user to home page
         flash('Logged in')
@@ -98,25 +99,20 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            flash('This is error message', 'error')
-            return render_template("register.html")
+            return #apology("must provide username", 400)
         elif not request.form.get("password"):
-            flash("Please enter password")
-            return render_template("register.html")
+            return #apology("must provide password", 400)
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            flash("Passwords do not match")
-            return render_template("register.html")
-
+            return #apology("passwords do not match", 400)
 
         # Checks if username is not taken
         username = request.form.get("username")
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
+        #print(len(rows))
         if len(rows) >= 1:
-            flash("Username taken")
-            return render_template("register.html")
-
+            return "error"  #apology("username is already taken", 400)
 
         # Puts username(UN) and password(PW) in database
         else:
@@ -149,6 +145,9 @@ def home():
         return render_template("home.html")
 
 
+#app.route("/")
+#def home():
+     #return render_template("home.html")
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
@@ -164,9 +163,13 @@ def profile():
 
 
 
+
+
 @app.route("/menu", methods=["GET", "POST"])
+
 def menu():
     return render_template("menu.html")
+
 
 @app.route("/recept")
 def recept():
