@@ -145,10 +145,14 @@ def register():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
+        #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
+        # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
         return render_template("profile.html")
     else:
         # voorkeuren['allergie'] = request.get("allergie)
         # voorkeurn['kitchen']= request.get("kitchen")
+        # db.execute("UPDATE voorkeuren SET (allergie, kitchen) VALUES (:allergie, :kitchen)", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
+        # return render_template("profile.html", allergie=voorkeuren['allergie'], kitchen=voorkeuren['kitchen'])
         return render_template("profile.html")
 
 
