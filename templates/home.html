@@ -6,12 +6,17 @@
 
 {% block main %}
 
-<span style="text-align:left;">
-<h4><b>Welcome to Mealplanner!</b></h4>
-<p class="lead">
-A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
-</p>
 
+
+
+<span style="text-align:left;">
+<h4><b><font color = "white">Welcome to Mealplanner!</font></b></h4>
+<p class="lead">
+<font color = "white">A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
+</font></p>
+
+
+<font color = "white">
 <checkboxes>
   <h5>
     Allergies:
@@ -38,9 +43,11 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
     <label><input type="checkbox" name="milk"> Cow's milk</label>
   </div>
 </checkboxes>
+</font>
 
   </tr>
 
+<font color = "white">
 <checkboxes>
   <p><h5>
     Kitchen:
@@ -61,14 +68,18 @@ A website that compiles an entire weekly menu for you. A busy week ahead? With a
     <label><input id="Vegetarian" type="checkbox"> Vegetarian</label>
   </div>
  </checkboxes>
+</font>
 
+<font color = "white">
   <h5>
     Budget
   </h5>
 
+
   <input type="range" min="1" max="100" value="50" class="slider" style="float:left;" id="myRange"><br>
   <p>Value: <span id="demo"></span></p>
 </div>
+</font>
 
 <script>
 var slider = document.getElementById("myRange");
@@ -84,6 +95,21 @@ slider.oninput = function() {
 <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
 </div></span>
+
+
+<body2>
+<form action="index.html" method="get">
+
+<p>
+
+<input type="image" src="https://marketplace.canva.com/EADah0a0xOk/1/0/618w/canva-brown-borders-dinner-menu-hbm_SdG_1vQ.jpg" onclick="alert('Don\'t forget to press the back button to return!')" width="300" height="300" />
+
+</p>
+
+</form>
+</body2>
+
+
 
 
 {% endblock %}
