@@ -205,11 +205,9 @@ def menu():
     # zet de nummers om in recepten
     week =[]
     for recept in recepten:
-        dag = db.execute("SELECT idr, name FROM recipe WHERE idr=:idr", idr=recept)
-        week.append(dag[0])
+        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
 
-    #print(week)
-    return render_template("menu.html", week=week)
+    return render_template("menu.html")
 
 
 @app.route("/recipe")
@@ -217,15 +215,13 @@ def recept():
     if request.method == "POST":
         idr= request.form.get("idr")
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
-        # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
     recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
     ingr= recipe[0]['ingredients']
     lijst = [[]]
     i=0
     volgende = False
-
-    # zet ingredient om in leesbare lijst
+    print(lijst)
     for woord in ingr:
         if ";" in woord:
             woord.replace(';',"")
@@ -240,6 +236,8 @@ def recept():
         else:
             lijst[i].append(woord)
     lijst[i] = "".join(lijst[i])
+    print(lijst)
+
 
     recipe[0]['ingredients'] = lijst
     return render_template("recipe.html", recipe = recipe[0])
@@ -256,15 +254,3 @@ def errorhandler(e):
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
