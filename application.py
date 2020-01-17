@@ -205,11 +205,9 @@ def menu():
     # zet de nummers om in recepten
     week =[]
     for recept in recepten:
-        dag = db.execute("SELECT idr, name FROM recipe WHERE idr=:idr", idr=recept)
-        week.append(dag[0])
+        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
 
-    #print(week)
-    return render_template("menu.html", week=week)
+    return render_template("menu.html")
 
 
 @app.route("/recipe", methods =["GET", "POST"])
@@ -292,15 +290,3 @@ def errorhandler(e):
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
