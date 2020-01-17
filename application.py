@@ -7,6 +7,8 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from random import randint
+
 
 # Configure application
 app = Flask(__name__)
@@ -122,6 +124,7 @@ def register():
             #Remember which user has logged in
             session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
                           username=request.form.get("username"))[0]['id']
+            print(session["user_id"])
 
         flash('Registered')
         return redirect("/")
@@ -136,21 +139,25 @@ def register():
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        preferences = {}
-        preferences['nuts'] = request.form.get("nuts")
-        preferences['eggs'] = request.form.get("eggs")
-        preferences['soya'] = request.form.get("soya")
-        preferences['wheat'] = request.form.get("wheat")
-        preferences['fish'] = request.form.get("fish")
-        preferences['milk'] = request.form.get("milk")
-        preferences['mexican'] = request.form.get("mexican")
-        preferences['dutch'] = request.form.get("dutch")
-        preferences['italian'] = request.form.get("italian")
-        preferences['vegetarian'] = request.form.get("vegetarian")
-        preferences['asian'] = request.form.get("asian")
 
-        print(preferences)
+        # Get all the checkboxvalues
+        string = "codex:"
+        preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
+        for preference in preferences:
+            if request.form.get(preference) == "true":
+                string += '1'
+            else:
+                string += '0'
+        # Get the value amount
+        value = request.form.get("value")
+
+        # Put them into the database
+        if "user_id" in session:
+            print(session["user_id"])
+            db.execute("UPDATE users SET value = %s WHERE id = %s", value, session["user_id"])
+            db.execute("UPDATE users SET preferences = %s WHERE id = %s", string, session["user_id"])
 
         return render_template("menu.html")
     else:
@@ -184,7 +191,25 @@ def profile():
 @app.route("/menu", methods=["GET", "POST"])
 
 def menu():
-    return render_template("menu.html")
+    #return render_template("menu.html")
+    # totaal = hoeveelheid recepten
+    recepten = []
+    totaal = db.execute("SELECT COUNT(*) from recipe")
+
+    # genereert 5 willekeurige verschilende nummers
+    while len(recepten) < 5:
+        nummer = randint(1, totaal[0]['COUNT(*)'])
+        if nummer not in recepten:
+            recepten.append(nummer)
+
+    # zet de nummers om in recepten
+    week =[]
+    for recept in recepten:
+        dag = db.execute("SELECT idr, name FROM recipe WHERE idr=:idr", idr=recept)
+        week.append(dag[0])
+
+    #print(week)
+    return render_template("menu.html", week=week)
 
 
 @app.route("/recipe")
@@ -192,13 +217,15 @@ def recept():
     if request.method == "POST":
         idr= request.form.get("idr")
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+        # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
     recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
     ingr= recipe[0]['ingredients']
     lijst = [[]]
     i=0
     volgende = False
-    print(lijst)
+
+    # zet ingredient om in leesbare lijst
     for woord in ingr:
         if ";" in woord:
             woord.replace(';',"")
@@ -213,15 +240,9 @@ def recept():
         else:
             lijst[i].append(woord)
     lijst[i] = "".join(lijst[i])
-    print(lijst)
-
 
     recipe[0]['ingredients'] = lijst
     return render_template("recipe.html", recipe = recipe[0])
-
-
-
-
 
 def errorhandler(e):
     """Handle error"""
@@ -234,3 +255,16 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+
+    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
