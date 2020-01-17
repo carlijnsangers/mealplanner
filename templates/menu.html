@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block main %}
+<form action="/recipe" method="post">
+    <ol>
+    {% for dag in week %}
+    <div class="from-group">
+    <li>{{ dag.name }} </li> <button value="{{dag.idr}}" name="idr"> recept</button>
+    {% endfor %}
+    </div>
+    </ol>
+</form>
     <table id="dag123">
         <tr>
             <td></td>
