@@ -122,6 +122,7 @@ def register():
             #Remember which user has logged in
             session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
                           username=request.form.get("username"))[0]['id']
+            print(session["user_id"])
 
         flash('Registered')
         return redirect("/")
@@ -149,8 +150,9 @@ def home():
         preferences['italian'] = request.form.get("italian")
         preferences['vegetarian'] = request.form.get("vegetarian")
         preferences['asian'] = request.form.get("asian")
-
-        print(preferences)
+        print("test")
+        if "user_id" in session:
+            print(session["user_id"])
 
         return render_template("menu.html")
     else:
@@ -206,3 +208,16 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+
+    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
