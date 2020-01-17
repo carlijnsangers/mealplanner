@@ -11,12 +11,14 @@
         <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
-
-        <link href="/static/style.css" rel="stylesheet">
+        <link href="/static/favicon.ico" rel="icon">
+        <link href="/static/styles.css" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        <title>Mealplanner</title>
 
     </head>
 
@@ -34,6 +36,7 @@
                     </div>
                 {% else %}
                     <div class="navbar-nav ml-auto mt-2">
+                        <a class="nav-item nav-link" href="/home">home</a>
                         <a class="nav-item nav-link" href="/register">Register</a>
                         <a class="nav-itemn nav-link" href="/login">Log In</a></li>
                     </div>

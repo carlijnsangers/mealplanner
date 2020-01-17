@@ -134,15 +134,31 @@ def register():
 # Nieuwe programma's
 ####################################################
 # geeft homepage weer
-@app.route("/", methods=["GET", "POST"])
+@app.route("/home", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
+        preferences = {}
+        preferences['nuts'] = request.form.get("nuts")
+        preferences['eggs'] = request.form.get("eggs")
+        preferences['soya'] = request.form.get("soya")
+        preferences['wheat'] = request.form.get("wheat")
+        preferences['fish'] = request.form.get("fish")
+        preferences['milk'] = request.form.get("milk")
+        preferences['mexican'] = request.form.get("mexican")
+        preferences['dutch'] = request.form.get("dutch")
+        preferences['italian'] = request.form.get("italian")
+        preferences['vegetarian'] = request.form.get("vegetarian")
+        preferences['asian'] = request.form.get("asian")
+
+        print(preferences)
+
         return render_template("menu.html")
-    # preferences = {}
-    # preferences['nuts'] = request.form.get("nuts")
-    # print(preferences)
     else:
         return render_template("home.html")
+
+@app.route("/", methods=["GET"])
+def find_home():
+    return render_template("home.html")
 
 
 #app.route("/")
@@ -171,9 +187,38 @@ def menu():
     return render_template("menu.html")
 
 
-@app.route("/recept")
+@app.route("/recipe")
 def recept():
-    return render_template("recept.html")
+    if request.method == "POST":
+        idr= request.form.get("idr")
+        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+
+    recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
+    ingr= recipe[0]['ingredients']
+    lijst = [[]]
+    i=0
+    volgende = False
+    print(lijst)
+    for woord in ingr:
+        if ";" in woord:
+            woord.replace(';',"")
+            lijst[i].append(woord)
+            volgende = True
+            i+=1
+            lijst[i-1]= "".join(lijst[i-1])
+        elif volgende == True:
+            lijst.append(list())
+            lijst[i].append(woord)
+            volgende= False
+        else:
+            lijst[i].append(woord)
+    lijst[i] = "".join(lijst[i])
+    print(lijst)
+
+
+    recipe[0]['ingredients'] = lijst
+    return render_template("recipe.html", recipe = recipe[0])
+
 
 
 
