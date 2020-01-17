@@ -1,41 +1,35 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Profiel
+    Profile
 {% endblock %}
 
 {% block main %}
+
+<link href="/static/profile.css" rel="stylesheet">
+
     <div class="split links">
         <div class="centered">
             <img src="/static/generic.jpg">
             <!--  Op klik/hover verander img-->
         </div>
-        <button> Change preferences</button>
         <div class="preferences">
-        <!-- geeft huidige voorkeuren weer -->
-        Allergies:
-        <!-- {{allergie }} -->
-            <br>
-        Kitchen:
-        <!-- {{kitchen}} -->
+            <!-- geeft huidige voorkeuren weer -->
         </div>
+        <button> Change preferences</button>
     </div>
-
     <div class="split midden">
         <div class="centered">
-            <h3 style="text-align:center">Favorite recipes </h3>
             <div class="recepten"></div>
         </div>
     </div>
-
     <div class="split rechts">
         <div class="centered">
-            <h3 style="text-align:center">Recent reviews</h3>
             <div class="recensies"></div>
         </div>
     </div>
-<!--
-<checkboxes>
+
+    <checkboxes>
   <h4>
     Allergies:
   </h4>
@@ -61,6 +55,29 @@
     <label><input type="checkbox"> Cow's milk</label>
   </div>
 </checkboxes>
--->
+
+
+<checkboxes>
+  <p><h5>
+    Kitchen:
+  </h5></p>
+  <div class="checkbox">
+    <label><input type="checkbox" name="italian" value="true"> Italian</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="mexican" value="true"> Mexican</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="dutch" value="true"> Dutch</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="asian" value="true"> Asian</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name= "vegetarian" value="true"> Vegetarian</label>
+  </div>
+ </checkboxes>
+</font>
+
 
 {% endblock %}
