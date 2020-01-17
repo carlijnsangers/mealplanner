@@ -205,9 +205,11 @@ def menu():
     # zet de nummers om in recepten
     week =[]
     for recept in recepten:
-        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
+        dag = db.execute("SELECT idr, name FROM recipe WHERE idr=:idr", idr=recept)
+        week.append(dag[0])
 
-    return render_template("menu.html")
+    #print(week)
+    return render_template("menu.html", week=week)
 
 
 @app.route("/recipe")
@@ -215,13 +217,15 @@ def recept():
     if request.method == "POST":
         idr= request.form.get("idr")
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+        # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
     recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
     ingr= recipe[0]['ingredients']
     lijst = [[]]
     i=0
     volgende = False
-    print(lijst)
+
+    # zet ingredient om in leesbare lijst
     for woord in ingr:
         if ";" in woord:
             woord.replace(';',"")
@@ -236,8 +240,6 @@ def recept():
         else:
             lijst[i].append(woord)
     lijst[i] = "".join(lijst[i])
-    print(lijst)
-
 
     recipe[0]['ingredients'] = lijst
     return render_template("recipe.html", recipe = recipe[0])
