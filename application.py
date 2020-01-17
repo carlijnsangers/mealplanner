@@ -191,7 +191,35 @@ def menu():
 
 @app.route("/recipe")
 def recept():
-    return render_template("recipe.html")
+    if request.method == "POST":
+        idr= request.form.get("idr")
+        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+
+    recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
+    ingr= recipe[0]['ingredients']
+    lijst = [[]]
+    i=0
+    volgende = False
+    print(lijst)
+    for woord in ingr:
+        if ";" in woord:
+            woord.replace(';',"")
+            lijst[i].append(woord)
+            volgende = True
+            i+=1
+            lijst[i-1]= "".join(lijst[i-1])
+        elif volgende == True:
+            lijst.append(list())
+            lijst[i].append(woord)
+            volgende= False
+        else:
+            lijst[i].append(woord)
+    lijst[i] = "".join(lijst[i])
+    print(lijst)
+
+
+    recipe[0]['ingredients'] = lijst
+    return render_template("recipe.html", recipe = recipe[0])
 
 
 

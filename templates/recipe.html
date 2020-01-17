@@ -5,5 +5,14 @@
 {% endblock %}
 
 {% block main %}
-
+    <img src="" alt="img recipe"> <br>
+    {{recipe.name}} <br><br>
+    Ingredients: <br>
+    <ul>
+    {% for item in recipe.ingredients %}
+    <li> {{ item }}</li>
+    {% endfor %}
+    </ul>
+    <br>
+    {{recipe.procedure}}
 {% endblock %}
