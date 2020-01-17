@@ -139,22 +139,25 @@ def register():
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        preferences = {}
-        preferences['nuts'] = request.form.get("nuts")
-        preferences['eggs'] = request.form.get("eggs")
-        preferences['soya'] = request.form.get("soya")
-        preferences['wheat'] = request.form.get("wheat")
-        preferences['fish'] = request.form.get("fish")
-        preferences['milk'] = request.form.get("milk")
-        preferences['mexican'] = request.form.get("mexican")
-        preferences['dutch'] = request.form.get("dutch")
-        preferences['italian'] = request.form.get("italian")
-        preferences['vegetarian'] = request.form.get("vegetarian")
-        preferences['asian'] = request.form.get("asian")
-        print("test")
+
+        # Get all the checkboxvalues
+        string = "codex:"
+        preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
+        for preference in preferences:
+            if request.form.get(preference) == "true":
+                string += '1'
+            else:
+                string += '0'
+        # Get the value amount
+        value = request.form.get("value")
+
+        # Put them into the database
         if "user_id" in session:
             print(session["user_id"])
+            db.execute("UPDATE users SET value = %s WHERE id = %s", value, session["user_id"])
+            db.execute("UPDATE users SET preferences = %s WHERE id = %s", string, session["user_id"])
 
         return render_template("menu.html")
     else:
