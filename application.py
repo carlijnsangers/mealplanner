@@ -205,44 +205,78 @@ def menu():
     # zet de nummers om in recepten
     week =[]
     for recept in recepten:
-        dag = db.execute("SELECT idr, name FROM recipe WHERE idr=:idr", idr=recept)
-        week.append(dag[0])
+        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
 
-    #print(week)
-    return render_template("menu.html", week=week)
+    return render_template("menu.html")
 
 
-@app.route("/recipe")
+@app.route("/recipe", methods =["GET", "POST"])
 def recept():
     if request.method == "POST":
         idr= request.form.get("idr")
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+        #print(recipe)
         # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
-    recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=1)
-    ingr= recipe[0]['ingredients']
-    lijst = [[]]
-    i=0
-    volgende = False
+        ingr= recipe[0]['ingredients']
+        lijst = [[]]
+        i=0
+        volgende = False
 
-    # zet ingredient om in leesbare lijst
-    for woord in ingr:
-        if ";" in woord:
-            woord.replace(';',"")
-            lijst[i].append(woord)
-            volgende = True
-            i+=1
-            lijst[i-1]= "".join(lijst[i-1])
-        elif volgende == True:
-            lijst.append(list())
-            lijst[i].append(woord)
-            volgende= False
-        else:
-            lijst[i].append(woord)
-    lijst[i] = "".join(lijst[i])
+        # zet ingredient om in leesbare lijst
+        for woord in ingr:
+            if ";" in woord:
+                # woord.replace(';', "a")
+                # print(woord)
+                # lijst[i].append(woord)
+                volgende = True
+                lijst[i]= "".join(lijst[i])
+                i+=1
+            elif volgende == True:
+                lijst.append(list())
+                lijst[i].append(woord)
+                volgende= False
+            else:
+                lijst[i].append(woord)
 
-    recipe[0]['ingredients'] = lijst
-    return render_template("recipe.html", recipe = recipe[0])
+        if i < len(lijst):
+            lijst[i] = "".join(lijst[i])
+
+        recipe[0]['ingredients'] = lijst
+        return render_template("recipe.html", recipe = recipe[0])
+
+    elif request.method=="GET":
+        idr = request.args.get("idr")
+        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
+        if recipe:
+            ingr= recipe[0]['ingredients']
+            lijst = [[]]
+            i=0
+            volgende = False
+
+            # zet ingredient om in leesbare lijst
+            for woord in ingr:
+                if ";" in woord:
+                    volgende = True
+                    lijst[i]= "".join(lijst[i])
+                    i+=1
+                elif volgende == True:
+                    lijst.append(list())
+                    lijst[i].append(woord)
+                    volgende= False
+                else:
+                    lijst[i].append(woord)
+
+            if i < len(lijst):
+                lijst[i] = "".join(lijst[i])
+
+            recipe[0]['ingredients'] = lijst
+            return render_template("recipe.html", recipe = recipe[0])
+
+        return render_template("home.html")
+
+    else:
+        return render_template("home.html")
 
 def errorhandler(e):
     """Handle error"""
@@ -256,15 +290,3 @@ def errorhandler(e):
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function

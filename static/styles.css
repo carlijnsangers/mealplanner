@@ -7,6 +7,10 @@ th, td{
     border:1px solid black;
 }
 
+.custom {
+    background-color: #eadefa;
+}
+
 .dag123{
     table-layout:auto;
     width:100%;
@@ -26,6 +30,7 @@ nav .navbar-brand
 /* colors for brand */
 nav .navbar-brand .blue
 {
+    color: #eadefa;
     color: #537fbe;
 }
 
