@@ -9,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from random import randint
 
+from helpers import lookup
 
 # Configure application
 app = Flask(__name__)
