@@ -8,116 +8,125 @@
 
 
 <link href="/static/style.css" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-<span style="text-align:left;">
-<h4><b><font color = "white">Welcome to Mealplanner!</font></b></h4>
-<p class="lead">
+<div class ="grid">
 
-
-<font color = "white">A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. With a personal page you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
-</p>
-<form action="/home" method="post">
-
-<checkboxes>
-  <h5>
-    Allergies:
-  </h5>
-  <div class="checkbox" name="nuts">
-    <label><input type="checkbox" name="nuts" value="true"> Nuts</label>
+<div class = "title">
+  <span style="text-align:left;">
+  <div class ="row">
+    <div class = "col-sm-2 col-md-5">
+      <h4><b><font color = "white">Welcome to Mealplanner!</font></b></h4>
+    </div>
   </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="peanuts" value="true"> Peanuts</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="eggs" value="true"> Eggs</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="soya" value="true"> Soya</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="wheat" value="true"> Wheat</label>
-  </div>
-  <div class="check">
-    <label><input type="checkbox" name="fish" value="true"> Fish, Shellfish and Crustaceans</label>
-  </div>
-  <div class="check">
-    <label><input type="checkbox" name="milk" value="true"> Cow's milk</label>
-  </div>
-</checkboxes>
-</font>
-
-  </tr>
-
-
-<font color = "white">
-<checkboxes>
-  <p><h5>
-    Kitchen:
-  </h5></p>
-  <div class="checkbox">
-    <label><input type="checkbox" name="italian" value="true"> Italian</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="mexican" value="true"> Mexican</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="dutch" value="true"> Dutch</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="asian" value="true"> Asian</label>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name= "vegetarian" value="true"> Vegetarian</label>
-  </div>
- </checkboxes>
-</font>
-
-<font color = "white">
-  <h5>
-    Budget
-  </h5>
-
-
-  <input type="range" min="20" max="100" value="50" class="slider" style="float:left;" name="value" id="myRange"><br>
-  <p>Value:€ <span id="demo"></span></p>
 </div>
-</font>
+  <p class="lead">
 
-<script>
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-</script>
-
-
-<div class="form-group">
-        <button class="btn btn-primary" type="submit">Submit</button>
+<div class = "header">
+  <div class ="row">
+    <div class = "col-sm-3 col-md-6">
+      <font color = "white">A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. It is an option to make a personal page where you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
+    </div>
+  </div>
 </div>
-</form>
-</span>
+  </p>
+  <form action="/home" method="post">
+
+      <checkboxes>
+        <h5>
+          Allergies:
+        </h5>
+        <div class="checkbox1" name="nuts">
+          <label><input type="checkbox" name="nuts" value="true"> Nuts</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="peanuts" value="true"> Peanuts</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="eggs" value="true"> Eggs</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="soya" value="true"> Soya</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="wheat" value="true"> Wheat</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="fish" value="true"> Fish, Shellfish and Crustaceans</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="milk" value="true"> Cow's milk</label>
+        </div>
+      </checkboxes>
+      </font>
+
+      </tr>
 
 
-<body2>
-<form action="index.html" method="get">
+      <font color = "white">
+      <checkboxes>
+        <p><h5>
+          Kitchen:
+        </h5></p>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="italian" value="true"> Italian</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="mexican" value="true"> Mexican</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="dutch" value="true"> Dutch</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name="asian" value="true"> Asian</label>
+        </div>
+        <div class="checkbox1">
+          <label><input type="checkbox" name= "vegetarian" value="true"> Vegetarian</label>
+        </div>
+       </checkboxes>
+      </font>
 
-<p>
 
-<span style='font-size:500px; width:40%; float:left; margin-left:30%; margin-top:30%'>&#8620;</span><input type="image" style="float:right; width:30%; margin-top: 60%" src="https://marketplace.canva.com/EADah0a0xOk/1/0/618w/canva-brown-borders-dinner-menu-hbm_SdG_1vQ.jpg" onclick="alert('Don\'t forget to press the back button to return!')" />
-
-
-</p>
-
-</form>
-</body2>
+      <font color = "white">
+        <h5>
+          Budget
+        </h5>
 
 
+        <input type="range" min="20" max="100" value="50" class="slider" style="float:left;" name="value" id="myRange"><br>
+        <p>Value:€ <span id="demo"></span></p>
+      </div>
+      </font>
+
+      <script>
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      output.innerHTML = slider.value;
+
+      slider.oninput = function() {
+        output.innerHTML = this.value;
+      }
+      </script>
 
 
+      <div class="form-group">
+              <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+      </form>
+      </span>
 
+<div class="navbar-nav ml-auto mt-2">
+  <a class="nav-item nav-link" href="/register">Register</a>
+</div>
+<form class ="box2" action="/register" method="post">
+    <p class="big"><h2>Register Now!</h2><br>
+    <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"><br>
+    <input class="form-control" name="password" placeholder="Password" type="password"><br>
+    <input class="form-control" name="confirmation" placeholder="Repeat Password" type="password"><br>
+    <button class="btn btn-primary" type="submit">Register</button><br>
+    </p>
 
 
 {% endblock %}
