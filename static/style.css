@@ -110,7 +110,7 @@ td, tr
     color: red
 }
 
-body {
+body.home {
   background: url('https://www.thespruceeats.com/thmb/nn_bwtTNkqXE7qIDyPyIZoHjg1E=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -118,7 +118,9 @@ body {
   background-size: cover
 }
 
-
+body.profile {
+    background: black;
+}
 
 div align {
     position: absolute;
@@ -132,6 +134,7 @@ div align {
     height: 2%;
     position: relative;
     top: 30%;
+
 }
 
 .box {
