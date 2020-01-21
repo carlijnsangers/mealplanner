@@ -16,13 +16,3 @@ def get_meal(query, diet, intolerances):
         "image": quote["results"][0]["image"]
 
     }
-
-
-<<<<<<< HEAD
-=======
-
-#print(lookup("rice", None, ["Dairy", "Egg"]))
-
-#print(get_meal("macaroni", None, ["Dairy", "Egg"]))
-
->>>>>>> ee63934b5499cbeb82dce9af6b2a0e284e010865
