@@ -14,4 +14,4 @@ def lookup(query, diet, intolerances):
     }
 
 
-print(lookup("rice", None, ["Dairy", "Egg"]))
+#print(lookup("rice", None, ["Dairy", "Egg"]))

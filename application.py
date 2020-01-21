@@ -144,12 +144,12 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        cuisines = [ "italien", "mexican", "dutch", "asian", "vegetarien"]
-        intolerances = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
-        for cuisine in cuisines:
-            if request.form.get(cuisine) == None:
-                cuisines.remove(cuisine)
-        print(cuisines)
+        diets = ["vegetarian", "pescetarian", "vegan"]
+        intolerances = ["tree nut","peanut", "egg", "soy", "wheat", "seafood", "dairy"]
+
+        diet = request.form.get("diet")
+        print(diet)
+
 
         for intolerance in intolerances:
             if request.form.get(intolerance) == "true":
@@ -162,13 +162,15 @@ def home():
 
 
 
-        return render_template("menu.html")
+        return render_template("menu.html", diets=diets)
     else:
-        return render_template("home.html")
+        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+        return render_template("home.html", diets=diets)
 
 @app.route("/", methods=["GET"])
 def find_home():
-    return render_template("home.html")
+    diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+    return render_template("home.html", diets=diets)
 
 
 #app.route("/")
@@ -284,7 +286,7 @@ def recept():
 
 def preferences():
     allergie = ["tree nut", "peanut", "egg", "soy", "wheat", "seafood", "dairy"]
-    dieet = ["no diet", "vegetarian", "pescetarian", "vegan"]
+    dieet = ["vegetarian", "pescetarian", "vegan"]
 
     #for string in voorkeuren:
     #    if string in allergie:
