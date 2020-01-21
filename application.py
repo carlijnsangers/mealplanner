@@ -152,7 +152,7 @@ def home():
         for intolerance in intolerances:
             if request.form.get(intolerance) == "true":
                 allergie.append(intolerance)
-        #print(allergie)
+        print(allergie)
 
         return render_template("menu.html")
     else:
