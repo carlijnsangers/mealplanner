@@ -144,21 +144,23 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        string = "codex:"
-        preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
-        for preference in preferences:
-            if request.form.get(preference) == "true":
-                string += '1'
-            else:
-                string += '0'
+        cuisines = [ "italien", "mexican", "dutch", "asian", "vegetarien"]
+        intolerances = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
+        for cuisine in cuisines:
+            if request.form.get(cuisine) == None:
+                cuisines.remove(cuisine)
+        print(cuisines)
+
+        for intolerance in intolerances:
+            if request.form.get(intolerance) == "true":
+                intolerances.remove(intolerance)
+        print(intolerances)
+
         # Get the value amount
         value = request.form.get("value")
 
-        # Put them into the database
-        if "user_id" in session:
-            print(session["user_id"])
-            db.execute("UPDATE users SET value = %s WHERE id = %s", value, session["user_id"])
-            db.execute("UPDATE users SET preferences = %s WHERE id = %s", string, session["user_id"])
+
+
 
         return render_template("menu.html")
     else:
