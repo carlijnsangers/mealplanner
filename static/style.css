@@ -142,7 +142,7 @@ div align {
     width: 10%;
     height: 2%;
     position: relative;
-    top: 30%;
+    margin: 2% -3%;
 
 }
 
@@ -250,3 +250,6 @@ div align {
 p.big {
     line-height: 3.0;
 }
+
+
+
