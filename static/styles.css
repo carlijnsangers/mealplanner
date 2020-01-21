@@ -135,8 +135,9 @@ body2 {
 
 span.b {
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  float:left;
+  width: 33%;
+  margin:5%;
   padding: 5px;
   border: 1px solid blue;
   background-color: yellow;
