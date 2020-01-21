@@ -228,7 +228,7 @@ def menu():
 
     # genereert 5 willekeurige verschilende nummers
     while len(recepten) < 5:
-        nummer = randint(1, totaal[0]['COUNT(*)'])
+        nummer = random.randint(1, totaal[0]['COUNT(*)'])
         if nummer not in recepten:
             recepten.append(nummer)
 
