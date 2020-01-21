@@ -7,9 +7,9 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from random import randint
+import random
 
-from helpers import lookup
+from helpers import get_meal
 
 # Configure application
 app = Flask(__name__)
@@ -137,20 +137,48 @@ def register():
 ####################################################
 # Nieuwe programma's
 ####################################################
+
+#global variables
+intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+
+
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
     # User reached route via POST (as by submitting a form via POST)
+    global intolerances
+
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        string = "codex:"
-        preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
-        for preference in preferences:
-            if request.form.get(preference) == "true":
-                string += '1'
-            else:
-                string += '0'
+        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
+
+        allergie = []
+        diet = request.form.get("diet")
+        #print(diet)
+
+        for intolerance in intolerances:
+            if request.form.get(intolerance) == "true":
+                allergie.append(intolerance)
+        print(allergie)
+
+
+
+        for intolerance in intolerances:
+            if request.form.get(intolerance) == "false":
+                intolerances.remove(intolerance)
+
+        meals = []
+        for meal in range(5):
+            query = random.choice(querys)
+            meal =  get_meal(query, None, intolerances)
+            meals.append(meal)
+        print(meals)
+
+
+
+
         # Get the value amount
         value = request.form.get("value")
 
@@ -162,11 +190,14 @@ def home():
 
         return render_template("menu.html")
     else:
-        return render_template("home.html")
+        global diets
+        return render_template("home.html", diets=diets, intolerances=intolerances)
 
 @app.route("/", methods=["GET"])
 def find_home():
-    return render_template("home.html")
+    global diets
+    global intolerances
+    return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
 #app.route("/")
@@ -199,7 +230,7 @@ def menu():
 
     # genereert 5 willekeurige verschilende nummers
     while len(recepten) < 5:
-        nummer = randint(1, totaal[0]['COUNT(*)'])
+        nummer = random.randint(1, totaal[0]['COUNT(*)'])
         if nummer not in recepten:
             recepten.append(nummer)
 
@@ -278,6 +309,17 @@ def recept():
 
     else:
         return render_template("home.html")
+
+def preferences():
+    global intolerances
+    global diets
+
+
+    #for string in voorkeuren:
+    #    if string in allergie:
+
+    #    elif string in dieet:
+
 
 def errorhandler(e):
     """Handle error"""
