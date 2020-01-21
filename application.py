@@ -145,7 +145,17 @@ def home():
 
         # Get all the checkboxvalues
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
-        intolerances = ["gluten","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
+        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        allergie = []
+        diet = request.form.get("diet")
+        #print(diet)
+
+        for intolerance in intolerances:
+            if request.form.get(intolerance) == "true":
+                allergie.append(intolerance)
+        #print(allergie)
+
+
 
         for intolerance in intolerances:
             if request.form.get(intolerance) == "false":
@@ -169,11 +179,13 @@ def home():
 
         return render_template("menu.html")
     else:
-        return render_template("home.html")
+        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+        return render_template("home.html", diets=diets)
 
 @app.route("/", methods=["GET"])
 def find_home():
-    return render_template("home.html")
+    diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+    return render_template("home.html", diets=diets)
 
 
 #app.route("/")
@@ -288,17 +300,8 @@ def recept():
         return render_template("home.html")
 
 def preferences():
-    preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
-    data = db.execute("SELECT preferences FROM users WHERE id=:id", id=session["user_id"])
-    voorkeuren = []
-    for i in len(data[0]['preferences']):
-        if data[0]['preferences'][i] == "1":
-            voorkeuren.append(preferences[i-5])
-
-    allergie = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
-    #keuken = ["italien", "mexican", "dutch", "asian"]
-    dieet = ["vegetarien"]
-
+    allergie = ["tree nut", "peanut", "egg", "soy", "wheat", "seafood", "dairy"]
+    dieet = ["vegetarian", "pescetarian", "vegan"]
 
     #for string in voorkeuren:
     #    if string in allergie:
