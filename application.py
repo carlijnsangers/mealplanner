@@ -163,30 +163,23 @@ def home():
                 allergie.append(intolerance)
         print(allergie)
 
+        for intolerance in allergie:
+            intolerances.remove(intolerance)
+        intolerancesCSV = ", ".join(intolerances)
 
 
-        for intolerance in intolerances:
-            if request.form.get(intolerance) == "false":
-                intolerances.remove(intolerance)
+        # meals = []
+        # for meal in range(5):
+        #     query = random.choice(querys)
+        #     meal =  get_meal(query, None, intolerancesCSV)
+        #     meals.append(meal)
+        # print(meals)
 
-        meals = []
-        for meal in range(5):
-            query = random.choice(querys)
-            meal =  get_meal(query, None, intolerances)
-            meals.append(meal)
-        print(meals)
-
-
-
-
-        # Get the value amount
-        value = request.form.get("value")
 
         # Put them into the database
         if "user_id" in session:
             print(session["user_id"])
-            db.execute("UPDATE users SET value = %s WHERE id = %s", value, session["user_id"])
-            db.execute("UPDATE users SET preferences = %s WHERE id = %s", string, session["user_id"])
+            db.execute("UPDATE users SET preferences = :allergie WHERE id = :id", allergie= intolerancesCSV, id=session["user_id"])
 
         return render_template("menu.html")
     else:
