@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from random import randint
+import random
 
 from helpers import get_meal
 
@@ -144,12 +144,22 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
+        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
         intolerances = ["gluten","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
 
         for intolerance in intolerances:
-            if request.form.get(intolerance) == "true":
+            if request.form.get(intolerance) == "false":
                 intolerances.remove(intolerance)
-        print(intolerances)
+
+        meals = []
+        for meal in range(5):
+            query = random.choice(querys)
+            meal =  get_meal(query, None, intolerances)
+            meals.append(meal)
+        print(meals)
+
+
+
 
         # Get the value amount
         value = request.form.get("value")
