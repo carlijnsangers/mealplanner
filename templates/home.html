@@ -141,7 +141,7 @@
         </form>
         </span>
 
-
+{% if not session.user_id %}
   <form class ="box2" action="/register" method="post">
       <p class="big"><h2>Register Now!</h2><br>
       <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"><br>
@@ -150,5 +150,7 @@
       <button class="btn btn-primary" type="submit">Register</button><br>
       </p>
 </body>
+{% endif %}
+
 
 {% endblock %}
