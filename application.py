@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from random import randint
 
-from helpers import lookup
+from helpers import get_meal
 
 # Configure application
 app = Flask(__name__)
@@ -144,25 +144,17 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        diets = ["vegetarian", "pescetarian", "vegan"]
-        intolerances = ["tree nut","peanut", "egg", "soy", "wheat", "seafood", "dairy"]
-
+        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        allergie = []
         diet = request.form.get("diet")
-        print(diet)
-
+        #print(diet)
 
         for intolerance in intolerances:
             if request.form.get(intolerance) == "true":
-                intolerances.remove(intolerance)
-        print(intolerances)
+                allergie.append(intolerance)
+        #print(allergie)
 
-        # Get the value amount
-        value = request.form.get("value")
-
-
-
-
-        return render_template("menu.html", diets=diets)
+        return render_template("menu.html")
     else:
         diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
         return render_template("home.html", diets=diets)

@@ -38,26 +38,30 @@
           <h5>
             Allergies:
           </h5>
-          <div class="checkbox1" name="nuts">
+          <div class="checkbox1">
             <label><input type="checkbox" name="tree nut" value="true"> Tree nuts</label>
+            </div>
+            <div class="checkbox1">
+            <label><input type="checkbox" name="gluten" value="true"> Gluten</label>
+            </div>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="peanuts" value="true"> Peanut</label>
+            <label><input type="checkbox" name="peanut" value="true"> Peanut</label>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="eggs" value="true"> Eggs</label>
+            <label><input type="checkbox" name="egg" value="true"> Egg</label>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="soya" value="true"> Soya</label>
+            <label><input type="checkbox" name="soy" value="true"> Soy</label>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="wheat" value="true"> Wheat</label>
+            <label><input type="checkbox" name="grain" value="true"> Grain</label>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="fish" value="true"> Fish, Shellfish and Crustaceans</label>
+            <label><input type="checkbox" name="seafood" value="true"> Seafood</label>
           </div>
           <div class="checkbox1">
-            <label><input type="checkbox" name="milk" value="true"> Cow's milk</label>
+            <label><input type="checkbox" name="dairy" value="true"> Dairy</label>
           </div>
         </checkboxes>
         </font>
@@ -71,7 +75,7 @@
             Diet:
           </h5></p>
 
-        <select>
+        <select name="diet">
             {% for diet in diets %}
             <option value="{{diet}}" name="diet">{{diet}} </option>
             {% endfor %}
@@ -90,7 +94,7 @@
           <div class="checkbox1">
             <label><input type="checkbox" name= "vegetarian" value="true"> Vegetarian</label>
           </div> -->
-         </checkboxes>
+         <!--</checkboxes>-->
 
         </font>
 
