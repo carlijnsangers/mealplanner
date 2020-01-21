@@ -33,6 +33,11 @@
   </div>
     </p>
     <form action="/home" method="post">
+        {% for query in querys %}
+           <div class="checkbox1" name="nuts">
+            <label><input type="checkbox" name=query value="true"> {query}</label>
+          </div>
+        {% endfor %}
 
         <checkboxes>
           <h5>
