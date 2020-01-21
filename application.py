@@ -281,17 +281,8 @@ def recept():
         return render_template("home.html")
 
 def preferences():
-    preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
-    data = db.execute("SELECT preferences FROM users WHERE id=:id", id=session["user_id"])
-    voorkeuren = []
-    for i in len(data[0]['preferences']):
-        if data[0]['preferences'][i] == "1":
-            voorkeuren.append(preferences[i-5])
-
-    allergie = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
-    #keuken = ["italien", "mexican", "dutch", "asian"]
-    dieet = ["vegetarien"]
-
+    allergie = ["tree nut", "peanut", "egg", "soy", "wheat", "seafood", "dairy"]
+    dieet = ["no diet", "vegetarian", "pescetarian", "vegan"]
 
     #for string in voorkeuren:
     #    if string in allergie:
