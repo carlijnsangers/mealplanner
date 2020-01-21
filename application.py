@@ -175,6 +175,7 @@ def find_home():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
+
         #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
         # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
         return render_template("profile.html")
@@ -278,6 +279,25 @@ def recept():
 
     else:
         return render_template("home.html")
+
+def preferences():
+    preferences = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk", "italien", "mexican", "dutch", "asian", "vegetarien"]
+    data = db.execute("SELECT preferences FROM users WHERE id=:id", id=session["user_id"])
+    voorkeuren = []
+    for i in len(data[0]['preferences']):
+        if data[0]['preferences'][i] == "1":
+            voorkeuren.append(preferences[i-5])
+
+    allergie = ["nuts","peanuts", "eggs", "soya", "wheat", "fish", "milk"]
+    #keuken = ["italien", "mexican", "dutch", "asian"]
+    dieet = ["vegetarien"]
+
+
+    #for string in voorkeuren:
+    #    if string in allergie:
+
+    #    elif string in dieet:
+
 
 def errorhandler(e):
     """Handle error"""
