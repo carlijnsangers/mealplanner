@@ -152,45 +152,25 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
+        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
-
-        allergie = []
+        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         diet = request.form.get("diet")
-        #print(diet)
-
-        for intolerance in intolerances:
-            if request.form.get(intolerance) == "true":
-                allergie.append(intolerance)
-        print(allergie)
-
 
 
         for intolerance in intolerances:
             if request.form.get(intolerance) == "false":
                 intolerances.remove(intolerance)
 
-        meals = []
-        for meal in range(5):
-            query = random.choice(querys)
-            meal =  get_meal(query, None, intolerances)
-            meals.append(meal)
-        print(meals)
+        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        # for meal in range(5):
+        #     query = random.choice(querys)
+        #     meal =  get_meal(query, diet, intolerances)
+        #     meals.append(meal)
 
 
-
-
-        # Get the value amount
-        value = request.form.get("value")
-
-        # Put them into the database
-        if "user_id" in session:
-            print(session["user_id"])
-            db.execute("UPDATE users SET value = %s WHERE id = %s", value, session["user_id"])
-            db.execute("UPDATE users SET preferences = %s WHERE id = %s", string, session["user_id"])
-
-        return render_template("menu.html")
+        return render_template("menu.html", meals=meals)
     else:
-        global diets
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
 @app.route("/", methods=["GET"])
