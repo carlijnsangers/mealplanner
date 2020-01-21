@@ -137,14 +137,21 @@ def register():
 ####################################################
 # Nieuwe programma's
 ####################################################
+
+#global variables
+intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+
+
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
     # User reached route via POST (as by submitting a form via POST)
+    global intolerances
+
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         allergie = []
         diet = request.form.get("diet")
         #print(diet)
@@ -156,14 +163,13 @@ def home():
 
         return render_template("menu.html")
     else:
-        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        global diets
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
 @app.route("/", methods=["GET"])
 def find_home():
-    diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-    intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+    global diets
+    global intolerances
     return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
@@ -279,8 +285,9 @@ def recept():
         return render_template("home.html")
 
 def preferences():
-    allergie = ["tree nut", "peanut", "egg", "soy", "wheat", "seafood", "dairy"]
-    dieet = ["vegetarian", "pescetarian", "vegan"]
+    global intolerances
+    global diets
+
 
     #for string in voorkeuren:
     #    if string in allergie:
