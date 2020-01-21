@@ -38,6 +38,13 @@
           <h5>
             Allergies:
           </h5>
+          {% for intolerance in intolerances %}
+          <div class="checkbox1">
+              <label><input type="checkbox" name ="{{intolerance}}" value="true"> {{ intolerance}} </label>
+          </div>
+          {% endfor %}
+
+        <!--
           <div class="checkbox1">
             <label><input type="checkbox" name="tree nut" value="true"> Tree nuts</label>
             </div>
@@ -63,6 +70,7 @@
           <div class="checkbox1">
             <label><input type="checkbox" name="dairy" value="true"> Dairy</label>
           </div>
+          -->
         </checkboxes>
         </font>
 

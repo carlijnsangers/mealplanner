@@ -157,12 +157,14 @@ def home():
         return render_template("menu.html")
     else:
         diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-        return render_template("home.html", diets=diets)
+        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        return render_template("home.html", diets=diets, intolerances=intolerances)
 
 @app.route("/", methods=["GET"])
 def find_home():
     diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-    return render_template("home.html", diets=diets)
+    intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+    return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
 #app.route("/")
