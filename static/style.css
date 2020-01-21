@@ -1,0 +1,255 @@
+<<<<<<< HEAD
+=======
+table{
+    border-collapse:collapse;
+    border:1px navy;
+}
+
+th, td{
+    border:1px solid black;
+}
+
+.dag123{
+    table-layout:auto;
+    width:100%;
+}
+
+.dag45{
+    table-layout:auto;
+    width:67%;
+}
+
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* colors for brand */
+nav .navbar-brand .blue
+{
+    color: #537fbe;
+}
+
+/* hex for kleur logo */
+nav {
+    background-color:#EADEFA;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+td, tr
+{
+    text-align: left;
+
+}
+
+.checkbox1
+{
+    text-align: left;
+}
+
+.split{
+    height:100%;
+    /* width:33.3333333%;
+    width: calc(100% /3); */
+    position:fixed;
+    top:82.5px;
+    z-index:-1;
+}
+
+.links{
+    background-color:red;
+    left:0;
+    width:25%;
+
+}
+
+.midden{
+    background-color:green;
+    left:25%;
+    width:37.5%;
+}
+
+.rechts{
+    background-color:blue;
+    right:0;
+    width:37.5%;
+}
+
+.spacer{
+    height:82.5px;
+    width:100%;
+    top:0;
+    left:0;
+}
+/* css slider 2 */
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+.error {
+    color: red
+}
+
+body.home {
+  background: url('https://www.thespruceeats.com/thmb/nn_bwtTNkqXE7qIDyPyIZoHjg1E=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover
+}
+
+body.profile {
+    background: black;
+}
+
+.saverec {
+    margin-left: -15%;
+}
+
+.review {
+    float: right;
+    margin-top: -5%;
+}
+
+div align {
+    position: absolute;
+    right: 1%;
+}
+
+.checkbox2 {
+    text-align: left;
+    font-size: 10%;
+    width: 10%;
+    height: 2%;
+    position: relative;
+    top: 30%;
+
+}
+
+.box {
+    width: 30%;
+    padding: 4%;
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    transform: translate(-5%, -5%);
+    background: url('https://img.pixers.pics/pho_wat(s3:700/FO/89/74/54/64/700_FO89745464_fd47a8365f906039e4f6aa271c575a3c.jpg,700,537,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,487,jpg)/fotobehang-close-up-komkommer-segment-achtergrond-textuur.jpg.jpg');
+    text-align: center;
+}
+
+.box input[type="text"],.box input[type="password"]{
+    border: 0;
+    border-radius: 25%;
+    background: none;
+    display: block;
+    margin: 2% auto;
+    text-align: center;
+    border-style: 0.02% #ffffff;
+    padding: 0.20% 0.01%;
+    border-width: 20%;
+    outline: none;
+    color: black;
+}
+
+.box h1 {
+    color: black;
+}
+
+.box input[type="submit"]{
+    border: 0;
+    border-radius: 25%;
+    background: none;
+    display: block;
+    margin: 2% auto;
+    text-align: center;
+    border-style: 0.02% solid #00FF00;
+    padding: 0.20% 4%;
+    width: 20%;
+    outline: none;
+    color: white;
+
+}
+
+.box input[type="submit"]:hover{
+    background: #00FF00;
+}
+
+.box2 {
+    width: 30%;
+    padding: 5%;
+    position: absolute;
+    top: 20%;
+    left: 60%;
+    transform: translate(-5%, -5%);
+    background: url('https://img.pixers.pics/pho_wat(s3:700/FO/89/74/54/64/700_FO89745464_fd47a8365f906039e4f6aa271c575a3c.jpg,700,537,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,487,jpg)/fotobehang-close-up-komkommer-segment-achtergrond-textuur.jpg.jpg') no-repeat;
+    text-align: center;
+    float: right;
+
+
+
+}
+
+.box2 input[type="text"],.box2 input[type="password"],.box2 input[type="repeat password"]{
+    border: 0;
+    border-radius: 25%;
+    background: none;
+    display: block;
+    margin: 2% auto;
+    text-align: center;
+    border-style: 0.02% #ffffff;
+    padding: 0.20% 0.01%;
+    border-width: 20%;
+    outline: none;
+    color: black;
+
+}
+
+.box2 h2 {
+    color: black;
+    text-align: center;
+}
+
+.box2 input[type="submit"]{
+    border: 0;
+    border-radius: 25%;
+    background: none;
+    display: block;
+    margin: 2% auto;
+    text-align: center;
+    border-style: 0.02% solid #00FF00;
+    padding: 0.20% 4%;
+    width: 30%;
+    outline: none;
+    color: white;
+}
+
+.box2 input[type="submit"]:hover{
+    background: #00FF00;
+}
+
+p.big {
+    line-height: 3.0;
+}
+>>>>>>> 385c8670a8b708307ebfbaaa6bb89bc05218a04c

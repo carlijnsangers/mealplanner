@@ -137,10 +137,18 @@ def register():
 ####################################################
 # Nieuwe programma's
 ####################################################
+
+#global variables
+intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+
+
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
     # User reached route via POST (as by submitting a form via POST)
+    global intolerances
+
     if request.method == "POST":
 
         # Get all the checkboxvalues
@@ -167,8 +175,8 @@ def home():
 
 @app.route("/", methods=["GET"])
 def find_home():
-    diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-    intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+    global diets
+    global intolerances
     return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
@@ -178,7 +186,6 @@ def find_home():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
-
         #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
         # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
         return render_template("profile.html")
@@ -203,7 +210,7 @@ def menu():
 
     # genereert 5 willekeurige verschilende nummers
     while len(recepten) < 5:
-        nummer = randint(1, totaal[0]['COUNT(*)'])
+        nummer = random.randint(1, totaal[0]['COUNT(*)'])
         if nummer not in recepten:
             recepten.append(nummer)
 
@@ -284,8 +291,9 @@ def recept():
         return render_template("home.html")
 
 def preferences():
-    allergie = ["tree nut", "peanut", "egg", "soy", "wheat", "seafood", "dairy"]
-    dieet = ["vegetarian", "pescetarian", "vegan"]
+    global intolerances
+    global diets
+
 
     #for string in voorkeuren:
     #    if string in allergie:
