@@ -10,10 +10,19 @@ import socket
 def get_meal(query, diet, intolerances):
     response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
     quote = response.json()
+    if len(quote['results']) >1:
+        number = random.randint(1, len(quote['results'])) -1
+    else:
+        number = 0
+    print(quote, len(quote['results']), number)
+    if len(quote['results']) == 0:
+        print("error")
+        return "error"
     return {
-        "id": quote["results"][0]["id"],
-        "meal": quote["results"][0]["title"],
-        "image": quote["results"][0]["image"]
+        "id": quote["results"][number]["id"],
+        "meal": quote["results"][number]["title"],
+        "image": quote["results"][number]["image"],
+        "title": quote["results"][number]["title"]
     }
 
 
@@ -35,5 +44,3 @@ def get_IP():
         return host_ip
     except:
         return
-
-print(get_IP())

@@ -152,26 +152,36 @@ def home():
 
         # Get all the checkboxvalues
         global diets
-        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
+        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "macaroni"]
         #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         diet = request.form.get("diet")
+        if diet == "vegan" or diet == "vegetarian":
+            querys = ["pasta", "salad", "potatoes", "rice", "macaroni"]
+        elif diet == 'pescatarian':
+            querys = ["pasta", "salad", "salmon", "potatoes", "rice", "macaroni"]
 
+        print(querys)
 
+        allergie =[]
         for intolerance in intolerances:
-            if request.form.get(intolerance) == "false":
-                intolerances.remove(intolerance)
+            if request.form.get(intolerance) == "true":
+                allergie.append(intolerance)
+        allergie = ",".join(allergie)
 
-        meals = [{"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}]
-        # for meal in range(5):
-        #     query = random.choice(querys)
-        #     meal =  get_meal(query, diet, intolerances)
-        #     meals.append(meal)
+        # meals = [{"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}]
+        meals = []
+        for meal in range(5):
+            query = random.choice(querys)
+            meal =  get_meal(query, diet, allergie)
+            meals.append(meal)
+
         for meal in meals:
+            print(meal["id"])
             if "user_id" in session:
-                db.execute("INSERT INTO meal (meal id, meal name, meal img, user id, user IP) VALUES (%s, %s, %s, %s, %s)",
+                db.execute("INSERT INTO meal (idr, title, img, user_id, user_IP) VALUES (%s, %s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], session["user_id"], get_IP()))
             else:
-                db.execute("INSERT INTO meal (meal id, meal name, meal img, user IP) VALUES (%s, %s, %s, %s)",
+                db.execute("INSERT INTO meal (idr, title, img, user_IP) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], get_IP()))
 
 
@@ -219,8 +229,9 @@ def recept():
         idr = request.args.get("idr")
 
         recipe = lookup(idr)
-
-        return render_template("recipe.html", recipe=recipe, meals=meals)
+        data = db.execute("SELECT img, title FROM meal WHERE idr = :idr LIMIT 1", idr=idr)
+        print(data)
+        return render_template("recipe.html", recipe=recipe, data=data)
 
     else:
         return render_template("home.html")
