@@ -5,16 +5,14 @@
 {% endblock %}
 
 {% block main %}
-    <div>
-        {% for meal in meals %}
-        <div class="container">
-            <img src="nature.jpg" alt="Norway" style="width:100%;">
-            <div class="text-block">
-                <h4>{{meal["title"]}}</h4>
-            </div>
-        </div>
-        {% endfor %}
+
+    {% for meal in meals %}
+    <div class="from-group">">
+        <a href="/recipe?idr=2" target="_blank_"
+            <span class="b">{{meal['title']}} <img src="{{meal["image"]}}"> </span>
+        </a>
     </div>
+    {% endfor %}
     <div>
 
     </div>

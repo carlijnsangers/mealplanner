@@ -154,7 +154,7 @@ def home():
         # Get all the checkboxvalues
         diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
-        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         diet = request.form.get("diet")
 
 
@@ -168,7 +168,7 @@ def home():
         #     meal =  get_meal(query, diet, intolerances)
         #     meals.append(meal)
 
-
+        print(len(meals))
         return render_template("menu.html", meals=meals)
     else:
         return render_template("home.html", diets=diets, intolerances=intolerances)
@@ -259,6 +259,7 @@ def recept():
 
     elif request.method=="GET":
         idr = request.args.get("idr")
+
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
         if recipe:
             ingr= recipe[0]['ingredients']

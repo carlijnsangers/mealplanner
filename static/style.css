@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 table{
     border-collapse:collapse;
     border:1px navy;
@@ -144,7 +143,7 @@ div align {
     width: 10%;
     height: 2%;
     position: relative;
-    top: 30%;
+    margin: 2% -3%;
 
 }
 
@@ -252,4 +251,4 @@ div align {
 p.big {
     line-height: 3.0;
 }
->>>>>>> 385c8670a8b708307ebfbaaa6bb89bc05218a04c
+
