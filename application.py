@@ -8,8 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-
-from helpers import get_meal
+from helpers import lookup, get_meal
 
 # Configure application
 app = Flask(__name__)
@@ -224,69 +223,13 @@ def menu():
 
 @app.route("/recipe", methods =["GET", "POST"])
 def recept():
-    if request.method == "POST":
-        idr= request.form.get("idr")
-        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
-        #print(recipe)
-        # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
-        ingr= recipe[0]['ingredients']
-        lijst = [[]]
-        i=0
-        volgende = False
-
-        # zet ingredient om in leesbare lijst
-        for woord in ingr:
-            if ";" in woord:
-                # woord.replace(';', "a")
-                # print(woord)
-                # lijst[i].append(woord)
-                volgende = True
-                lijst[i]= "".join(lijst[i])
-                i+=1
-            elif volgende == True:
-                lijst.append(list())
-                lijst[i].append(woord)
-                volgende= False
-            else:
-                lijst[i].append(woord)
-
-        if i < len(lijst):
-            lijst[i] = "".join(lijst[i])
-
-        recipe[0]['ingredients'] = lijst
-        return render_template("recipe.html", recipe = recipe[0])
-
-    elif request.method=="GET":
+    if request.method=="GET":
         idr = request.args.get("idr")
 
-        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
-        if recipe:
-            ingr= recipe[0]['ingredients']
-            lijst = [[]]
-            i=0
-            volgende = False
+        recipe = lookup(idr)
 
-            # zet ingredient om in leesbare lijst
-            for woord in ingr:
-                if ";" in woord:
-                    volgende = True
-                    lijst[i]= "".join(lijst[i])
-                    i+=1
-                elif volgende == True:
-                    lijst.append(list())
-                    lijst[i].append(woord)
-                    volgende= False
-                else:
-                    lijst[i].append(woord)
-
-            if i < len(lijst):
-                lijst[i] = "".join(lijst[i])
-
-            recipe[0]['ingredients'] = lijst
-            return render_template("recipe.html", recipe = recipe[0])
-
-        return render_template("home.html")
+        return render_template("recipe.html", recipe=recipe)
 
     else:
         return render_template("home.html")

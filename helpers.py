@@ -19,10 +19,15 @@ def get_meal(query, diet, intolerances):
 
 def lookup(idr):
     # onderstaande is geen ideale link, mist ingredienten en hoeveelheden
-    response = None # requests.get(f"https://api.spoonacular.com/recipes/{(id)}/analyzedInstructions")
-    ingredients = None # requests.get(f"https://api.spoonacular.com/recipes/{(id)}/ingredientWidget.json")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
     # ingredienten met prijs V
     #  https://api.spoonacular.com/recipes/{(id)}/priceBreakdownWidget.json
+    quote = response.json()
+    return{
+        "id": quote["results"][0]["id"],
+
+    }
 
     print(response, ingredients)
     return {}
