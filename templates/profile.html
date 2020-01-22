@@ -9,42 +9,29 @@
 <body class = "profile">
   <link href="/static/style.css" rel="stylesheet">
 
+
       <div class="split links">
-          <div class="centered">
-            <img src="/static/generic.jpg">
-                <label for="avatar">Choose a picture:</label>
-                <input type="file"
-                       id="avatar" name="avatar"
-                       accept="image/png, image/jpeg">
-
-
-              <!--  Op klik/hover verander img-->
-          </div>
-          <div class="preferences">
-              <!-- geeft huidige voorkeuren weer -->
-          </div>
-          <button> Change preferences</button>
+        <div class="centered">
+          <div class="personal"></div>
+          <h1><center>My personal page</center></h1>
+        </div>
       </div>
       <div class="split midden">
           <div class="centered">
               <div class="recepten"></div>
+              <h1><center>Saved recipes</center></h1>
           </div>
       </div>
       <div class="split rechts">
           <div class="centered">
               <div class="recensies"></div>
+                <h1><center>Reviews</center></h1>
           </div>
       </div>
 
-    <div class="saverec">
-      <h1><center>Saved Recipes</center></h1>
-    </div>
 
-    <div class="review">
-      <h1>Reviews</h1>
-    </div>
-
-
+      <div class="preferences"></div>
+      <button id="preferences">Change preferences</button>
 
 </body>
 
