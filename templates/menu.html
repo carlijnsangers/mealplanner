@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block main %}
-    <div class="from-group">
-        <span class="b">{{meal[0]}}</span>
+
+    {% for meal in meals %}
+    <div class="container">
+        <a href="/recipe?idr={{meal['id']}}" target="_blank">
+            <span class="b" > <img src="{{meal["image"]}}"> {{meal['title']}}</span>
+        </a>
     </div>
+    {% endfor %}
     <div>
 
     </div>

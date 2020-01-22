@@ -8,8 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-
-from helpers import get_meal
+from helpers import lookup, get_meal
 
 # Configure application
 app = Flask(__name__)
@@ -152,9 +151,9 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+        global diets
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
-        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         diet = request.form.get("diet")
 
 
@@ -162,13 +161,13 @@ def home():
             if request.form.get(intolerance) == "false":
                 intolerances.remove(intolerance)
 
-        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        meals = [{"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}]
         # for meal in range(5):
         #     query = random.choice(querys)
         #     meal =  get_meal(query, diet, intolerances)
         #     meals.append(meal)
 
-
+        print(len(meals))
         return render_template("menu.html", meals=meals)
     else:
         return render_template("home.html", diets=diets, intolerances=intolerances)
@@ -203,89 +202,18 @@ def profile():
 @app.route("/menu", methods=["GET", "POST"])
 
 def menu():
-    #return render_template("menu.html")
-    # totaal = hoeveelheid recepten
-    recepten = []
-    totaal = db.execute("SELECT COUNT(*) from recipe")
-
-    # genereert 5 willekeurige verschilende nummers
-    while len(recepten) < 5:
-        nummer = random.randint(1, totaal[0]['COUNT(*)'])
-        if nummer not in recepten:
-            recepten.append(nummer)
-
-    # zet de nummers om in recepten
-    week =[]
-    for recept in recepten:
-        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
-
     return render_template("menu.html")
 
 
 @app.route("/recipe", methods =["GET", "POST"])
 def recept():
-    if request.method == "POST":
-        idr= request.form.get("idr")
-        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
-        #print(recipe)
-        # link voor werkend bovenstaande https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another
 
-        ingr= recipe[0]['ingredients']
-        lijst = [[]]
-        i=0
-        volgende = False
-
-        # zet ingredient om in leesbare lijst
-        for woord in ingr:
-            if ";" in woord:
-                # woord.replace(';', "a")
-                # print(woord)
-                # lijst[i].append(woord)
-                volgende = True
-                lijst[i]= "".join(lijst[i])
-                i+=1
-            elif volgende == True:
-                lijst.append(list())
-                lijst[i].append(woord)
-                volgende= False
-            else:
-                lijst[i].append(woord)
-
-        if i < len(lijst):
-            lijst[i] = "".join(lijst[i])
-
-        recipe[0]['ingredients'] = lijst
-        return render_template("recipe.html", recipe = recipe[0])
-
-    elif request.method=="GET":
+    if request.method=="GET":
         idr = request.args.get("idr")
-        recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
-        if recipe:
-            ingr= recipe[0]['ingredients']
-            lijst = [[]]
-            i=0
-            volgende = False
 
-            # zet ingredient om in leesbare lijst
-            for woord in ingr:
-                if ";" in woord:
-                    volgende = True
-                    lijst[i]= "".join(lijst[i])
-                    i+=1
-                elif volgende == True:
-                    lijst.append(list())
-                    lijst[i].append(woord)
-                    volgende= False
-                else:
-                    lijst[i].append(woord)
+        recipe = lookup(idr)
 
-            if i < len(lijst):
-                lijst[i] = "".join(lijst[i])
-
-            recipe[0]['ingredients'] = lijst
-            return render_template("recipe.html", recipe = recipe[0])
-
-        return render_template("home.html")
+        return render_template("recipe.html", recipe=recipe)
 
     else:
         return render_template("home.html")

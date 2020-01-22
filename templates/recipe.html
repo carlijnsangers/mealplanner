@@ -6,13 +6,19 @@
 
 {% block main %}
     <img src="" alt="img recipe"> <br>
-    {{recipe.name}} <br><br>
+    <br>
     Ingredients: <br>
     <ul>
     {% for item in recipe.ingredients %}
-    <li> {{ item }}</li>
+    <li> {{ item.amount.metric.value }} {{item.amount.metric.unit}}  {{ item.name }}</li>
     {% endfor %}
     </ul>
     <br>
-    {{recipe.procedure}}
+    <ol>
+    {% for step in recipe.steps %}
+    <li>
+    {{ step.step }}
+    </li>
+    {% endfor %}
+    </ol>
 {% endblock %}
