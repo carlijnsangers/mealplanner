@@ -252,3 +252,9 @@ p.big {
     line-height: 3.0;
 }
 
+
+#preferences {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
