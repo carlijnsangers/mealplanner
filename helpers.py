@@ -2,6 +2,7 @@ import requests
 import urllib.parse
 import os
 import random
+import socket
 
 # link naar rapidapi met voorgeprogrammeerde functies
 # https://goo.gl/9XTKTZ
@@ -30,4 +31,9 @@ def lookup(idr):
         "ingredients": quote2["ingredients"]
     }
 
-print(lookup(214959))
+def get_Host_name_IP():
+    try:
+        host_ip = socket.gethostbyname(host_name)
+        return host_ip
+    except:
+        return
