@@ -8,7 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-from helpers import lookup, get_meal
+from helpers import lookup, get_meal, get_IP
 
 # Configure application
 app = Flask(__name__)
@@ -168,11 +168,11 @@ def home():
         #     meals.append(meal)
         for meal in meals:
             if "user_id" in session:
-                db.execute("INSERT INTO meal (meal_id, meal_name, meal_image, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], session["user_id"]))
+                db.execute("INSERT INTO meal (meal id, meal name, meal img, user id, user IP) VALUES (%s, %s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], session["user_id"], get_IP()))
             else:
-                db.execute("INSERT INTO meal (meal_id, meal_name, meal_image) VALUES (%s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"]))
+                db.execute("INSERT INTO meal (meal id, meal name, meal img, user IP) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], get_IP()))
 
 
         return render_template("menu.html", meals=meals)
