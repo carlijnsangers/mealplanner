@@ -5,8 +5,15 @@
 {% endblock %}
 
 {% block main %}
-    <div class="from-group">
-        <span class="b">{{meal[0]}}</span>
+    <div>
+        {% for meal in meals %}
+        <div class="container">
+            <img src="nature.jpg" alt="Norway" style="width:100%;">
+            <div class="text-block">
+                <h4>{{meal["title"]}}</h4>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     <div>
 
