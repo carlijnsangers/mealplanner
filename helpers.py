@@ -35,5 +35,3 @@ def get_IP():
         return host_ip
     except:
         return
-
-print(get_IP())
