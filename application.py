@@ -151,7 +151,7 @@ def home():
     if request.method == "POST":
 
         # Get all the checkboxvalues
-        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+        global diets
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
         #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
         diet = request.form.get("diet")
@@ -202,22 +202,6 @@ def profile():
 @app.route("/menu", methods=["GET", "POST"])
 
 def menu():
-    #return render_template("menu.html")
-    # totaal = hoeveelheid recepten
-    recepten = []
-    totaal = db.execute("SELECT COUNT(*) from recipe")
-
-    # genereert 5 willekeurige verschilende nummers
-    while len(recepten) < 5:
-        nummer = random.randint(1, totaal[0]['COUNT(*)'])
-        if nummer not in recepten:
-            recepten.append(nummer)
-
-    # zet de nummers om in recepten
-    week =[]
-    for recept in recepten:
-        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
-
     return render_template("menu.html")
 
 
