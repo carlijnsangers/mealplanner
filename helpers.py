@@ -23,11 +23,11 @@ def lookup(idr):
     ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
     # ingredienten met prijs V
     #  https://api.spoonacular.com/recipes/{(id)}/priceBreakdownWidget.json
-    quote = response.json()
+    quote1 = response.json()
+    quote2 = ingredients.json()
     return{
-        "id": quote["results"][0]["id"],
-
+        "steps": quote1[0]["steps"],
+        "ingredients": quote2["ingredients"]
     }
 
-    print(response, ingredients)
-    return {}
+print(lookup(214959))
