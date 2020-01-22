@@ -166,8 +166,15 @@ def home():
         #     query = random.choice(querys)
         #     meal =  get_meal(query, diet, intolerances)
         #     meals.append(meal)
+        for meal in meals:
+            if "user_id" in session:
+                db.execute("INSERT INTO meal (meal_id, meal_name, meal_image, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], session["user_id"]))
+            else:
+                db.execute("INSERT INTO meal (meal_id, meal_name, meal_image) VALUES (%s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"]))
 
-        print(len(meals))
+
         return render_template("menu.html", meals=meals)
     else:
         return render_template("home.html", diets=diets, intolerances=intolerances)
@@ -229,7 +236,7 @@ def recept():
 
         recipe = lookup(idr)
 
-        return render_template("recipe.html", recipe=recipe)
+        return render_template("recipe.html", recipe=recipe, meals=meals)
 
     else:
         return render_template("home.html")
