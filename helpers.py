@@ -30,6 +30,7 @@ def lookup(idr):
 
 def get_IP():
     try:
+        host_name = socket.gethostname()
         host_ip = socket.gethostbyname(host_name)
         return host_ip
     except:
