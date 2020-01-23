@@ -114,11 +114,13 @@ def register():
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         #print(len(rows))
         if len(rows) >= 1:
-            return "error"  #apology("username is already taken", 400)
+            return flash("Username is already taken")  #apology("username is already taken", 400)
 
         # Puts username(UN) and password(PW) in database
         else:
             PW = generate_password_hash(request.form.get("password"))
+
+
             db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
 
             #Remember which user has logged in
