@@ -127,7 +127,7 @@ def register():
 
             check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
             if len(check) == 1:
-                db.execute("UPDATE meals SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
+                db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
             print(session["user_id"])
 
         flash('Registered')
