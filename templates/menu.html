@@ -14,9 +14,14 @@
         <a href="/recipe?id={{meal['id']}}" target="_blank">
             <span class="b" >
                 <img src="{{meal["img"]}}">
-                {{meal['title']}}
+                <main>
+                    {{meal['title']}}
+                </main>
+
                 <footer>
                     <form action="/reroll" method="post">
+                        <button type="button" class="btn btn-primary btn-sm">reroll</button>
+                    </form>
                 </footer>
             </span>
 
