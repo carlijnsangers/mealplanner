@@ -8,7 +8,11 @@
     <img src="{{data[0].image}}" alt="image recipe"> <br>
     <h4>
         {{data[0].title}} <button type="button" class="btn btn-primary btn-sm" onclick="share()"> Share </button>
-        <button type="button" class="btn btn-primary btn=sm" > Favorite</button>
+        <form action="/favorite" method="post">
+            <div class="form=group">
+                <button type="button" class="btn btn-primary btn=sm" name="idr" value="{{idr}}"> Favorite</button>
+            </div>
+        </form>
 
     </h4>
     <br>
@@ -29,7 +33,7 @@
 
 <script>
     function share() {
-        alert(window.location.href + id );
+        alert(window.location.href);
     }
 </script>
 {% endblock %}
