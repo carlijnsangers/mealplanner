@@ -191,7 +191,7 @@ def home():
         meals = []
         for meal in range(5):
             meal = str(meal)
-            while meal == None or len(meal) <= 1:
+            while meal == None or len(meal) <= 1 or meal in meals:
                 query = random.choice(querys)
                 meal =  get_meal(query, diet, allergie)
             meals.append(meal)
