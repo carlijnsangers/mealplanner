@@ -11,17 +11,24 @@
     </h1>
     {% for meal in meals %}
     <div class="container form-ac">
-        <a href="/recipe?id={{meal['id']}}" target="_blank">
+
             <span class="b" >
+        <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
                     <img src="{{meal["img"]}}">
                     {{meal['title']}}
                 </main>
-
+        </a>
                 <footer>
                     <form action="/reroll" method="post">
                         <button type="button" class="btn btn-primary btn-sm">&#8634;</button>
                     </form>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="share()">Share</button>
+                        <script>
+                        function share() {
+                        alert(window.location.hostname + "/recipe?id={{meal['id']}}" );
+                        }
+                        </script>
                 </footer>
             </span>
 
