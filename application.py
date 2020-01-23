@@ -245,25 +245,6 @@ def profile():
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
-
-    #return render_template("menu.html")
-    # totaal = hoeveelheid recepten
-    recepten = []
-    totaal = db.execute("SELECT COUNT(*) from recipe")
-
-    # genereert 5 willekeurige verschilende nummers
-    while len(recepten) < 5:
-        nummer = random.randint(1, totaal[0]['COUNT(*)'])
-        if nummer not in recepten:
-            recepten.append(nummer)
-
-    # zet de nummers om in recepten
-    week =[]
-    for recept in recepten:
-        week.append(db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=recept))
-
-    return render_template("menu.html")
-
     if "user_id" in session:
         meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
     else:
