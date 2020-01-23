@@ -189,14 +189,14 @@ def home():
         allergie = ",".join(allergie)
 
 
-        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","img":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","img":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","img":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","img":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
         # for meal in range(5):
         #     query = random.choice(querys)
         #     meal =  get_meal(query, diet, intolerances)
         #     meals.append(meal)
         for meal in meals:
-                db.execute("INSERT INTO meal (id, title, img, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["img"], user_id))
+                db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
 
         return redirect("/menu")
 
@@ -233,9 +233,9 @@ def profile():
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     if "user_id" in session:
-        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
+        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
     else:
-        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
+        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
     print(meals)
     return render_template("menu.html", meals=meals)
 
@@ -247,7 +247,7 @@ def recept():
         idr = request.args.get("id")
 
         recipe = lookup(idr)
-        data = db.execute("SELECT img, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
+        data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
         print(data)
         return render_template("recipe.html", recipe=recipe, data=data, idr=idr)
 
@@ -264,7 +264,7 @@ def favorite():
         db.execute("DELETE * FROM favorites WHRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     else:
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
-        db.execute("INSERT INTO favorites (user_id, idr, img, title) VALUES (:user_id, :idr, :image, :title)",
+        db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 

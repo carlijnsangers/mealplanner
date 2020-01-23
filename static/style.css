@@ -294,7 +294,9 @@ p.big {
 .rating {
     position: absolute;
     display: flex;
-    transform: translate(-50%, -50%) rotateY(180deg);
+    transform: translate(6%, 6%) rotateY(180deg);
+    margin-top: 0;
+
 
 }
 
@@ -323,7 +325,7 @@ p.big {
     position: absolute;
     display: block;
     font-size: 100%;
-    color: #1f9cff;
+    color: #ffa500;
     top: 0;
     opacity: 1;
     transition: .5s;
