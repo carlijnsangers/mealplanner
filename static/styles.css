@@ -142,12 +142,17 @@ span.b {
     background-color:rgba(46,139,87);
     color: black;
 }
-main:hover {
+.b:hover {
     text-decoration: underline;
 }
-
-footer {
-    float: right;
-    margin: 3%;
+span.b a:link{
+    color:black;
+}
+span.b a:visited{
+    color:black;
 }
 
+.a {
+    float:right;
+    margin:2%;
+}

@@ -13,13 +13,15 @@
         Week menu
     </h1>
     {% for meal in meals %}
-    <div class="container form-ac">
-        <a href="/recipe?id={{meal['id']}}" target="_blank">
+    <div class="container">
+
             <span class="b" >
+        <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
-                    <img src="{{meal["img"]}}">
+                    <img src="{{meal["image"]}}">
                     {{meal['title']}}
                 </main>
+
 
                 <footer>
                     <div class="rating">
@@ -29,14 +31,26 @@
                         <input type="radio" name="star" id="star4"><label for="star4"></label>
                         <input type="radio" name="star" id="star5"><label for="star5"></label>
                     </div>
-                    <form action="/reroll" method="post">
-                        <button type="button" class="btn btn-primary btn-sm">&#8634;</button>
-                    </form>
-                </footer>
-            </span>
 
         </a>
+                <div class="a">
 
+                    <form action="/reroll" method="post">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}">&#8634;</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="a">
+                    <button type="button" class="btn btn-primary btn-sm" style="background-color:red;" onclick="share()">Share</button>
+                        <script>
+                        function share() {
+                            var id = "/recipe?id={{meal['id']}}"
+                        alert(window.location.hostname + id );
+                        }
+                        </script>
+                </div>
+            </span>
     </div>
     {% endfor %}
     <div>
