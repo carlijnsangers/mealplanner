@@ -220,7 +220,6 @@ def profile():
 
 
 @app.route("/menu", methods=["GET", "POST"])
-
 def menu():
     if "user_id" in session:
         meals = db.execute("SELECT img, title FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
