@@ -161,10 +161,10 @@ div align {
 
 .box {
     width: 30%;
-    padding: 4%;
+    padding: 5%;
     position: absolute;
     top: 20%;
-    left: 5%;
+    left: 35%;
     transform: translate(-5%, -5%);
     background: url('https://img.pixers.pics/pho_wat(s3:700/FO/89/74/54/64/700_FO89745464_fd47a8365f906039e4f6aa271c575a3c.jpg,700,537,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,487,jpg)/fotobehang-close-up-komkommer-segment-achtergrond-textuur.jpg.jpg');
     text-align: center;
@@ -191,7 +191,7 @@ div align {
 .box input[type="submit"]{
     border: 0;
     border-radius: 25%;
-    background: none;
+    background: white;
     display: block;
     margin: 2% auto;
     text-align: center;
@@ -209,23 +209,19 @@ div align {
 
 .box2 {
     width: 30%;
-    padding: 5%;
+    padding: 2%;
     position: absolute;
     top: 20%;
-    left: 60%;
+    right: 35%;
     transform: translate(-5%, -5%);
     background: url('https://img.pixers.pics/pho_wat(s3:700/FO/89/74/54/64/700_FO89745464_fd47a8365f906039e4f6aa271c575a3c.jpg,700,537,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,480,487,jpg)/fotobehang-close-up-komkommer-segment-achtergrond-textuur.jpg.jpg') no-repeat;
     text-align: center;
-    float: right;
-
-
-
 }
 
 .box2 input[type="text"],.box2 input[type="password"],.box2 input[type="repeat password"]{
     border: 0;
     border-radius: 25%;
-    background: none;
+    background: white;
     display: block;
     margin: 2% auto;
     text-align: center;
