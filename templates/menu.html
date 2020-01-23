@@ -9,7 +9,7 @@
     {% for meal in meals %}
     <div class="container">
         <a href="/recipe?idr={{meal['id']}}" target="_blank">
-            <span class="b" > <img src="{{meal["image"]}}"> {{meal['title']}}</span>
+            <span class="b" > <img src="{{meal["img"]}}"> {{meal['title']}}</span>
         </a>
     </div>
     {% endfor %}

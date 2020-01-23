@@ -150,6 +150,14 @@ def home():
 
     if request.method == "POST":
 
+        if "user_id" in session:
+            user_id = session["user_id"]
+        else:
+            user_id = get_IP()
+
+        # Delete the old recipes
+        db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
+
         # Get all the checkboxvalues
         global diets
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "macaroni"]
@@ -160,7 +168,6 @@ def home():
         elif diet == 'pescatarian':
             querys = ["pasta", "salad", "salmon", "potatoes", "rice", "macaroni"]
 
-        print(querys)
 
         allergie =[]
         for intolerance in intolerances:
@@ -176,16 +183,10 @@ def home():
             meals.append(meal)
 
         for meal in meals:
-            print(meal["id"])
-            if "user_id" in session:
-                db.execute("INSERT INTO meal (idr, title, img, user_id, user_IP) VALUES (%s, %s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], session["user_id"], get_IP()))
-            else:
-                db.execute("INSERT INTO meal (idr, title, img, user_IP) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], get_IP()))
+                db.execute("INSERT INTO meal (idr, title, img, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
 
-
-        return render_template("menu.html", meals=meals)
+        return redirect("/menu")
     else:
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
@@ -219,7 +220,12 @@ def profile():
 @app.route("/menu", methods=["GET", "POST"])
 
 def menu():
-    return render_template("menu.html")
+    if "user_id" in session:
+        meals = db.execute("SELECT img, title FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
+    else:
+        meals = db.execute("SELECT img, title FROM meal WHERE user_id=:user_id", user_id = get_IP())
+    print(meals)
+    return render_template("menu.html", meals=meals)
 
 
 @app.route("/recipe", methods =["GET", "POST"])
