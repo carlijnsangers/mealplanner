@@ -183,8 +183,10 @@ def home():
             meals.append(meal)
 
         for meal in meals:
-                db.execute("INSERT INTO meal (idr, title, img, user_id) VALUES (%s, %s, %s, %s)",
+                db.execute("INSERT INTO meal (id, title, img, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
+
+
 
         return redirect("/menu")
     else:
@@ -221,9 +223,9 @@ def profile():
 
 def menu():
     if "user_id" in session:
-        meals = db.execute("SELECT img, title FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
+        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
     else:
-        meals = db.execute("SELECT img, title FROM meal WHERE user_id=:user_id", user_id = get_IP())
+        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
     print(meals)
     return render_template("menu.html", meals=meals)
 
@@ -232,10 +234,10 @@ def menu():
 def recept():
 
     if request.method=="GET":
-        idr = request.args.get("idr")
+        idr = request.args.get("id")
 
         recipe = lookup(idr)
-        data = db.execute("SELECT img, title FROM meal WHERE idr = :idr LIMIT 1", idr=idr)
+        data = db.execute("SELECT img, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
         print(data)
         return render_template("recipe.html", recipe=recipe, data=data)
 
