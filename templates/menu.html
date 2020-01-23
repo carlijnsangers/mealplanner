@@ -7,10 +7,12 @@
 {% block main %}
 
     {% for meal in meals %}
-    <div class="container">
-        <a href="/recipe?idr={{meal['id']}}" target="_blank">
+
+    <div class="container form-ac">
+        <a href="/recipe?id={{meal['id']}}" target="_blank">
             <span class="b" > <img src="{{meal["img"]}}"> {{meal['title']}}</span>
         </a>
+
     </div>
     {% endfor %}
     <div>
