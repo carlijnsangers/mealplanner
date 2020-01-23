@@ -11,7 +11,7 @@ key = "1fa0943622124891a2991ba8f9a89e9c"
 
 
 def get_meal(query, diet, intolerances):
-    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
+    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=1fa0943622124891a2991ba8f9a89e9c")
     quote = response.json()
     if len(quote['results']) >1:
         number = random.randint(1, len(quote['results'])) -1
@@ -31,8 +31,8 @@ def get_meal(query, diet, intolerances):
 
 
 def lookup(idr):
-    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
-    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=1fa0943622124891a2991ba8f9a89e9c")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=1fa0943622124891a2991ba8f9a89e9c")
     quote1 = response.json()
     quote2 = ingredients.json()
     return{
