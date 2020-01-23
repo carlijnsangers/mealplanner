@@ -239,6 +239,13 @@ def menu():
     print(meals)
     return render_template("menu.html", meals=meals)
 
+@app.route("/reroll", methods =["GET", "POST"])
+def reroll():
+    idr = request.form.get("reroll")
+    print(idr)
+
+
+
 
 
 @app.route("/recipe", methods =["GET", "POST"])
