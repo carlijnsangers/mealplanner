@@ -18,11 +18,11 @@
                     {{meal['title']}}
                 </main>
 
-                <footer>
-                    <form action="/reroll" method="post">
-                        <button type="button" class="btn btn-primary btn-sm">&#8634;</button>
+                <div class ="a">
+                    <form action="/reroll" method="post" >
+                            <button type="button" class="btn btn-primary btn-sm" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" title="Hooray!">&#8634;</button>
                     </form>
-                </footer>
+                </div>
             </span>
 
         </a>
