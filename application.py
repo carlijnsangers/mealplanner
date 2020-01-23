@@ -9,7 +9,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
 
+
 from helpers import get_meal
+
+from helpers import lookup, get_meal, get_IP
+
 
 # Configure application
 app = Flask(__name__)
@@ -115,7 +119,7 @@ def register():
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         #print(len(rows))
         if len(rows) >= 1:
-            return "error"  #apology("username is already taken", 400)
+            return flash("Username is already taken")  #apology("username is already taken", 400)
 
         # Puts username(UN) and password(PW) in database
         else:
@@ -125,6 +129,10 @@ def register():
             #Remember which user has logged in
             session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
                           username=request.form.get("username"))[0]['id']
+
+            check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
+            if len(check) == 1:
+                db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
             print(session["user_id"])
 
         flash('Registered')
@@ -151,16 +159,44 @@ def home():
 
     if request.method == "POST":
 
+        if "user_id" in session:
+            user_id = session["user_id"]
+        else:
+            user_id = get_IP()
+
+        # Delete the old recipes
+        db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
+
         # Get all the checkboxvalues
+
         diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
         intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+
+        global diets
+        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "macaroni"]
+        #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+
         diet = request.form.get("diet")
+        if diet == "vegan" or diet == "vegetarian":
+            querys = ["pasta", "salad", "potatoes", "rice", "macaroni"]
+        elif diet == 'pescatarian':
+            querys = ["pasta", "salad", "salmon", "potatoes", "rice", "macaroni"]
 
 
+        allergie =[]
         for intolerance in intolerances:
-            if request.form.get(intolerance) == "false":
-                intolerances.remove(intolerance)
+            if request.form.get(intolerance) == "true":
+                allergie.append(intolerance)
+        allergie = ",".join(allergie)
+
+        # meals = [{"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}]
+        meals = []
+        for meal in range(5):
+            query = random.choice(querys)
+            meal =  get_meal(query, diet, allergie)
+            meals.append(meal)
+
 
         meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
         # for meal in range(5):
@@ -170,6 +206,15 @@ def home():
 
 
         return render_template("menu.html", meals=meals)
+
+        for meal in meals:
+                db.execute("INSERT INTO meal (id, title, img, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
+
+
+
+        return redirect("/menu")
+
     else:
         return render_template("home.html",diets=diets, intolerances=intolerances)
 
@@ -201,8 +246,8 @@ def profile():
 
 
 @app.route("/menu", methods=["GET", "POST"])
-
 def menu():
+
     #return render_template("menu.html")
     # totaal = hoeveelheid recepten
     recepten = []
@@ -221,9 +266,18 @@ def menu():
 
     return render_template("menu.html")
 
+    if "user_id" in session:
+        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
+    else:
+        meals = db.execute("SELECT img, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
+    print(meals)
+    return render_template("menu.html", meals=meals)
+
+
 
 @app.route("/recipe", methods =["GET", "POST"])
 def recept():
+
     if request.method == "POST":
         idr= request.form.get("idr")
         recipe = db.execute("SELECT * FROM recipe WHERE idr=:idr", idr=idr)
@@ -286,6 +340,15 @@ def recept():
             return render_template("recipe.html", recipe = recipe[0])
 
         return render_template("home.html")
+
+    if request.method=="GET":
+        idr = request.args.get("id")
+
+        recipe = lookup(idr)
+        data = db.execute("SELECT img, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
+        print(data)
+        return render_template("recipe.html", recipe=recipe, data=data)
+
 
     else:
         return render_template("home.html")
