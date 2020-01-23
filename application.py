@@ -256,11 +256,24 @@ def recept():
         recipe = lookup(idr)
         data = db.execute("SELECT img, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
         print(data)
-        return render_template("recipe.html", recipe=recipe, data=data)
-
+        return render_template("recipe.html", recipe=recipe, data=data, idr=idr)
 
     else:
         return render_template("home.html")
+
+
+@app.route("/favorite", methods= ["POST"])
+def favorite():
+    idr = request.form.get("idr")
+    print(idr)
+    check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+    if check:
+        db.execute("DELETE * FROM favorites WHRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+    else:
+        data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
+        db.execute("INSERT INTO favorites (user_id, idr, img, title) VALUES (:user_id, :idr, :image, :title)",
+                user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
+    return
 
 def preferences():
     global intolerances
