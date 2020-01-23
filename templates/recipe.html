@@ -7,7 +7,9 @@
 {% block main %}
     <img src="{{data[0].image}}" alt="image recipe"> <br>
     <h4>
-        {{data[0].title}}
+        {{data[0].title}} <button type="button" class="btn btn-primary btn-sm" onclick="share()"> Share </button>
+        <button type="button" class="btn btn-primary btn=sm" > Favorite</button>
+
     </h4>
     <br>
     Ingredients: <br>
@@ -24,4 +26,10 @@
     </li>
     {% endfor %}
     </ol>
+
+<script>
+    function share() {
+        alert(window.location.href + id );
+    }
+</script>
 {% endblock %}

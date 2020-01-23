@@ -145,6 +145,12 @@ span.b {
 .b:hover {
     text-decoration: underline;
 }
+span.b a:link{
+    color:black;
+}
+span.b a:visited{
+    color:black;
+}
 
 .a {
     float:right;
