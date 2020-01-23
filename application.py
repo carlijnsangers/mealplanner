@@ -149,6 +149,7 @@ def register():
 #global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice"]
 
 
 # geeft homepage weer
@@ -169,11 +170,8 @@ def home():
 
         # Get all the checkboxvalues
         global diets
-        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
-        intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
-
-        querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "macaroni"]
-        #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
+        global querys
+        global intolerances
 
         diet = request.form.get("diet")
         if diet == "vegan" or diet == "vegetarian":
@@ -189,11 +187,13 @@ def home():
         allergie = ",".join(allergie)
 
 
-        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
-        # for meal in range(5):
-        #     query = random.choice(querys)
-        #     meal =  get_meal(query, diet, intolerances)
-        #     meals.append(meal)
+        # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        meals = []
+        for meal in range(5):
+            query = random.choice(querys)
+            meal =  get_meal(query, diet, allergie)
+            meals.append(meal)
+
         for meal in meals:
                 db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
@@ -261,13 +261,33 @@ def favorite():
     print(idr)
     check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     if check:
-        db.execute("DELETE * FROM favorites WHRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+        db.execute("DELETE FROM favorites WHeRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     else:
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
         print("hi")
     return redirect("/recipe?id=" + idr)
+
+@app.route("/reroll", methods =["GET", "POST"])
+def reroll():
+    global diets
+    global intolerances
+    global querys
+
+    if "user_id" in session:
+        user_id = session["user_id"]
+    else:
+        user_id = get_IP()
+
+    idr = request.form.get("reroll")
+    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
+    query = random.choice(querys)
+    meal =  get_meal(query, None, None)
+    print(meal)
+    db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
+    return redirect("/menu")
 
 def preferences():
     global intolerances
