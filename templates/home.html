@@ -22,8 +22,8 @@
 
         <p style="color:white">A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste and budget. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. It is an option to make a personal page where you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
         </p>
-      </div>
 
+  <font color="white">
     <form action="/home" method="post">
         {% for query in querys %}
            <div class="checkbox1" name="nuts">
@@ -39,8 +39,9 @@
           <div class="checkbox1">
               <label><input type="checkbox" name ="{{intolerance}}" value="true"> {{ intolerance}} </label>
           </div>
-          {% endfor %}
 
+          {% endfor %}
+  </font>
         <!--
           <div class="checkbox1">
             <label><input type="checkbox" name="tree nut" value="true"> Tree nuts</label>
@@ -132,8 +133,7 @@
         </div>
         </form>
         </span>
-
-
+</div>
 </body>
 
 
