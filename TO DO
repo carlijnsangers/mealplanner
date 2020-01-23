@@ -1,6 +1,7 @@
 reviews/beoordeling functie bij recept
 profielpagina opmaak
-recepten opslaan
-error in helpers
+
 Share in menu fixen; geeft nu steeds laatste id
-fix favorites
+Test favorites script
+Test of 0 results nog error geeft
+Test get_meal voor errors
