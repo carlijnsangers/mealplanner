@@ -284,9 +284,10 @@ def favorite():
         db.execute("DELETE * FROM favorites WHRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     else:
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
-        db.execute("INSERT INTO favorites (user_id, idr, img, title) VALUES (:user_id, :idr, :image, :title)",
+        db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
-    return
+        print("hi")
+    return redirect("/recipe?id=" + idr)
 
 def preferences():
     global intolerances
