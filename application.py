@@ -140,7 +140,7 @@ def register():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("home.html")
+        return render_template("register.html")
 
 ####################################################
 # Nieuwe programma's
@@ -168,12 +168,10 @@ def home():
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the checkboxvalues
-
-        diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
+        global diets
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "union"]
         intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 
-        global diets
         querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "macaroni"]
         #intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 
