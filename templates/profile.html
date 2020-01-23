@@ -29,9 +29,20 @@
           </div>
       </div>
 
-
-      <div class="preferences"></div>
       <button id="preferences">Change preferences</button>
+      <button id="save">Save preferences</button>
+      <h6 id="allergies"> Allergies: </h6>
+      <font color = "black">
+              <checkboxes>
+                <p><h6 id="diet"><font color="black">
+                  Diet:
+                </font></h6></p>
+
+              <select name="diet" id="diet2">
+                  {% for diet in diets %}
+                  <option value="{{diet}}" name="diet">{{diet}} </option>
+                  {% endfor %}
+              </select>
 
 </body>
 
