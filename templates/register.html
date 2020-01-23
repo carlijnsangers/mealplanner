@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+<link href="/static/style.css" rel="stylesheet">
+  <form class ="box2" action="/register" method="post">
+      <p class="big"><h2>Register Now!</h2><br>
+      <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"><br>
+      <input class="form-control" name="password" placeholder="Password" type="password"><br>
+      <input class="form-control" name="confirmation" placeholder="Repeat Password" type="password"><br>
+      <button class="btn btn-primary" type="submit">Register</button><br>
+      </p>
+
+
+{% endblock %}
