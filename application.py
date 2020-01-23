@@ -188,13 +188,6 @@ def home():
                 allergie.append(intolerance)
         allergie = ",".join(allergie)
 
-        # meals = [{"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}]
-        meals = []
-        for meal in range(5):
-            query = random.choice(querys)
-            meal =  get_meal(query, diet, allergie)
-            meals.append(meal)
-
 
         meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","img":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","img":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","img":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","img":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
         # for meal in range(5):
@@ -203,7 +196,7 @@ def home():
         #     meals.append(meal)
         for meal in meals:
                 db.execute("INSERT INTO meal (id, title, img, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], user_id))
+                                            (meal["id"], meal["title"], meal["img"], user_id))
 
         return redirect("/menu")
 
