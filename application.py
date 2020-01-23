@@ -266,7 +266,8 @@ def favorite():
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
-    return
+        print("hi")
+    return redirect("/recipe?id=" + idr)
 
 def preferences():
     global intolerances
