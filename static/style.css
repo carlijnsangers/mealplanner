@@ -75,23 +75,31 @@ td, tr
     position:fixed;
     top:82.5px;
     z-index:-1;
+    background: url('https://www.thespruceeats.com/thmb/nn_bwtTNkqXE7qIDyPyIZoHjg1E=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
 }
 
 .links{
-    background-color:red;
+    border: 1px solid #000;
+    padding: 1px;
     left:0;
     width:25%;
 
 }
 
 .midden{
-    background-color:white;
+    border: 1px solid #000;
+    padding: 1px;
     left:25%;
     width:37.5%;
 }
 
 .rechts{
-    background-color:blue;
+    border: 1px solid #000;
+    padding: 1px;
     right:0;
     width:37.5%;
 }
@@ -120,7 +128,11 @@ body.home {
 }
 
 body.profile {
-    background: #eadefa;
+    background: url('https://www.thespruceeats.com/thmb/nn_bwtTNkqXE7qIDyPyIZoHjg1E=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
 }
 
 .saverec {
