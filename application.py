@@ -1,5 +1,4 @@
 import os
-
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -8,7 +7,6 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-
 
 from helpers import get_meal
 
@@ -54,12 +52,12 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash("Please enter username", category='danger')
             return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("Please enter password")
+            flash("Please enter username", category='danger')
             return render_template("login.html")
 
         # Query database for username
@@ -68,7 +66,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Username not found")
+            flash("Username not found", category='danger')
             return render_template("login.html")
 
         # Remember which user has logged in
@@ -76,7 +74,7 @@ def login():
         print(session["user_id"])
 
         # Redirect user to home page
-        flash('Logged in')
+        flash('Logged in', category='succes')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -106,20 +104,23 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            return #apology("must provide username", 400)
+            flash("Please enter username", category='danger')
+            return render_template("register.html")
         elif not request.form.get("password"):
-            return #apology("must provide password", 400)
+            flash("Please enter password", category='danger')
+            return render_template("register.html")
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            return #apology("passwords do not match", 400)
+            flash("passwords do not match", category='danger')
+            return render_template("register.html")
 
         # Checks if username is not taken
         username = request.form.get("username")
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
-        #print(len(rows))
         if len(rows) >= 1:
-            return flash("Username is already taken")  #apology("username is already taken", 400)
+            flash("Username is already taken", category='danger')
+            return render_template("register.html")
 
         # Puts username(UN) and password(PW) in database
         else:
@@ -135,7 +136,7 @@ def register():
                 db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
             print(session["user_id"])
 
-        flash('Registered')
+        flash('Registered', category='succes')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -228,8 +229,6 @@ def profile():
 
 
 
-
-
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     if "user_id" in session:
@@ -266,7 +265,6 @@ def favorite():
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
-        print("hi")
     return redirect("/recipe?id=" + idr)
 
 @app.route("/reroll", methods =["GET", "POST"])
