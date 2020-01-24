@@ -291,49 +291,17 @@ p.big {
     margin-top: 14%;
 }
 
-.rating {
-    position: absolute;
-    display: flex;
-    transform: translate(6%, 6%) rotateY(180deg);
-    margin-top: 0;
-
-
+body.recipe {
+    background: url('https://www.thespruceeats.com/thmb/nn_bwtTNkqXE7qIDyPyIZoHjg1E=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover
 }
 
-.rating input {
-    display: none;
-}
-
-.rating label {
-    display: block;
-    cursor: pointer;
-    width: 30%;
-}
-
-.rating label:before {
-    content: '\f005';
-    font-family: fontAwesome;
-    position: relative;
-    display: block;
-    font-size: 100%;
-    color: #101010;
-}
-
-.rating label:after {
-    content: '\f005';
-    font-family: fontAwesome;
-    position: absolute;
-    display: block;
-    font-size: 100%;
-    color: #ffa500;
-    top: 0;
-    opacity: 1;
-    transition: .5s;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
-}
-
-.rating label: hover: after,
-.rating label: hover ~ label: after,
-.rating input: checked ~ label: after{
-    opacity: 1;
+#homebutton {
+    border-radius: 30%;
+    font-size: 300%;
+    margin-top: 4%;
+    background-color: blue;
 }
