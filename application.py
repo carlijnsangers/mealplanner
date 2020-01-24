@@ -258,6 +258,15 @@ def recept():
 
 @app.route("/favorite", methods= ["POST"])
 def favorite():
+    print("HELLO")
+    idr = 1
+    data = "a"
+    # Hoe haal je de data van een js post op?
+    if idr in data:
+        idr=idr+1
+    return "200"
+
+
     idr = request.form.get("idr")
     print(idr)
     check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
