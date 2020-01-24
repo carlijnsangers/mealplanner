@@ -14,15 +14,12 @@
     </h1>
     {% for meal in meals %}
     <div class="container">
-
-            <span class="b" >
-        <a href="/recipe?id={{meal['id']}}" target="_blank">
+        <span class="b" >
+            <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
                     <img src="{{meal["image"]}}">
                     {{meal['title']}}
                 </main>
-
-
                 <footer>
                     <div class="rating">
                         <input type="radio" name="star" id="star"><label for="star"></label>
@@ -31,31 +28,26 @@
                         <input type="radio" name="star" id="star4"><label for="star4"></label>
                         <input type="radio" name="star" id="star5"><label for="star5"></label>
                     </div>
-
-        </a>
-                <div class="a">
-
-                    <form action="/reroll" method="post">
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}">&#8634;</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="a">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="share()">
-                            <img src="/static/share.png" alt="share" height=16px width=16px></button>
+            </a>
+            <div class="a">
+                <form action="/reroll" method="post">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}">&#8634;</button>
+                    </div>
+                </form>
+            </div>
+            <div class="a">
+                <button type="button" class="btn btn-primary btn-sm" id="{{meal['id']}}" onclick="share(this.id)">
+                    <img src="/static/share.png" alt="share" height=16px width=16px ></button>
                         <script>
-                        function share() {
-                            var id = "/recipe?id={{meal['id']}}"
-                        alert(window.location.hostname + id );
-                        }
+                            function share(clicked) {
+                                var id = clicked;
+                                var url = "/recipe?id=";
+                                alert(window.location.hostname + url + id );
+                            }
                         </script>
-                </div>
-            </span>
+            </div>
+        </span>
     </div>
     {% endfor %}
-    <div>
-
-
-
 {% endblock %}
