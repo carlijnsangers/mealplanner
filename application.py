@@ -215,8 +215,6 @@ def profile():
     else:
         return render_template("profile.html")
 
-
-
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     if "user_id" in session:
