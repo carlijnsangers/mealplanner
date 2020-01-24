@@ -12,21 +12,21 @@ key = "1fa0943622124891a2991ba8f9a89e9c"
 
 def get_meal(query, diet, intolerances):
     response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=1fa0943622124891a2991ba8f9a89e9c")
-    quote = response.json()
-    if "results" in quote:
-        if len(quote['results']) >1:
-            number = random.randint(1, len(quote['results'])) -1
+    meal = response.json()
+    if "results" in meal:
+        if len(meal['results']) >1:
+            number = random.randint(1, len(meal['results'])) -1
         else:
             number = 0
-        print(quote, len(quote['results']), number)
-        if len(quote['results']) == 0:
+        print(meal, len(meal['results']), meal)
+        if len(meal['results']) == 0:
             print("error")
             return
         return {
-            "id": quote["results"][number]["id"],
-            "meal": quote["results"][number]["title"],
-            "image": quote["results"][number]["image"],
-            "title": quote["results"][number]["title"]
+            "id": meal["results"][number]["id"],
+            "meal": meal["results"][number]["title"],
+            "image": meal["results"][number]["image"],
+            "title": meal["results"][number]["title"]
         }
     return
 
@@ -34,11 +34,11 @@ def get_meal(query, diet, intolerances):
 def lookup(idr):
     response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=1fa0943622124891a2991ba8f9a89e9c")
     ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=1fa0943622124891a2991ba8f9a89e9c")
-    quote1 = response.json()
-    quote2 = ingredients.json()
+    rep = response.json()
+    ing = ingredients.json()
     return{
-        "steps": quote1[0]["steps"],
-        "ingredients": quote2["ingredients"]
+        "steps": rep[0]["steps"],
+        "ingredients": ing["ingredients"]
     }
 
 def get_IP():

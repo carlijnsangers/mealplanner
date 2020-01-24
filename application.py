@@ -52,12 +52,12 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("Please enter username", category='danger')
+            flash("Please enter username")
             return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("Please enter username", category='danger')
+            flash("Please enter password")
             return render_template("login.html")
 
         # Query database for username
@@ -66,7 +66,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Username not found", category='danger')
+            flash("Invalid password")
             return render_template("login.html")
 
         # Remember which user has logged in
@@ -104,22 +104,22 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            flash("Please enter username", category='danger')
+            flash("Please enter username")
             return render_template("register.html")
         elif not request.form.get("password"):
-            flash("Please enter password", category='danger')
+            flash("Please enter password")
             return render_template("register.html")
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            flash("passwords do not match", category='danger')
+            flash("passwords do not match")
             return render_template("register.html")
 
         # Checks if username is not taken
         username = request.form.get("username")
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         if len(rows) >= 1:
-            flash("Username is already taken", category='danger')
+            flash("Username is already taken")
             return render_template("register.html")
 
         # Puts username(UN) and password(PW) in database
@@ -136,7 +136,7 @@ def register():
                 db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
             print(session["user_id"])
 
-        flash('Registered', category='succes')
+        flash('Registered')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -150,7 +150,7 @@ def register():
 #global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice"]
+querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto"]
 
 
 # geeft homepage weer
@@ -262,7 +262,7 @@ def favorite():
     print(idr)
     check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     if check:
-        db.execute("DELETE FROM favorites WHeRE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+        db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
     else:
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
