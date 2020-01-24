@@ -74,7 +74,7 @@ def login():
         print(session["user_id"])
 
         # Redirect user to home page
-        flash('Logged in')
+
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
