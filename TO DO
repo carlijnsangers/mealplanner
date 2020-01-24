@@ -5,8 +5,7 @@ change quote
 Test of 0 results nog error geeft
 Test get_meal voor errors
 
-fix reroll delay
 stylesheet fixen
-
+Reroll disabled zichzelf nu en de pagina refresh zet de knop weer normaal. Nog testen met api key
 
 /favorite vraag hoe je data uit een js post haalt
