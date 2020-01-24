@@ -5,37 +5,45 @@
 {% endblock %}
 
 {% block main %}
-    <img src="{{data[0].image}}" alt="image recipe"> <br>
-    <h4>
-        {{data[0].title}} <button type="button" class="btn btn-primary btn-sm" onclick="share()"> Share </button>
-        {% if session.user_id %}
-        <form action="/favorite" method="post">
-            <div class="form=group">
-                <button type="submit" class="btn btn-primary btn=sm" name="idr" value="{{idr}}"> Favorite</button>
-            </div>
-        </form>
-        {% endif %}
 
-    </h4>
-    <br>
-    Ingredients: <br>
-    <ul>
-    {% for item in recipe.ingredients %}
-    <li> {{ item.amount.metric.value }} {{item.amount.metric.unit}}  {{ item.name }}</li>
-    {% endfor %}
-    </ul>
-    <br>
-    <ol>
-    {% for step in recipe.steps %}
-    <li>
-    {{ step.step }}
-    </li>
-    {% endfor %}
-    </ol>
+<link href="/static/style.css" rel="stylesheet">
+<body class = "recipe">
+<div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
+        <img src="{{data[0].image}}" alt="image recipe"> <br>
+        <font color="white">
+        <h4>
+            {{data[0].title}} <button type="button" class="btn btn-primary btn-sm" onclick="share()"> Share </button>
+            {% if session.user_id %}
+            <form action="/favorite" method="post">
+                <div class="form=group">
+                    <button type="submit" class="btn btn-primary btn=sm" name="idr" value="{{idr}}"> Favorite</button>
+                </div>
+            </form>
+            {% endif %}
 
-<script>
-    function share() {
-        alert(window.location.href);
-    }
-</script>
+        </h4>
+        <br>
+        Ingredients: <br>
+        <ul>
+        {% for item in recipe.ingredients %}
+        <li> {{ item.amount.metric.value }} {{item.amount.metric.unit}}  {{ item.name }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        <ol>
+        {% for step in recipe.steps %}
+        <li>
+        {{ step.step }}
+        </li>
+        {% endfor %}
+        </ol>
+        </font>
+
+    <script>
+        function share() {
+            alert(window.location.href);
+        }
+    </script>
+</div>
+</body>
 {% endblock %}
