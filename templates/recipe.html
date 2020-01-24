@@ -11,7 +11,7 @@
         {% if session.user_id %}
         <form action="/favorite" method="post">
             <div class="form=group">
-                <button type="submit" class="btn btn-primary btn=sm" name="idr" value="{{idr}}"> Favorite</button>
+                <button type="submit" onclick="change()" class="btn btn-primary btn=sm" name="idr" id="favorite" value="{{idr}}"> Favorite</button>
             </div>
         </form>
         {% endif %}
@@ -36,6 +36,12 @@
 <script>
     function share() {
         alert(window.location.href);
+    }
+
+    function change() {
+        var button = document.getElementById("favorite");
+        if (button.innerHTML=="favorite") button.innerHTML = "unfavorite";
+        else button.innerHTML = "favorite";
     }
 </script>
 {% endblock %}

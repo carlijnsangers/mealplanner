@@ -1,9 +1,14 @@
 reviews/beoordeling functie bij recept
 profielpagina opmaak
-recepten opslaan
-error in helpers
+
 Share in menu fixen; geeft nu steeds laatste id
+<<<<<<< HEAD
 fix favorites
 fix login errors
 gestalt principes
 change quote
+=======
+Test favorites script
+Test of 0 results nog error geeft
+Test get_meal voor errors
+>>>>>>> 4fddad0347e4f1b5eba859ba870d473be99898e8
