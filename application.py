@@ -293,16 +293,18 @@ def reroll():
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
 
-def preferences():
-    global intolerances
-    global diets
+def preferences(allergie, dieet):
+    if "user_id" in session:
+        user= session['user_id']
+    else:
+        user=get_IP()
 
-
-    #for string in voorkeuren:
-    #    if string in allergie:
-
-    #    elif string in dieet:
-
+    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=session['user_id'])
+    if check:
+        db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
+    else:
+        db.execute("INSERT INTO preferences (id, allergie, dieet) VALUES (:user_id, :allergie, :dieet", user_id=user, allergie=allergie, dieet=dieet)
+    return
 
 def errorhandler(e):
     """Handle error"""

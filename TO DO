@@ -7,5 +7,6 @@ Test get_meal voor errors
 
 stylesheet fixen
 Reroll disabled zichzelf nu en de pagina refresh zet de knop weer normaal. Nog testen met api key
+preferences staat nu in application.py toepassen waar nodig
 
 /favorite hoe je data uit een js post haalt WERKT NU NIET!
