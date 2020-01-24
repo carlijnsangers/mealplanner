@@ -57,7 +57,7 @@ def login():
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("Please enter username")
+            flash("Please enter password")
             return render_template("login.html")
 
         # Query database for username
@@ -66,7 +66,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Username not found")
+            flash("Invalid password")
             return render_template("login.html")
 
         # Remember which user has logged in
