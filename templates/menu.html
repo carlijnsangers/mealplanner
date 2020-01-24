@@ -6,15 +6,15 @@
 
 {% block main %}
 
+<body class="menu">
 <link href="/static/style.css" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
-    <h1>
+    <h1><b><font color="white">
         Week menu
+        </font></b>
     </h1>
     {% for meal in meals %}
     <div class="container">
-
             <span class="b" >
         <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
@@ -24,14 +24,6 @@
 
 
                 <footer>
-                    <div class="rating">
-                        <input type="radio" name="star" id="star"><label for="star"></label>
-                        <input type="radio" name="star" id="star2"><label for="star2"></label>
-                        <input type="radio" name="star" id="star3"><label for="star3"></label>
-                        <input type="radio" name="star" id="star4"><label for="star4"></label>
-                        <input type="radio" name="star" id="star5"><label for="star5"></label>
-                    </div>
-
         </a>
                 <div class="a">
 
@@ -54,7 +46,7 @@
     </div>
     {% endfor %}
     <div>
-
+</body>
 
 
 {% endblock %}
