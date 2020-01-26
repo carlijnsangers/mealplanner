@@ -7,9 +7,6 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-
-from helpers import get_meal
-
 from helpers import lookup, get_meal, get_IP
 
 
