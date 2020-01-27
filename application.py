@@ -45,12 +45,12 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash("Please enter username", category='danger')
             return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("Please enter password")
+            flash("Please enter password", category='danger')
             return render_template("login.html")
 
         # Query database for username
@@ -59,7 +59,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Invalid password")
+            flash("Invalid password", category='danger')
             return render_template("login.html")
 
         # Remember which user has logged in
@@ -98,22 +98,22 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash("Please enter username", category='danger')
             return render_template("register.html")
         elif not request.form.get("password"):
-            flash("Please enter password")
+            flash("Please enter password", category='danger')
             return render_template("register.html")
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            flash("passwords do not match")
+            flash("passwords do not match", category='danger')
             return render_template("register.html")
 
         # Checks if username is not taken
         username = request.form.get("username")
         rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         if len(rows) >= 1:
-            flash("Username is already taken")
+            flash("Username is already taken", category='danger')
             return render_template("register.html")
 
         # Puts username(UN) and password(PW) in database
