@@ -8,6 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
 from helpers import lookup, get_meal, get_IP
+import database as database
 
 
 # Configure application
