@@ -262,7 +262,8 @@ body.menu {
 span.b {
     display: inline-block;
     float:left;
-    width: 30%;
+    width: 304px;
+    height: 328px;
     padding: 0%;
     margin:1.5%;
     border: 1px solid black;
@@ -301,4 +302,8 @@ body.register {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+div.c {
+    height: 50px;
 }
