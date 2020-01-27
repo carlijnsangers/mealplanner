@@ -152,6 +152,7 @@ querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "
 def home():
     # User reached route via POST (as by submitting a form via POST)
     global intolerances
+    global diets
 
     if request.method == "POST":
 
@@ -161,7 +162,6 @@ def home():
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the checkboxvalues
-        global diets
         global querys
 
         diet = request.form.get("diet")
@@ -216,8 +216,6 @@ def menu():
     meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
 
-
-
 @app.route("/recipe", methods =["GET", "POST"])
 def recept():
     if request.method=="GET":
@@ -244,13 +242,14 @@ def favorite():
 
     idr = request.form.get("idr")
     print(idr)
-    check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+    user_id=get_user()
+    check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
-        db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session["user_id"], idr=idr)
+        db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     else:
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
-                user_id=session["user_id"], idr=idr, image=data[0]["image"], title=data[0]['title'])
+                user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     url = "/recipe?id="+ idr
     return redirect(url)
 
@@ -283,7 +282,8 @@ def update_preferences(allergie, dieet):
     if check:
         db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
     else:
-        db.execute("INSERT INTO preferences (id, allergie, dieet) VALUES (:user_id, :allergie, :dieet", user_id=user, allergie=', '.join(allergie), dieet=dieet)
+        db.execute("INSERT INTO preferences (id, allergie, dieet) VALUES (:user_id, :allergie, :dieet",
+                user_id=user, allergie=', '.join(allergie), dieet=dieet)
     return
 
 def preferences(user):
@@ -302,8 +302,6 @@ def errorhandler(e):
         return ("Stringerror")
     # return apology(e.name, e.code)
 
-
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
-
