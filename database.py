@@ -1,7 +1,7 @@
 # database querys
 # gebruiken met database.functie
 
-from CS50 import SQL
+from cs50 import SQL
 db = SQL("sqlite:///test.db")
 
 # user in db
