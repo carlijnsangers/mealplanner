@@ -208,6 +208,7 @@ def profile():
         user_id = get_user()
         voorkeuren = preferences(user_id)
         print(voorkeuren)
+        favorites = db.execute("SELECT * FROM favorite WHERE user_id=:user_id", user_id=user_id)
         return render_template("profile.html", voorkeuren=voorkeuren)
     else:
         return render_template("profile.html")
@@ -231,8 +232,7 @@ def recept():
 
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
-    #print(request.POST)
-    print("HELLO")
+
     print(request.form['idr'])
     idr = request.form['idr']
     user_id=get_user()

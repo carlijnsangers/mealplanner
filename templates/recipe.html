@@ -16,7 +16,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="share()" data-toggle="tooltip" data-placement="right" title="Share">
                 <img src="/static/share.png" alt="share" height=16px width=16px > </button>
 
-            <button type="button" class="btn btn-primary btn-sm" name="favorite" id="favorite" value="{{idr}}"onclick="fav(this.value)"> a</button>
+            <button type="button" class="btn btn-primary btn-sm" name="favorite" id="favorite" value="{{idr}}"onclick="fav(this.value)"> Favorite</button>
 
 
         </h4>
@@ -50,11 +50,18 @@
                     url: url,
                     data: {'idr' : idr}
                 });
-            if (document.getElementById("favorite").innerHTML == "Favorite"){
-                document.getElementById("favorite").innerHTML = "Unfavorite";
+            if (document.getElementById("favorite").innerHTML == "Unfavorite"){
+                document.getElementById("favorite").innerHTML = "Favorite";
+                document.getElementById("favorite").style.backgroundColor = "";
+                document.getElementById("favorite").style.borderColor = "";
+                document.getElementById("favorite").style.boxShadow= "";
             }
             else{
-                document.getElementById("favorite").innerHTML = "Favorite";
+                document.getElementById("favorite").innerHTML = "Unfavorite";
+                document.getElementById("favorite").style.backgroundColor = "red";
+                document.getElementById("favorite").style.borderColor = "red";
+                document.getElementById("favorite").style.boxShadow= "red";
+                //box-shadow: 0 0 0 .2rem rgba(0,123,255,.5)
             }
         }
     </script>
