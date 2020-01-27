@@ -4,9 +4,6 @@ import os
 import random
 import socket
 
-# link naar rapidapi met voorgeprogrammeerde functies
-# https://goo.gl/9XTKTZ
-
 key = "1fa0943622124891a2991ba8f9a89e9c"
 
 
