@@ -1,6 +1,7 @@
 # database querys
 # gebruiken met database.functie
 
+from helpers import get_IP
 from cs50 import SQL
 db = SQL("sqlite:///test.db")
 
@@ -34,3 +35,8 @@ def del_meal(idr, user_id):
 def check(user_id, db):
     check = db.execute("SELECT * FROM :db WHERE id=:user_id", user_id=user_id, db=db)
     return check
+
+# IP naar id in meal
+def ip_to_id(user_id):
+    db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=user_id, IP = get_IP())
+    return
