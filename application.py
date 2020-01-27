@@ -277,13 +277,16 @@ def reroll():
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
 
-def update_preferences(allergie, dieet):
+def get_user():
     if "user_id" in session:
-        user= session['user_id']
+        return session['user_id']
     else:
-        user=get_IP()
+        return get_IP()
 
-    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=session['user_id'])
+def update_preferences(allergie, dieet):
+    user = get_user()
+
+    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     if check:
         db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
     else:
