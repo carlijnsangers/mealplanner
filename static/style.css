@@ -51,24 +51,18 @@ main img
 .links{
     border: 1px solid #000;
     padding: 1px;
-    left:0;
-    width:25%;
+    left:0%;
+    width:50%;
 
-}
-
-.midden{
-    border: 1px solid #000;
-    padding: 1px;
-    left:25%;
-    width:37.5%;
 }
 
 .rechts{
     border: 1px solid #000;
     padding: 1px;
-    right:0;
-    width:37.5%;
+    left:50%;
+    width:50%;
 }
+
 
 .spacer{
     height:82.5px;
@@ -219,13 +213,13 @@ p.big {
 #allergies {
     position: fixed;
     left: 0;
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
 #diet {
     position: fixed;
     left: 0;
-    margin-top: 11%;
+    margin-top: 3%;
 }
 
 #diet2 {

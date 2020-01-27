@@ -8,6 +8,9 @@
 
 <body class = "profile">
   <link href="/static/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 
       <div class="split links">
@@ -18,25 +21,26 @@
             </div>
         </div>
       </div>
-      <div class="split midden">
+
+      <div class="split rechts">
           <div class="centered">
               <div class="recepten"></div>
                 <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
               <h1><center>Saved recipes</center></h1>
                 </div>
           </div>
-      </div>
-      <div class="split rechts">
-          <div class="centered">
-              <div class="recensies"></div>
-                  <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
-                <h1><center>Reviews</center></h1>
-                  </div>
-          </div>
-      </div>
 
       <button id="preferences">Change preferences</button>
       <button id="save">Save preferences</button>
+<<<<<<< HEAD
+      <h6 id="allergies"> Diet: </h6>
+      <font color = "black">
+              <checkboxes>
+                <p><h6 id="diet"><font color="black">
+                  Allergies:
+                </font></h6></p>
+
+=======
       <h6 id="allergies"> Allergies: {{voorkeuren['allergies']}}</h6>
       <font color = "black">
               <checkboxes>
@@ -50,6 +54,7 @@
               <!--    {% endfor %}-->
               <!--</select>-->
 
+>>>>>>> f01a9f9a4ce76c462aeb07b64e3a26d955ee90c9
 </body>
 
 

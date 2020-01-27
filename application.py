@@ -129,7 +129,7 @@ def register():
             if len(check) == 1:
                 db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
 
-        flash('Registered')
+        #flash('Registered')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
