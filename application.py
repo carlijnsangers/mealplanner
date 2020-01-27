@@ -203,7 +203,8 @@ def find_home():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
-        voorkeuren = preferences(session['user_id'])
+        user_id = get_user()
+        voorkeuren = preferences(user_id)
         print(voorkeuren)
         return render_template("profile.html", voorkeuren=voorkeuren)
     else:
@@ -211,10 +212,8 @@ def profile():
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
-    if "user_id" in session:
-        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
-    else:
-        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
+    user_id=get_user()
+    meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
 
 
