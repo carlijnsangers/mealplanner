@@ -29,3 +29,8 @@ def update_menu(meal, user_id):
 def del_meal(idr, user_id):
     db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
     return
+
+# check of user in db
+def check(user_id, db):
+    check = db.execute("SELECT * FROM :db WHERE id=:user_id", user_id=user_id, db=db)
+    return check
