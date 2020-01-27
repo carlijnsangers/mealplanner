@@ -136,7 +136,7 @@ def register():
                 db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
             print(session["user_id"])
 
-        flash('Registered')
+        #flash('Registered')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -188,14 +188,14 @@ def home():
         allergie = ",".join(allergie)
 
 
-        # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
-        meals = []
-        for meal in range(5):
-            meal = str(meal)
-            while meal == None or len(meal) <= 1 or meal in meals:
-                query = random.choice(querys)
-                meal =  get_meal(query, diet, allergie)
-            meals.append(meal)
+        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        #meals = []
+        #for meal in range(5):
+            #meal = str(meal)
+            #while meal == None or len(meal) <= 1 or meal in meals:
+                #query = random.choice(querys)
+               # meal =  get_meal(query, diet, allergie)
+           # meals.append(meal)
 
         for meal in meals:
                 db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
@@ -219,6 +219,7 @@ def find_home():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
+
         #voorkeuren = db.execute("SELECT * FROM voorkeuren WHERE id=:id", id=session['user_id'])
         # return render_template("profile.html", allergie=voorkeuren[0]['allergie'], kitchen=voorkeuren[0]['kitchen'])
         return render_template("profile.html")
