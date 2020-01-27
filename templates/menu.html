@@ -19,13 +19,14 @@
             <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
                     <img src="{{meal["image"]}}">
-                    {{meal['title']}}
+                    <div class="c">
+                        {{meal['title']}}
                     </div>
                 </main>
              </a>
             <footer>
                 <div class="a">
-                    <form action="/reroll" method="post">
+                    <form action="/reroll" method="post" onsubmit="reroll.disabled = true; return true;">
                         <div class="form-group">
                             <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal">&#8634;</button>
                         </div>
@@ -41,5 +42,12 @@
     </div>
 
     {% endfor %}
+<script>
+    function share(clicked) {
+        var id = clicked;
+        var url = "/recipe?id=";
+        alert("Recipe link: "  + window.location.hostname + url + id );
+        }
 
+</script>
 {% endblock %}

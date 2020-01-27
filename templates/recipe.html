@@ -16,7 +16,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="share()" data-toggle="tooltip" data-placement="right" title="Share">
                 <img src="/static/share.png" alt="share" height=16px width=16px > </button>
 
-            <button type="button" class="btn btn-primary btn-sm" name="idr" id="1" onclick="fav(this.id)"> Favorite</button>
+            <button type="button" class="btn btn-primary btn-sm" name="favorite" id="favorite" value="{{idr}}"onclick="fav(this.value)"> a</button>
 
 
         </h4>
@@ -41,14 +41,20 @@
         function share() {
             alert(window.location.href);
         }
+
         function fav(idr){
             url="/favorite";
-            $.post(url, idr);
-            if (document.getElementById(idr).innerHTML == Favorite){
-                document.getElementById(idr).innerHTML = Unfavorite
+            $.ajax(
+                {
+                    type: "POST",
+                    url: url,
+                    data: {'idr' : idr}
+                });
+            if (document.getElementById("favorite").innerHTML == "Favorite"){
+                document.getElementById("favorite").innerHTML = "Unfavorite";
             }
             else{
-                document.getElementById(idr).innerHTML = Favorite
+                document.getElementById("favorite").innerHTML = "Favorite";
             }
         }
     </script>

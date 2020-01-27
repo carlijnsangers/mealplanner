@@ -229,20 +229,14 @@ def recept():
     else:
         return render_template("home.html")
 
-@app.route("/favorite", methods= ["POST"])
+@app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
+    #print(request.POST)
     print("HELLO")
-    idr = 1
-    data = "a"
-    # Hoe haal je de data van een js post op?
-    if idr in data:
-        idr=idr+1
-    return "200"
-
-
-    idr = request.form.get("idr")
-    print(idr)
+    print(request.form['idr'])
+    idr = request.form['idr']
     user_id=get_user()
+
     check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
         db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
@@ -250,8 +244,7 @@ def favorite():
         data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
-    url = "/recipe?id="+ idr
-    return redirect(url)
+    return
 
 @app.route("/reroll", methods =["GET", "POST"])
 def reroll():
