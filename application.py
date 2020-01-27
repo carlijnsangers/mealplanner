@@ -143,7 +143,7 @@ def register():
 #global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto"]
+querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel"]
 vegan = ["burger", "salmon", "chicken"]
 pescatarian = ['burger', 'chicken']
 
@@ -245,6 +245,7 @@ def favorite():
         db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
                 user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
+
 
 @app.route("/reroll", methods =["GET", "POST"])
 def reroll():

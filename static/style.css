@@ -269,6 +269,7 @@ span.b {
     border: 1px solid black;
     background-color:rgba(46,139,87, 0.9);
     color: black;
+    font-weight: bold;
 
 
 }
@@ -286,6 +287,10 @@ span.b a:visited{
 .a {
     float:right;
     margin:1%;
+}
+
+.c {
+    padding: 1%;
 }
 
 body.login {
