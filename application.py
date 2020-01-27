@@ -8,8 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
 from helpers import lookup, get_meal, get_IP
-import database as database
-
+import database
 
 # Configure application
 app = Flask(__name__)
@@ -25,8 +24,6 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-# Custom filter
-
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
@@ -36,8 +33,6 @@ Session(app)
 # test database
 db = SQL("sqlite:///test.db")
 
-
-# geeft momenteel error met de huidige login pagina
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -77,7 +72,6 @@ def login():
     else:
         return render_template("login.html")
 
-
 @app.route("/logout")
 def logout():
     """Log user out"""
@@ -87,7 +81,6 @@ def logout():
 
     # Redirect user to homepage
     return redirect("/")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -156,13 +149,12 @@ def home():
     global diets
 
     if request.method == "POST":
-
         user_id=get_user()
 
         # Delete the old recipes
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
-        # Get all the checkboxvalues
+        # Get all the query options
         global querys
 
         diet = request.form.get("diet")
@@ -221,7 +213,6 @@ def menu():
 def recept():
     if request.method=="GET":
         idr = request.args.get("id")
-
         recipe = lookup(idr)
         data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
         return render_template("recipe.html", recipe=recipe, data=data, idr=idr)
@@ -260,8 +251,7 @@ def reroll():
     global intolerances
     global querys
 
-    user_id = get_user()
-
+    user_id = get_user()s
     idr = request.form.get("reroll")
     db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
     query = random.choice(querys)
