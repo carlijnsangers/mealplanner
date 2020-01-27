@@ -26,9 +26,9 @@
              </a>
             <footer>
                 <div class="a">
-                    <form action="/reroll" method="post">
+                    <form action="/reroll" method="post" onsubmit="reroll.disabled = true; return true;">
                         <div class="form-group">
-                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal" id="Button">&#8634;</button>
+                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal">&#8634;</button>
                         </div>
                     </form>
                 </div>
