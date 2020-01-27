@@ -140,7 +140,7 @@ intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood"
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
 querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto"]
 
-
+# functies en routes
 # geeft homepage weer
 @app.route("/home", methods=["GET", "POST"])
 def home():
@@ -179,7 +179,7 @@ def home():
         #     meals.append(meal)
 
         for meal in meals:
-                db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+            db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
 
         return redirect("/menu")
@@ -267,8 +267,10 @@ def get_user():
         return get_IP()
 
 def update_preferences(allergie, dieet):
+    # huidige gebruiker
     user = get_user()
 
+    # kijkt of gebruiker al eerder voorkeuren heeft opgegeven en update anders voegt toe
     check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     if check:
         db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
@@ -278,6 +280,7 @@ def update_preferences(allergie, dieet):
     return
 
 def preferences(user):
+    #haalt preferences op van user
     data = db.execute("SELECT allergie, dieet FROM preferences WHERE id=:user", user=user)
     if data:
         return data
