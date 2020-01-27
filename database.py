@@ -8,3 +8,24 @@ db = SQL("sqlite:///test.db")
 def user_in_db(username):
     data = db.execute("SELECT * FROM users WHERE username=:username", username=username)
     return data
+
+# img, title
+def get_recipe(idr):
+    data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
+    return data
+
+# get menu
+def get_menu(user_id):
+    data = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
+    return data
+
+# update menu, meal=dict
+def update_menu(meal, user_id):
+    db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+            (meal["id"], meal["title"], meal["image"], user_id))
+    return
+
+# verwijder item van menu
+def del_meal(idr, user_id):
+    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
+    return
