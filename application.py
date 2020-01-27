@@ -139,6 +139,8 @@ def register():
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
 querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto"]
+vegan = ["burger", "salmon", "chicken"]
+pescatarian = ['burger', 'chicken']
 
 # functies en routes
 # geeft homepage weer
@@ -159,9 +161,11 @@ def home():
 
         diet = request.form.get("diet")
         if diet == "vegan" or diet == "vegetarian":
-            querys = ["pasta", "salad", "potatoes", "rice", "macaroni"]
+            for option in vegan:
+                querys.remove(option)
         elif diet == 'pescatarian':
-            querys = ["pasta", "salad", "salmon", "potatoes", "rice", "macaroni"]
+            for option in pescatarian:
+                querys.remove(option)
 
         allergie =[]
         for intolerance in intolerances:
