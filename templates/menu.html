@@ -15,39 +15,30 @@
     </h1>
     {% for meal in meals %}
     <div class="container">
-            <span class="b" >
-        <a href="/recipe?id={{meal['id']}}" target="_blank">
+        <span class="b" >
+            <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
                     <img src="{{meal["image"]}}">
                     {{meal['title']}}
                 </main>
-
-
-                <footer>
-        </a>
+             </a>
+            <footer>
                 <div class="a">
-
                     <form action="/reroll" method="post">
                         <div class="form-group">
-                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}">&#8634;</button>
+                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal">&#8634;</button>
                         </div>
                     </form>
                 </div>
                 <div class="a">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="share()">
-                            <img src="/static/share.png" alt="share" height=16px width=16px></button>
-                        <script>
-                        function share() {
-                            var id = "/recipe?id={{meal['id']}}"
-                        alert(window.location.hostname + id );
-                        }
-                        </script>
-                </div>
-            </span>
-    </div>
-    {% endfor %}
-    <div>
-</body>
+                    <button type="button" class="btn btn-primary btn-sm" id="{{meal['id']}}" onclick="share(this.id)" data-toggle="tooltip" data-placement="right" title="Share">
+                    <img src="/static/share.png" alt="share" height=16px width=16px ></button>
 
+                </div>
+            </footer>
+        </span>
+    </div>
+
+    {% endfor %}
 
 {% endblock %}

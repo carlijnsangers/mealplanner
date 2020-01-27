@@ -12,7 +12,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="/static/favicon.ico" rel="icon">
-        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/style.css" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -62,5 +62,14 @@
         </main>
 
     </body>
-
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    function share(clicked) {
+        var id = clicked;
+        var url = "/recipe?id=";
+        alert(window.location.hostname + url + id );
+        }
+    </script>
 </html>
