@@ -62,5 +62,14 @@
         </main>
 
     </body>
-
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    function share(clicked) {
+        var id = clicked;
+        var url = "/recipe?id=";
+        alert(window.location.hostname + url + id );
+        }
+    </script>
 </html>
