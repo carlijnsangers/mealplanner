@@ -247,10 +247,8 @@ def favorite():
     return
 
 
-@app.route("/reroll", methods =["GET", "POST"])
+@app.route("/reroll", methods =["POST"])
 def reroll():
-    global diets
-    global intolerances
     global querys
 
     user_id = get_user()
@@ -261,6 +259,14 @@ def reroll():
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
+
+
+@app.route("/new_meal_plan", methods =["POST"])
+def new_meal_plan():
+    user_id = get_user()
+    db.execute("DELETE FROM meal WHERE user_id=:user_id", user_id=user_id)
+    return redirect("/menu")
+
 
 # functies
 def get_user():
