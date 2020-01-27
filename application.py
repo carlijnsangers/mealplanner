@@ -224,7 +224,6 @@ def recept():
     else:
         return render_template("home.html")
 
-
 @app.route("/favorite", methods= ["POST"])
 def favorite():
     print("HELLO")
@@ -265,6 +264,7 @@ def reroll():
     return redirect("/menu")
 
 def get_user():
+    # returnt huidige gebruiker
     if "user_id" in session:
         return session['user_id']
     else:
