@@ -4,9 +4,6 @@ import os
 import random
 import socket
 
-# link naar rapidapi met voorgeprogrammeerde functies
-# https://goo.gl/9XTKTZ
-
 key = "1fa0943622124891a2991ba8f9a89e9c"
 
 
@@ -33,8 +30,8 @@ def get_meal(query, diet, intolerances):
 
 
 def lookup(idr):
-    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
-    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=966dd37a9cba411dbdf6c4d9c5575c64")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=bc24b56b1aa744eb9a7812d3f1f65cfa")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=bc24b56b1aa744eb9a7812d3f1f65cfa")
     rep = response.json()
     ing = ingredients.json()
     return{
