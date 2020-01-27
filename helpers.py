@@ -11,7 +11,7 @@ key = "1fa0943622124891a2991ba8f9a89e9c"
 
 
 def get_meal(query, diet, intolerances):
-    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=1fa0943622124891a2991ba8f9a89e9c")
+    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20&course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=1fa0943622124891a2991ba8f9a89e9c")
     meal = response.json()
 
     if "results" in meal:
