@@ -155,10 +155,7 @@ def home():
 
     if request.method == "POST":
 
-        if "user_id" in session:
-            user_id = session["user_id"]
-        else:
-            user_id = get_IP()
+        user_id=get_user()
 
         # Delete the old recipes
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
@@ -206,7 +203,8 @@ def find_home():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if request.method != "POST":
-        voorkeuren = preferences(session['user_id'])
+        user_id = get_user()
+        voorkeuren = preferences(user_id)
         print(voorkeuren)
         return render_template("profile.html", voorkeuren=voorkeuren)
     else:
@@ -214,10 +212,8 @@ def profile():
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
-    if "user_id" in session:
-        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = session["user_id"])
-    else:
-        meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = get_IP())
+    user_id=get_user()
+    meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
 
 
@@ -264,10 +260,7 @@ def reroll():
     global intolerances
     global querys
 
-    if "user_id" in session:
-        user_id = session["user_id"]
-    else:
-        user_id = get_IP()
+    user_id = get_user()
 
     idr = request.form.get("reroll")
     db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
@@ -277,13 +270,16 @@ def reroll():
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
 
-def update_preferences(allergie, dieet):
+def get_user():
     if "user_id" in session:
-        user= session['user_id']
+        return session['user_id']
     else:
-        user=get_IP()
+        return get_IP()
 
-    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=session['user_id'])
+def update_preferences(allergie, dieet):
+    user = get_user()
+
+    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     if check:
         db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
     else:
