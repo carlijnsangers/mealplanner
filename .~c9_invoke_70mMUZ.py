@@ -5,9 +5,11 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+
 import random
 from helpers import lookup, get_meal, get_IP, get_query
 import database
+from database import get_diet, get_intolerances,  del_meal, del_meal_plan, update_menu
 
 # Configure application
 app = Flask(__name__)
@@ -29,7 +31,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# aangepaste functies uit finance
+# test database
+db = SQL("sqlite:///test.db")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -160,8 +164,7 @@ def home():
         user_id=get_user()
 
         # Delete the old recipes
-        database.del_meal_plan(user_id)
-        #db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
+        db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the query options
         diet = request.form.get("diet")
@@ -181,7 +184,7 @@ def home():
                 query = get_query(diet)
                 meal =  get_meal(query, diet, allergy)
             meals.append(meal)
-            database.update_menu(meal, user_id)
+            update_menu(meal, user_id)
 
         return redirect("/menu")
 
@@ -196,39 +199,31 @@ def find_home():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    if "user_id" not in session:
-        return redirect("/login")
-    user_id = get_user()
-    diet = database.get_diet(user_id)
-    intolerances = database.get_intolerances(user_id)
-    favorites = database.get_favorites(user_id)
-    # favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
-    return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
+    if request.method != "POST":
+        user_id = get_user()
+        diet = get_diet(user_id)
+        intolerances = get_intolerances(user_id)
+        favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
+        return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
+    else:
+        return render_template("profile.html")
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     user_id=get_user()
-    meals = database.get_menu(user_id)
-    # meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
+    meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
 
 @app.route("/recipe", methods =["GET", "POST"])
-def recipe():
+def recept():
     if request.method=="GET":
         idr = request.args.get("id")
         recipe = lookup(idr)
-        data = database.get_recipe(idr)
-        # data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
-        favorite = False
-        if "user_id" in session:
-            check = database.get_fav_idr(session['user_id'], idr)
-            # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session['user_id'], idr=idr)
-            if check:
-                favorite = True
-        return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
+        data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
+        return render_template("recipe.html", recipe=recipe, data=data, idr=idr)
 
     else:
-        return redirect("/")
+        return render_template("home.html")
 
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
@@ -236,16 +231,14 @@ def favorite():
     # print(request.form['idr'])
     idr = request.form['idr']
     user_id=session['user_id']
-    check = database.get_fav_idr(session['user_id'], idr)
-    # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+
+    check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
-        database.del_fav(user_id, idr)
-        # db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+        db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     else:
-        database.add_fav(user_id, idr)
-        # data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
-        # db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
-        #        user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
+        data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
+        db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
+                user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 
 
@@ -254,29 +247,33 @@ def reroll():
     global querys
     user_id = get_user()
     idr = request.form.get("reroll")
-    database.del_meal(idr, user_id)
-    intolerances = database.get_intolerances(user_id)
-    intolerances = intolerances.replace(", ", ",")
-    diet = database.get_diet(user_id)
+    del_meal(idr, user_id)
+    diet = get_diet(user_id)
     query = get_query(diet)
-    meal =  get_meal(query, diet, intolerances)
-    database.update_menu(meal, user_id)
+    meal =  get_meal(query, diet, None)
+    db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
+
 
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
     user_id = get_user()
 
-    diet = database.get_diet(user_id)
-    intolerances = database.get_intolerances(user_id)
-    intolerances = intolerances.replace(", ", ",")
-    database.del_meal_plan(user_id)
+    diet = get_diet(user_id)
+    print(diet)
+    intolerances = get_intolerances(user_id)
+    print(intolerances)
+    del_meal_plan(user_id)
     for food in range(5):
         query = get_query(diet)
+        print(query)
         meal =  get_meal(query, diet, intolerances)
-        database.update_menu(meal, user_id)
+        print(meal)
+        update_menu(meal, user_id)
 
     return redirect("/menu")
+
 
 # functies
 def get_user():
@@ -291,16 +288,14 @@ def update_preferences(allergy, diet):
     user = get_user()
 
     # kijkt of gebruiker al eerder voorkeuren heeft opgegeven en update anders voegt toe
-    # check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
-    check = database.check(user, "preferences")
+    check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     if check:
-        database.update_pref(user, allergy, diet)
-        #db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user, allergy=allergy, diet=diet)
+        db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user, allergy=allergy, diet=diet)
     else:
-        database.add_pref(user, allergy, diet)
-        # db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
-        #         user_id=user, allergy=allergy, diet=diet)
+        db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
+                user_id=user, allergy=allergy, diet=diet)
     return
+
 
 def errorhandler(e):
     """Handle error"""
