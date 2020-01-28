@@ -38,14 +38,11 @@ def del_meal(idr, user_id):
     return
 
 # check of user in db
-def check(user_id, db):
-    check = db.execute("SELECT * FROM :db WHERE id=:user_id LIMIT 1", user_id=user_id, db=db)
+def check(user_id, database):
+    check = db.execute("SELECT * FROM :database WHERE id=:user_id LIMIT 1", user_id=user_id, database=database)
     return check
 
 # IP naar id in meal
 def ip_to_id(user_id):
     db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=user_id, IP = get_IP())
     return
-
-
-print(get_menu("2"))
