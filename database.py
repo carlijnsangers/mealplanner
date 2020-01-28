@@ -1,5 +1,4 @@
 # database querys
-# gebruiken met database.functie
 
 from helpers import get_IP
 from cs50 import SQL
@@ -28,7 +27,7 @@ def get_menu(user_id):
 
 # Get diet
 def get_diet(user_id):
-    diet = db.execute("SELECT diet FROM preferences WHERE id=:user_id", user_id=user_id)
+    diet = db.execute("SELECT diet FROM preferences WHERE user_id=:user_id", user_id=user_id)
     if diet:
         return diet[0]['diet']
     else:
@@ -36,7 +35,7 @@ def get_diet(user_id):
 
 # Get intolerances
 def get_intolerances(user_id):
-    intolerances = db.execute("SELECT allergy FROM preferences WHERE id=:user_id", user_id=user_id)
+    intolerances = db.execute("SELECT allergy FROM preferences WHERE user_id=:user_id", user_id=user_id)
     if intolerances:
         return intolerances[0]['allergy'].replace(",", ", ")
     else:
@@ -60,7 +59,7 @@ def del_meal_plan(user_id):
 
 # check of user in db
 def check(user_id, database):
-    check = db.execute("SELECT * FROM :database WHERE id=:user_id LIMIT 1", user_id=user_id, database=database)
+    check = db.execute("SELECT * FROM :database WHERE user_id=:user_id LIMIT 1", user_id=user_id, database=database)
     return check
 
 # IP naar id in meal
@@ -90,12 +89,13 @@ def add_fav(user_id, idr):
             user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 
-# update prefences
+# update prefences in db
 def update_pref(user_id, allergy, diet):
-    db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user_id, allergy=allergy, diet=diet)
+    db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE user_id=:user_id", user_id=user_id, allergy=allergy, diet=diet)
     return
 
+# add preference to db
 def add_pref(user_id, allergy, diet):
-    db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
+    db.execute("INSERT INTO preferences (user_id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
             user_id=user_id, allergy=allergy, diet=diet)
     return

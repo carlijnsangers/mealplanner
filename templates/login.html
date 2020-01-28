@@ -9,12 +9,14 @@
 <link href="/static/style.css" rel="stylesheet">
 
 <body>
-<form class ="box" action="/login" method="post">
-    <p class="big"><h2>Login</h2><br>
-    <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"><br>
-    <input class="form-control" name="password" placeholder="Password" type="password"><br>
-    <button class="btn btn-primary" type="submit">Log In</button><br>
-    </p>
-Don't have an account yet? Click <a href="/register"> here</a> to create one!
+    <form class ="box" action="/login" method="post">
+        <p class="big"><h2>Login</h2><br>
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"><br>
+            <input class="form-control" name="password" placeholder="Password" type="password"><br>
+            <button class="btn btn-primary" type="submit">Log In</button><br>
+        </p>
+    Don't have an account yet? Click <a href="/register"> here</a> to create one!
+    </form>
 </body>
+
 {% endblock %}

@@ -45,14 +45,12 @@
             </div>
         </nav>
 
-
         {%- with messages = get_flashed_messages(with_categories=true) -%}
         {%- if messages -%}
             {%- for category, message in messages -%}
-                 <div class="alert alert-{{ category }} alert-dismissible  text-center" role="alert">
+                <div class="alert alert-{{ category }} alert-dismissible  text-center" role="alert">
                 <span>{{ message }}</span>
-                </button>
-            </div>
+                </div>
             {%- endfor -%}
             </ul>
         {%- endif -%}
@@ -63,14 +61,16 @@
         </main>
 
     </body>
+
     <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
+
     function share(clicked) {
         var id = clicked;
         var url = "/recipe?id=";
         alert(window.location.hostname + url + id );
-        }
+    }
     </script>
 </html>
