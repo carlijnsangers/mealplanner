@@ -41,6 +41,7 @@ def get_intolerances(user_id):
     else:
         return None
 
+
 # update menu, meal=dict
 def update_menu(meal, user_id):
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
