@@ -236,7 +236,7 @@ def favorite():
     # print(request.form['idr'])
     idr = request.form['idr']
     user_id=session['user_id']
-    check = database.get_fav_idr(session['user_id'], idr)
+    check = database.get_fav_idr(user_id, idr)
     # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
         database.del_fav(user_id, idr)
