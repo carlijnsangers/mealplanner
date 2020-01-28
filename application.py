@@ -150,7 +150,7 @@ intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood"
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
 
 # routes
-# geeft homepage weer
+# show homepage
 @app.route("/home", methods=["GET", "POST"])
 def home():
     # User reached route via POST (as by submitting a form via POST)
@@ -266,11 +266,13 @@ def reroll():
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
     user_id = get_user()
-
+    # search for diet in database
     diet = database.get_diet(user_id)
+    # search for intolerances in database
     intolerances = database.get_intolerances(user_id)
     intolerances = intolerances.replace(", ", ",")
     database.del_meal_plan(user_id)
+    # checks for menu of 5 which includes query and meal
     for food in range(5):
         query = get_query(diet)
         meal =  get_meal(query, diet, intolerances)
@@ -280,17 +282,17 @@ def new_meal_plan():
 
 # functies
 def get_user():
-    # returnt huidige gebruiker
+    # returnt current user
     if "user_id" in session:
         return session['user_id']
     else:
         return get_IP()
 
 def update_preferences(allergy, diet):
-    # huidige gebruiker
+    # current user
     user = get_user()
 
-    # kijkt of gebruiker al eerder voorkeuren heeft opgegeven en update anders voegt toe
+    #checks of user set preferences before and otherwise update add
     # check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     check = database.check(user, "preferences")
     if check:
