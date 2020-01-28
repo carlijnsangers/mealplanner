@@ -7,7 +7,6 @@ Testen favorite wanneer je pagina bezoekt van een recept dat je al als favorite 
 
 stylesheet fixen
 (update_)preferences staan nu in application.py toepassen waar nodig + kijken of goed in db komt te staan
-database query's naar aparte file zetten, werkt check?
 reroll fixen onclick="this.disabled=true;" werkt in firefox, maar niet in chrome
 uitbreiden querys
 
