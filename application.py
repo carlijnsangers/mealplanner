@@ -307,7 +307,6 @@ def errorhandler(e):
     if not isinstance(e, HTTPException):
         e = InternalServerError()
         return ("Stringerror")
-    # return apology(e.name, e.code)
 
 # Listen for errors
 for code in default_exceptions:
