@@ -5,7 +5,6 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-
 import random
 from helpers import lookup, get_meal, get_IP, get_query
 import database
@@ -208,7 +207,6 @@ def profile():
     # favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
     return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
 
-
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
     user_id=get_user()
@@ -267,7 +265,6 @@ def reroll():
     database.update_menu(meal, user_id)
     return redirect("/menu")
 
-
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
     user_id = get_user()
@@ -282,7 +279,6 @@ def new_meal_plan():
         database.update_menu(meal, user_id)
 
     return redirect("/menu")
-
 
 # functies
 def get_user():
@@ -307,7 +303,6 @@ def update_preferences(allergy, diet):
         # db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
         #         user_id=user, allergy=allergy, diet=diet)
     return
-
 
 def errorhandler(e):
     """Handle error"""
