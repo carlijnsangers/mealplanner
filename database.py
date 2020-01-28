@@ -1,5 +1,4 @@
 # database querys
-# gebruiken met database.functie
 
 from helpers import get_IP
 from cs50 import SQL
@@ -89,11 +88,12 @@ def add_fav(user_id, idr):
             user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 
-# update prefences
+# update prefences in db
 def update_pref(user_id, allergy, diet):
     db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user_id, allergy=allergy, diet=diet)
     return
 
+# add preference to db
 def add_pref(user_id, allergy, diet):
     db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
             user_id=user_id, allergy=allergy, diet=diet)
