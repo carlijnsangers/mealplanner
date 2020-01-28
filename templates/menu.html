@@ -6,18 +6,13 @@
 
 {% block main %}
 
-<body class="menu">
+<body>
 <link href="/static/style.css" rel="stylesheet">
 
     <h1><b><font color="white">
         Week menu
         </font></b>
     </h1>
-    <form action="/new_meal_plan" method="post">
-        <div class="form-group">
-            <button class="btn btn-primary btn-sm" type="submit">Create a new meal plan</button>
-        </div>
-    </form>
     {% for meal in meals %}
     <div class="container">
         <span class="b" >
@@ -55,4 +50,5 @@
         }
 
 </script>
+</body>
 {% endblock %}
