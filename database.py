@@ -29,12 +29,16 @@ def get_menu(user_id):
 # Get diet
 def get_diet(user_id):
     diet = db.execute("SELECT diet FROM preferences WHERE id=:user_id", user_id=user_id)
-    return diet
+    return diet[0]['diet']
 
 # Get intolerances
 def get_intolerances(user_id):
-    diet = db.execute("SELECT allergy FROM preferences WHERE id=:user_id", user_id=user_id)
-    return diet
+    intolerances = db.execute("SELECT allergy FROM preferences WHERE id=:user_id", user_id=user_id)
+    if intolerances:
+        return intolerances[0]['allergy'].replace(",", ", ")
+    else:
+        return None
+
 
 # update menu, meal=dict
 def update_menu(meal, user_id):
@@ -60,4 +64,5 @@ def check(user_id, database):
 def ip_to_id(user_id):
     db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=user_id, IP = get_IP())
     return
+
 
