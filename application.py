@@ -301,13 +301,3 @@ def update_preferences(allergy, diet):
         # db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
         #         user_id=user, allergy=allergy, diet=diet)
     return
-
-def errorhandler(e):
-    """Handle error"""
-    if not isinstance(e, HTTPException):
-        e = InternalServerError()
-        return ("Stringerror")
-
-# Listen for errors
-for code in default_exceptions:
-    app.errorhandler(code)(errorhandler)
