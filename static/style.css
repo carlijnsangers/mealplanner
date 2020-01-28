@@ -244,7 +244,7 @@ div.c {
     height: 50px;
 }
 
-span.d {
+.d {
     display: inline-block;
     width: 304px;
     height: 328px;
@@ -256,3 +256,4 @@ span.d {
     color: black;
     font-weight: bold;
 }
+
