@@ -11,11 +11,6 @@ def user_in_db(username):
     data = db.execute("SELECT * FROM users WHERE username=:username", username=username)
     return data
 
-# insert user in db
-def insert_in_users(username, password):
-    db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, password))
-    return
-
 # img, title
 def get_recipe(idr):
     data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
@@ -39,7 +34,7 @@ def del_meal(idr, user_id):
 
 # check of user in db
 def check(user_id, db):
-    check = db.execute("SELECT * FROM :db WHERE id=:user_id LIMIT 1", user_id=user_id, db=db)
+    check = db.execute("SELECT * FROM :db WHERE id=:user_id", user_id=user_id, db=db)
     return check
 
 # IP naar id in meal
@@ -48,4 +43,19 @@ def ip_to_id(user_id):
     return
 
 
-print(get_menu("2"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
