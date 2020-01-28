@@ -18,8 +18,7 @@ def get_meal(query, diet, intolerances):
             number = 0
 
         if len(meal['results']) == 0:
-            print("error")
-            return
+            return {"id":158185,"title":"Chickpea and Broccoli Bowl with Tahini Sauce","image":"https://spoonacular.com/recipeImages/158185-312x231.jpg","imageType":"jpg"}
         return {
             "id": meal["results"][number]["id"],
             "meal": meal["results"][number]["title"],
@@ -48,9 +47,9 @@ def get_IP():
         return
 
 def get_query(diet):
-    querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel"]
-    vegan = ["burger", "salmon", "chicken"]
-    pescatarian = ['burger', 'chicken']
+    querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili"]
+    vegan = ["burger", "chicken", "schnitzel"]
+    pescatarian = ['burger', 'chicken', "schnitzel"]
     if diet == "vegan" or diet == "vegetarian":
         for option in vegan:
             querys.remove(option)
