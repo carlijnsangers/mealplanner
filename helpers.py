@@ -4,8 +4,6 @@ import os
 import random
 import socket
 
-key = "1fa0943622124891a2991ba8f9a89e9c"
-
 
 def get_meal(query, diet, intolerances):
     response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
@@ -47,9 +45,9 @@ def get_IP():
         return
 
 def get_query(diet):
-    querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili"]
-    vegan = ["burger", "chicken", "schnitzel"]
-    pescatarian = ['burger', 'chicken', "schnitzel"]
+    querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili", "steak"]
+    vegan = ["burger", "chicken", "schnitzel", "steak"]
+    pescatarian = ['burger', 'chicken', "schnitzel", "steak"]
     if diet == "vegan" or diet == "vegetarian":
         for option in vegan:
             querys.remove(option)
