@@ -249,7 +249,7 @@ def reroll():
     del_meal(idr, user_id)
     diet = get_diet(user_id)
     query = get_query(diet)
-    meal =  get_meal(query, diet, None)
+    meal =  get_meal(query, None, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
@@ -268,7 +268,6 @@ def new_meal_plan():
         query = get_query(diet)
         print(query)
         meal =  get_meal(query, diet, intolerances)
-        print(meal)
         update_menu(meal, user_id)
 
     return redirect("/menu")
