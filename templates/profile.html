@@ -27,8 +27,8 @@
                 <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
               <h1><center>My favorite recipes</center></h1>
                   {% for meal in favorites %}
-
                   <div class="container">
+                    <div class="centered">
         <span class="d" >
             <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
@@ -39,7 +39,7 @@
                 </main>
              </a>
         </span>
-
+                  </div>
                 </div>
                 {% endfor %}
           </div>
