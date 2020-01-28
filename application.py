@@ -120,21 +120,17 @@ def register():
         else:
             PW = generate_password_hash(request.form.get("password"))
             database.insert_in_users(username, PW)
-            # db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
 
             #Remember which user has logged in
             data = database.user_in_db(username)
-            session["user_id"] = data[0]['id']
-            # session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
-            #               username=request.form.get("username"))[0]['id']
+            session["user_id"] = data[0]['user_id']
 
-            check = database.check(session['user_id'], "meal")
-            #check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
+            check = database.check(get_IP(), "meal")
+            print(check)
             if len(check) == 1:
                 database.ip_to_id(session['user_id'])
-                # db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
+                return redirect("/menu")
 
-        #flash('Registered')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -251,12 +247,12 @@ def favorite():
 
 @app.route("/reroll", methods =["POST"])
 def reroll():
-    global querys
     user_id = get_user()
     idr = request.form.get("reroll")
     database.del_meal(idr, user_id)
     intolerances = database.get_intolerances(user_id)
-    intolerances = intolerances.replace(", ", ",")
+    if intolerances != None:
+        intolerances = intolerances.replace(", ", ",")
     diet = database.get_diet(user_id)
     query = get_query(diet)
     meal =  get_meal(query, diet, intolerances)
