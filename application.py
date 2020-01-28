@@ -120,21 +120,19 @@ def register():
         else:
             PW = generate_password_hash(request.form.get("password"))
             database.insert_in_users(username, PW)
-            # db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
 
             #Remember which user has logged in
             data = database.user_in_db(username)
             session["user_id"] = data[0]['user_id']
-            # session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
-            #               username=request.form.get("username"))[0]['id']
 
-            check = database.check(session['user_id'], "meal")
-            #check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
+            # Check if the user already made a menu, and if so display that menu
+            check = database.check(get_IP(), "meal")
+            print(check)
             if len(check) == 1:
                 database.ip_to_id(session['user_id'])
-                # db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
+                return redirect("/menu")
 
-        #flash('Registered')
+        # Redirect to home page
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -188,11 +186,13 @@ def home():
     else:
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
+
 @app.route("/", methods=["GET"])
 def find_home():
     global diets
     global intolerances
     return render_template("home.html", diets=diets, intolerances = intolerances)
+
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -205,12 +205,19 @@ def profile():
     # favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
     return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
 
+
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
+
+    # Get the user id
     user_id=get_user()
+
+    # Get saved meals from database
     meals = database.get_menu(user_id)
+
     # meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
+
 
 @app.route("/recipe", methods =["GET", "POST"])
 def recipe():
@@ -229,6 +236,7 @@ def recipe():
 
     else:
         return redirect("/")
+
 
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
@@ -252,32 +260,51 @@ def favorite():
 @app.route("/reroll", methods =["POST"])
 def reroll():
     global querys
+
+    # Get the user id
     user_id = get_user()
+
+    # Get the recipe id of wanted reroll and delete it
     idr = request.form.get("reroll")
     database.del_meal(idr, user_id)
+
+    # Get a new meal
     intolerances = database.get_intolerances(user_id)
     intolerances = intolerances.replace(", ", ",")
     diet = database.get_diet(user_id)
     query = get_query(diet)
     meal =  get_meal(query, diet, intolerances)
+
+    # insert meal into database
     database.update_menu(meal, user_id)
+
+    # redirect to menu
     return redirect("/menu")
 
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
+
+    # Get the user id
     user_id = get_user()
-    # search for diet in database
+
+    # Delete the old meal plan
+    database.del_meal_plan(user_id)
+
+
+    # Search for diet in database
     diet = database.get_diet(user_id)
-    # search for intolerances in database
+
+    # Search for intolerances in database
     intolerances = database.get_intolerances(user_id)
     intolerances = intolerances.replace(", ", ",")
-    database.del_meal_plan(user_id)
-    # checks for menu of 5 which includes query and meal
+
+    # Create 5 meals and puts them into the database
     for food in range(5):
         query = get_query(diet)
         meal =  get_meal(query, diet, intolerances)
         database.update_menu(meal, user_id)
 
+    # Redirect to menu
     return redirect("/menu")
 
 # functies
