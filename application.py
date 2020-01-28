@@ -54,8 +54,9 @@ def login():
             return render_template("login.html")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username",
-                         username=request.form.get("username"))
+        rows = database.user_in_db(request.form.get('username'))
+        # rows = db.execute("SELECT * FROM users WHERE username = :username",
+        #                  username=request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -67,7 +68,8 @@ def login():
 
         # Redirect naar menu als bestaat
         user = get_user()
-        menu = db.execute("SELECT * FROM meal WHERE user_id=:user LIMIT 1", user=user)
+        menu = database.check(user, "meal")
+        # menu = db.execute("SELECT * FROM meal WHERE user_id=:user LIMIT 1", user=user)
         if menu:
             return redirect("/menu")
         # Redirect user to home page
@@ -111,7 +113,8 @@ def register():
 
         # Checks if username is not taken
         username = request.form.get("username")
-        rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
+        rows = database.user_in_db(username)
+        #rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         if len(rows) >= 1:
             flash("Username is already taken", category='danger')
             return render_template("register.html")
@@ -119,15 +122,20 @@ def register():
         # Puts username(UN) and password(PW) in database
         else:
             PW = generate_password_hash(request.form.get("password"))
-            db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
+            database.insert_in_users(username, PW)
+            # db.execute("INSERT INTO users (username, hash) VALUES (%s, %s)", (username, PW))
 
             #Remember which user has logged in
-            session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
-                          username=request.form.get("username"))[0]['id']
+            data = database.user_in_db(username)
+            session["user_id"] = data[0]['id']
+            # session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
+            #               username=request.form.get("username"))[0]['id']
 
-            check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
+            check = database.check(session['user_id'], "meal")
+            #check = db.execute("SELECT user_id FROM meal WHERE user_id=:IP LIMIT 1", IP=get_IP())
             if len(check) == 1:
-                db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
+                database.ip_to_id(session['user_id'])
+                # db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=session['user_id'], IP = get_IP())
 
         #flash('Registered')
         return redirect("/")
@@ -179,14 +187,14 @@ def home():
         allergy = ",".join(allergy)
 
         update_preferences(allergy, diet)
-        # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
-        meals = []
-        for meal in range(5):
-            meal = str(meal)
-            while meal == None or len(meal) <= 1 or meal in meals:
-                query = random.choice(querys)
-                meal =  get_meal(query, diet, allergy)
-            meals.append(meal)
+        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        # meals = []
+        # for meal in range(5):
+        #     meal = str(meal)
+        #     while meal == None or len(meal) <= 1 or meal in meals:
+        #         query = random.choice(querys)
+        #         meal =  get_meal(query, diet, allergy)
+        #     meals.append(meal)
 
         for meal in meals:
             db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
@@ -210,7 +218,7 @@ def profile():
         voorkeuren = preferences(user_id)
         print(voorkeuren)
         favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
-        return render_template("profile.html", voorkeuren=voorkeuren)
+        return render_template("profile.html", voorkeuren=voorkeuren, favorites=favorites)
     else:
         return render_template("profile.html")
 
@@ -234,9 +242,9 @@ def recept():
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
 
-    print(request.form['idr'])
+    # print(request.form['idr'])
     idr = request.form['idr']
-    user_id=get_user()
+    user_id=session['user_id']
 
     check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
