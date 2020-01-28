@@ -198,14 +198,14 @@ def find_home():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    if request.method != "POST":
-        user_id = get_user()
-        diet = database.get_diet(user_id)
-        intolerances = database.get_intolerances(user_id)
-        favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
-        return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
-    else:
-        return render_template("profile.html")
+    if "user_id" not in session:
+        return redirect("/login")
+    user_id = get_user()
+    diet = database.get_diet(user_id)
+    intolerances = database.get_intolerances(user_id)
+    favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
+    return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
+
 
 @app.route("/menu", methods=["GET", "POST"])
 def menu():
@@ -214,15 +214,20 @@ def menu():
     return render_template("menu.html", meals=meals)
 
 @app.route("/recipe", methods =["GET", "POST"])
-def recept():
+def recipe():
     if request.method=="GET":
         idr = request.args.get("id")
         recipe = lookup(idr)
         data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
-        return render_template("recipe.html", recipe=recipe, data=data, idr=idr)
+        favorite = False
+        if "user_id" in session:
+            check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session['user_id'], idr=idr)
+            if check:
+                favorite = True
+        return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
 
     else:
-        return render_template("home.html")
+        return redirect("/")
 
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
