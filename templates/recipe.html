@@ -17,8 +17,15 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="share()" data-toggle="tooltip" data-placement="right" title="Share">
                 <img src="/static/share.png" alt="share" height=16px width=16px > </button>
 
-            <button type="button" class="btn btn-primary btn-sm" name="idr" id="1" onclick="fav(this.id)"> Favorite</button>
-
+            {% if user_id in session %}
+            <button type="button" class="btn btn-primary btn-sm" name="idr" id="1" onclick="fav(this.id)">
+            {% if favorite == True %}
+            Unfavorite
+            {% else %}
+            Favorite
+            {% endif %}
+            </button>
+            {% endif %}
 
         </h4>
         <br>

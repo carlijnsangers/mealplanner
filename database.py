@@ -6,7 +6,7 @@ from cs50 import SQL
 
 db = SQL("sqlite:///test.db")
 
-# user in db
+# user in users
 def user_in_db(username):
     data = db.execute("SELECT * FROM users WHERE username=:username", username=username)
     return data
@@ -50,7 +50,7 @@ def update_menu(meal, user_id):
 
 # verwijder item van menu
 def del_meal(idr, user_id):
-    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
+    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id LIMIT 1", idr=idr, user_id=user_id)
     return
 
 # Verwijder het hele menu
@@ -67,4 +67,34 @@ def ip_to_id(user_id):
     db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=user_id, IP = get_IP())
     return
 
+# get favorites by user
+def get_favorites(user_id):
+    favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
+    return favorites
 
+# get favorite by idr and user
+def get_fav_idr(user_id, idr):
+    favorite = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+    return favorite
+
+# remove a favorite
+def del_fav(user_id, idr):
+    db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+    return
+
+# add a favorite
+def add_fav(user_id, idr):
+    data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
+    db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
+            user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
+    return
+
+# update prefences
+def update_pref(user_id, allergy, diet):
+    db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user_id, allergy=allergy, diet=diet)
+    return
+
+def add_pref(user_id, allergy, diet):
+    db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
+            user_id=user_id, allergy=allergy, diet=diet)
+    return
