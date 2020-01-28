@@ -61,7 +61,7 @@ def login():
             return render_template("login.html")
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0]["user_id"]
 
         # Redirect naar menu als bestaat
         user = get_user()
@@ -124,7 +124,7 @@ def register():
 
             #Remember which user has logged in
             data = database.user_in_db(username)
-            session["user_id"] = data[0]['id']
+            session["user_id"] = data[0]['user_id']
             # session["user_id"] = db.execute("SELECT id FROM users WHERE username = :username",
             #               username=request.form.get("username"))[0]['id']
 
