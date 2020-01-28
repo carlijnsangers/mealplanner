@@ -7,8 +7,8 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-from helpers import lookup, get_meal, get_IP
-import database
+from helpers import lookup, get_meal, get_IP, get_query
+from database import get_diet, get_intolerances,  del_meal, del_meal_plan, update_menu
 
 # Configure application
 app = Flask(__name__)
@@ -151,9 +151,6 @@ def register():
 #global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel"]
-vegan = ["burger", "salmon", "chicken"]
-pescatarian = ['burger', 'chicken']
 
 # routes
 # geeft homepage weer
@@ -161,7 +158,6 @@ pescatarian = ['burger', 'chicken']
 def home():
     # User reached route via POST (as by submitting a form via POST)
     global intolerances
-    global diets
 
     if request.method == "POST":
         user_id=get_user()
@@ -170,15 +166,7 @@ def home():
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the query options
-        global querys
-
         diet = request.form.get("diet")
-        if diet == "vegan" or diet == "vegetarian":
-            for option in vegan:
-                querys.remove(option)
-        elif diet == 'pescatarian':
-            for option in pescatarian:
-                querys.remove(option)
 
         allergy =[]
         for intolerance in intolerances:
@@ -187,18 +175,15 @@ def home():
         allergy = ",".join(allergy)
 
         update_preferences(allergy, diet)
-        meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
-        # meals = []
-        # for meal in range(5):
-        #     meal = str(meal)
-        #     while meal == None or len(meal) <= 1 or meal in meals:
-        #         query = random.choice(querys)
-        #         meal =  get_meal(query, diet, allergy)
-        #     meals.append(meal)
-
-        for meal in meals:
-            db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], user_id))
+        # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
+        meals = []
+        for meal in range(5):
+            meal = str(meal)
+            while meal == None or len(meal) <= 1 or meal in meals:
+                query = get_query(diet)
+                meal =  get_meal(query, diet, allergy)
+            meals.append(meal)
+            update_menu(meal, user_id)
 
         return redirect("/menu")
 
@@ -215,10 +200,10 @@ def find_home():
 def profile():
     if request.method != "POST":
         user_id = get_user()
-        voorkeuren = preferences(user_id)
-        print(voorkeuren)
+        diet = get_diet(user_id)
+        intolerances = get_intolerances(user_id)
         favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
-        return render_template("profile.html", voorkeuren=voorkeuren, favorites=favorites)
+        return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
     else:
         return render_template("profile.html")
 
@@ -259,12 +244,12 @@ def favorite():
 @app.route("/reroll", methods =["POST"])
 def reroll():
     global querys
-
     user_id = get_user()
     idr = request.form.get("reroll")
-    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
-    query = random.choice(querys)
-    meal =  get_meal(query, None, None)
+    del_meal(idr, user_id)
+    diet = get_diet(user_id)
+    query = get_query(diet)
+    meal =  get_meal(query, diet, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
@@ -272,14 +257,19 @@ def reroll():
 
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
-    global querys
     user_id = get_user()
-    db.execute("DELETE FROM meal WHERE user_id=:user_id", user_id=user_id)
-    for meal in range(5):
-        query = random.choice(querys)
-        meal =  get_meal(query, None, None)
-        db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], user_id))
+
+    diet = get_diet(user_id)
+    print(diet)
+    intolerances = get_intolerances(user_id)
+    print(intolerances)
+    del_meal_plan(user_id)
+    for food in range(5):
+        query = get_query(diet)
+        print(query)
+        meal =  get_meal(query, diet, intolerances)
+        print(meal)
+        update_menu(meal, user_id)
 
     return redirect("/menu")
 
@@ -305,15 +295,6 @@ def update_preferences(allergy, diet):
                 user_id=user, allergy=allergy, diet=diet)
     return
 
-def preferences(user):
-    #haalt preferences op van user
-    data = db.execute("SELECT allergy, diet FROM preferences WHERE id=:user", user=user)
-    if data:
-        return data
-    return {
-        "allergy": None,
-        "diet": None
-    }
 
 def errorhandler(e):
     """Handle error"""
