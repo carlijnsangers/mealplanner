@@ -23,19 +23,37 @@ def get_menu(user_id):
 # Get diet
 def get_diet(user_id):
     diet = db.execute("SELECT diet FROM preferences WHERE id=:user_id", user_id=user_id)
-    return diet
+    if diet:
+        return diet[0]['diet']
+    return {
+        "allergy": None,
+        "diet": None
+    }
 
+# Get intolerances
+def get_intolerances(user_id):
+    intolerances = db.execute("SELECT allergy FROM preferences WHERE id=:user_id", user_id=user_id)
+    if intolerances:
+        return intolerances[0]['allergy']
+    return {
+        "allergy": None,
+        "diet": None
+    }
 
 # update menu, meal=dict
 def update_menu(meal, user_id):
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
-            (meal["id"], meal["title"], meal["image"], user_id))
+                            (meal["id"], meal["title"], meal["image"], user_id))
     return
 
 # verwijder item van menu
 def del_meal(idr, user_id):
     db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
     return
+
+# Verwijder het hele menu
+def del_meal_plan(user_id):
+    db.execute("DELETE FROM meal WHERE user_id=:user_id", user_id=user_id)
 
 # check of user in db
 def check(user_id, db):

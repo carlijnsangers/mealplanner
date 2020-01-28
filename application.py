@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
 from helpers import lookup, get_meal, get_IP, get_query
-from database import get_diet, del_meal
+from database import get_diet, get_intolerances,  del_meal, del_meal_plan, update_menu
 
 # Configure application
 app = Flask(__name__)
@@ -143,9 +143,6 @@ def register():
 #global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
-querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel"]
-vegan = ["burger", "salmon", "chicken"]
-pescatarian = ['burger', 'chicken']
 
 # routes
 # geeft homepage weer
@@ -163,7 +160,6 @@ def home():
         # Get all the query options
         diet = request.form.get("diet")
 
-
         allergy =[]
         for intolerance in intolerances:
             if request.form.get(intolerance) == "true":
@@ -179,10 +175,7 @@ def home():
                 query = get_query(diet)
                 meal =  get_meal(query, diet, allergy)
             meals.append(meal)
-
-        for meal in meals:
-            db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], user_id))
+            update_menu(meal, user_id)
 
         return redirect("/menu")
 
@@ -199,10 +192,10 @@ def find_home():
 def profile():
     if request.method != "POST":
         user_id = get_user()
-        voorkeuren = preferences(user_id)
-        print(voorkeuren)
+        diet = get_diet(user_id)
+        intolerances = get_intolerances(user_id)
         favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
-        return render_template("profile.html", voorkeuren=voorkeuren)
+        return render_template("profile.html", diet=diet, intolerances=intolerances)
     else:
         return render_template("profile.html")
 
@@ -244,10 +237,10 @@ def favorite():
 def reroll():
     global querys
     user_id = get_user()
-    diet = get_diet(user_id)
     idr = request.form.get("reroll")
     del_meal(idr, user_id)
-    query = random.choice(querys)
+    diet = get_diet(user_id)
+    query = get_query(diet)
     meal =  get_meal(query, diet, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
@@ -256,14 +249,19 @@ def reroll():
 
 @app.route("/new_meal_plan", methods =["POST"])
 def new_meal_plan():
-    global querys
     user_id = get_user()
-    db.execute("DELETE FROM meal WHERE user_id=:user_id", user_id=user_id)
-    for meal in range(5):
-        query = random.choice(querys)
-        meal =  get_meal(query, None, None)
-        db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
-                                            (meal["id"], meal["title"], meal["image"], user_id))
+
+    diet = get_diet(user_id)
+    print(diet)
+    intolerances = get_intolerances(user_id)
+    print(intolerances)
+    del_meal_plan(user_id)
+    for food in range(5):
+        query = get_query(diet)
+        print(query)
+        meal =  get_meal(query, diet, intolerances)
+        print(meal)
+        update_menu(meal, user_id)
 
     return redirect("/menu")
 
@@ -289,15 +287,6 @@ def update_preferences(allergy, diet):
                 user_id=user, allergy=allergy, diet=diet)
     return
 
-def preferences(user):
-    #haalt preferences op van user
-    data = db.execute("SELECT allergy, diet FROM preferences WHERE id=:user", user=user)
-    if data:
-        return data
-    return {
-        "allergy": None,
-        "diet": None
-    }
 
 def errorhandler(e):
     """Handle error"""
