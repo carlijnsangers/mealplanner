@@ -45,12 +45,12 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash("Please enter username", category='danger')
             return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            flash("Please enter password")
+            flash("Please enter password", category='danger')
             return render_template("login.html")
 
         # Query database for username
@@ -60,7 +60,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            flash("Invalid password")
+            flash("Invalid password", category='danger')
             return render_template("login.html")
 
         # Remember which user has logged in
@@ -100,15 +100,15 @@ def register():
 
         # Checks if username/password is given
         if not request.form.get("username"):
-            flash("Please enter username")
+            flash("Please enter username", category='danger')
             return render_template("register.html")
         elif not request.form.get("password"):
-            flash("Please enter password")
+            flash("Please enter password", category='danger')
             return render_template("register.html")
 
         # Checks if passwords match
         elif request.form.get("password") != request.form.get("confirmation"):
-            flash("passwords do not match")
+            flash("passwords do not match", category='danger')
             return render_template("register.html")
 
         # Checks if username is not taken
@@ -116,7 +116,7 @@ def register():
         rows = database.user_in_db(username)
         #rows =  db.execute("SELECT * FROM users WHERE username = %s", username)
         if len(rows) >= 1:
-            flash("Username is already taken")
+            flash("Username is already taken", category='danger')
             return render_template("register.html")
 
         # Puts username(UN) and password(PW) in database
@@ -180,19 +180,20 @@ def home():
             for option in pescatarian:
                 querys.remove(option)
 
-        allergie =[]
+        allergy =[]
         for intolerance in intolerances:
             if request.form.get(intolerance) == "true":
-                allergie.append(intolerance)
-        allergie = ",".join(allergie)
+                allergy.append(intolerance)
+        allergy = ",".join(allergy)
 
+        update_preferences(allergy, diet)
         # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
         meals = []
         for meal in range(5):
             meal = str(meal)
             while meal == None or len(meal) <= 1 or meal in meals:
                 query = random.choice(querys)
-                meal =  get_meal(query, diet, allergie)
+                meal =  get_meal(query, diet, allergy)
             meals.append(meal)
 
         for meal in meals:
@@ -255,10 +256,8 @@ def favorite():
     return
 
 
-@app.route("/reroll", methods =["GET", "POST"])
+@app.route("/reroll", methods =["POST"])
 def reroll():
-    global diets
-    global intolerances
     global querys
 
     user_id = get_user()
@@ -270,6 +269,21 @@ def reroll():
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
 
+
+@app.route("/new_meal_plan", methods =["POST"])
+def new_meal_plan():
+    global querys
+    user_id = get_user()
+    db.execute("DELETE FROM meal WHERE user_id=:user_id", user_id=user_id)
+    for meal in range(5):
+        query = random.choice(querys)
+        meal =  get_meal(query, None, None)
+        db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
+                                            (meal["id"], meal["title"], meal["image"], user_id))
+
+    return redirect("/menu")
+
+
 # functies
 def get_user():
     # returnt huidige gebruiker
@@ -278,27 +292,27 @@ def get_user():
     else:
         return get_IP()
 
-def update_preferences(allergie, dieet):
+def update_preferences(allergy, diet):
     # huidige gebruiker
     user = get_user()
 
     # kijkt of gebruiker al eerder voorkeuren heeft opgegeven en update anders voegt toe
     check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     if check:
-        db.execute("UPDATE preferences SET allergie=:allergie, dieet=:dieet WHERE id=:user_id", user_id=user, allergie=allergie, dieet=dieet)
+        db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user, allergy=allergy, diet=diet)
     else:
-        db.execute("INSERT INTO preferences (id, allergie, dieet) VALUES (:user_id, :allergie, :dieet",
-                user_id=user, allergie=', '.join(allergie), dieet=dieet)
+        db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
+                user_id=user, allergy=allergy, diet=diet)
     return
 
 def preferences(user):
     #haalt preferences op van user
-    data = db.execute("SELECT allergie, dieet FROM preferences WHERE id=:user", user=user)
+    data = db.execute("SELECT allergy, diet FROM preferences WHERE id=:user", user=user)
     if data:
         return data
     return {
-        "allergie": None,
-        "dieet": None
+        "allergy": None,
+        "diet": None
     }
 
 def errorhandler(e):

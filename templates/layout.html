@@ -33,6 +33,7 @@
                 {% if session.user_id %}
                     <div class="navbar-nav ml-auto mt-2">
                         <a class="nav-item nav-link" href="/profile">My profile</a>
+                        <a class="nav-item nav-link" href="/menu">My menu</a>
                         <a class="nav-item nav-link" href="/logout" >Logout </a>
                     </div>
                 {% else %}
@@ -66,5 +67,10 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
+    function share(clicked) {
+        var id = clicked;
+        var url = "/recipe?id=";
+        alert(window.location.hostname + url + id );
+        }
     </script>
 </html>
