@@ -31,20 +31,16 @@ def get_diet(user_id):
     diet = db.execute("SELECT diet FROM preferences WHERE id=:user_id", user_id=user_id)
     if diet:
         return diet[0]['diet']
-    return {
-        "allergy": None,
-        "diet": None
-    }
+    else:
+        return "no diet"
 
 # Get intolerances
 def get_intolerances(user_id):
     intolerances = db.execute("SELECT allergy FROM preferences WHERE id=:user_id", user_id=user_id)
     if intolerances:
         return intolerances[0]['allergy'].replace(",", ", ")
-    return {
-        "allergy": None,
-        "diet": None
-    }
+    else:
+        return None
 
 # update menu, meal=dict
 def update_menu(meal, user_id):
