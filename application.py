@@ -61,7 +61,7 @@ def login():
             return render_template("login.html")
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0]["user_id"]
 
         # Redirect naar menu als bestaat
         user = get_user()
@@ -307,7 +307,6 @@ def errorhandler(e):
     if not isinstance(e, HTTPException):
         e = InternalServerError()
         return ("Stringerror")
-    # return apology(e.name, e.code)
 
 # Listen for errors
 for code in default_exceptions:
