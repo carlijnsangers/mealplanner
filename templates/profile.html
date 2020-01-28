@@ -18,34 +18,35 @@
     </div>
     <div class="split rechts">
         <div class="centered">
-            <div class="recepten"></div>
-                <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
-                    <h1><center>My favorite recipes</center></h1>
-                    {% for meal in favorites %}
-                        <div class="container">
-                            <div class="centered">
-                                <span class="d" >
-                                    <a href="/recipe?id={{meal['id']}}" target="_blank">
-                                        <main>
-                                            <img src="{{meal["image"]}}">
-                                            <div class="c">
-                                                {{meal['title']}}
-                                            </div>
-                                        </main>
-                                     </a>
-                                </span>
-                            </div>
+            <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
+                <h1><center>My favorite recipes</center></h1>
+                {% for meal in favorites %}
+                    <div class="container">
+                        <div class="centered">
+                            <span class="d" >
+                                <a href="/recipe?id={{meal['id']}}" target="_blank">
+                                    <main>
+                                        <img src="{{meal["image"]}}">
+                                        <div class="c">
+                                            {{meal['title']}}
+                                        </div>
+                                    </main>
+                                 </a>
+                            </span>
                         </div>
-                    {% endfor %}
-                <font color = "black">
-                <h6 id="allergies">
-                    Allergies: {{ intolerances }}
-                </h6>
-                <h6 id="diet">
-                    Diet: {{ diet  }}
-                </h6>
-                </font>
-                </div>
+                    </div>
+                {% endfor %}
+            <font color = "black">
+            <h6 id="allergies">
+                Allergies: {{ intolerances }}
+            </h6>
+            <h6 id="diet">
+                Diet: {{ diet  }}
+            </h6>
+            </font>
+            </div>
+        </div>
+    </div>
 </body>
 
 {% endblock %}

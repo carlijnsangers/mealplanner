@@ -7,9 +7,6 @@
 {% block main %}
 
 <link href="/static/style.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <body>
 <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
@@ -17,46 +14,36 @@
         <h4><b><font color = "white">Welcome to Mealplanner!</font></b></h4>
         <p style="color:white">A website that compiles an entire weekly menu for you. A busy week ahead? With a few clicks, five dishes will appear on your screen that suit your taste. The method of preparation and the ingredients are given with each dish. So all you have to do is get the groceries. It is an option to make a personal page where you can save your preferences and favorite dishes from the weekly menu. Personal and simple!
         </p>
-
-  <font color="white">
-    <form action="/home" method="post">
-        {% for query in querys %}
-           <div class="checkbox1" name="nuts">
-            <label><input type="checkbox" name=query value="true"> {query}</label>
-          </div>
-        {% endfor %}
-
-        <checkboxes>
-          <h5>
-            Allergies:
-          </h5>
-          {% for intolerance in intolerances %}
-          <div class="checkbox1">
-              <label><input type="checkbox" name ="{{intolerance}}" value="true"> {{ intolerance}} </label>
-          </div>
-          {% endfor %}
-  </font>
-
-
-  <font color = "white">
-    <checkboxes>
-      <p><h5>
-        Diet:
-      </h5></p>
-
-  <select name="diet">
-    {% for diet in diets %}
-      <option value="{{diet}}" name="diet">{{diet}} </option>
-    {% endfor %}
-  </select>
-  </font>
-
-  <div class="form-group">
-    <button class="btn btn-primary" id="homebutton" type="submit">Submit</button>
-  </div>
-  </form>
-  </span>
-
+        <font color="white">
+            <form action="/home" method="post">
+                {% for query in querys %}
+                    <div class="checkbox1" name="nuts">
+                        <label><input type="checkbox" name=query value="true"> {query}</label>
+                    </div>
+                {% endfor %}
+                <h5>
+                Allergies:
+                </h5>
+                    {% for intolerance in intolerances %}
+                        <div class="checkbox1">
+                            <label><input type="checkbox" name ="{{intolerance}}" value="true"> {{ intolerance}} </label>
+                        </div>
+                    {% endfor %}
+                <p> <h5>
+                    Diet:
+                </h5> </p>
+                <select name="diet">
+                    {% for diet in diets %}
+                        <option value="{{diet}}" name="diet">{{diet}} </option>
+                    {% endfor %}
+                </select>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="homebutton" type="submit">Submit</button>
+                </div>
+            </form>
+        </font>
+    </span>
 </div>
 </body>
+
 {% endblock %}

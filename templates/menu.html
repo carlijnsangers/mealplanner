@@ -19,41 +19,39 @@
         </div>
     </form>
     {% for meal in meals %}
-    <div class="container">
-        <span class="b" >
-            <a href="/recipe?id={{meal['id']}}" target="_blank">
-                <main>
-                    <img src="{{meal["image"]}}">
-                    <div class="c">
-                        {{meal['title']}}
-                    </div>
-                </main>
-             </a>
-            <footer>
-                <div class="a">
-                    <form action="/reroll" method="post">
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal">&#8634;</button>
+        <div class="container">
+            <span class="b" >
+                <a href="/recipe?id={{meal['id']}}" target="_blank">
+                    <main>
+                        <img src="{{meal["image"]}}">
+                        <div class="c">
+                            {{meal['title']}}
                         </div>
-                    </form>
-                </div>
-                <div class="a">
-                    <button type="button" class="btn btn-primary btn-sm" id="{{meal['id']}}" onclick="share(this.id)" data-toggle="tooltip" data-placement="right" title="Share">
-                    <img src="/static/share.png" alt="share" height=16px width=16px ></button>
+                    </main>
+                 </a>
+                <footer>
+                    <div class="a">
+                        <form action="/reroll" method="post">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm" type="submit" name="reroll" value="{{meal['id']}}" data-toggle="tooltip" data-placement="right" title="Reroll meal">&#8634;</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="a">
+                        <button type="button" class="btn btn-primary btn-sm" id="{{meal['id']}}" onclick="share(this.id)" data-toggle="tooltip" data-placement="right" title="Share">
+                        <img src="/static/share.png" alt="share" height=16px width=16px ></button>
 
-                </div>
-            </footer>
-        </span>
-    </div>
-
+                    </div>
+                </footer>
+            </span>
+        </div>
     {% endfor %}
+</body>
 <script>
     function share(clicked) {
         var id = clicked;
         var url = "/recipe?id=";
         alert("Recipe link: "  + window.location.hostname + url + id );
-        }
-
+    }
 </script>
-</body>
 {% endblock %}
