@@ -29,7 +29,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# aangepaste functies uit finance
+# test database
+db = SQL("sqlite:///test.db")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""

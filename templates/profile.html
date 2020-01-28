@@ -28,7 +28,8 @@
               <h1><center>My favorite recipes</center></h1>
                   {% for meal in favorites %}
                   <div class="container">
-        <span class="b" >
+                    <div class="centered">
+        <span class="d" >
             <a href="/recipe?id={{meal['id']}}" target="_blank">
                 <main>
                     <img src="{{meal["image"]}}">
@@ -38,7 +39,7 @@
                 </main>
              </a>
         </span>
-
+                  </div>
                 </div>
                 {% endfor %}
           </div>
@@ -58,8 +59,5 @@
               <!--</select>-->
 
 </body>
-
-
-
 
 {% endblock %}
