@@ -20,6 +20,12 @@ def get_menu(user_id):
     data = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return data
 
+# Get diet
+def get_diet(user_id):
+    diet = db.execute("SELECT diet FROM preferences WHERE id=:user_id", user_id=user_id)
+    return diet
+
+
 # update menu, meal=dict
 def update_menu(meal, user_id):
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
@@ -40,3 +46,4 @@ def check(user_id, db):
 def ip_to_id(user_id):
     db.execute("UPDATE meal SET user_id=:user_id WHERE user_id=:IP", user_id=user_id, IP = get_IP())
     return
+

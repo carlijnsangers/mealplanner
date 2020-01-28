@@ -7,8 +7,8 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
-from helpers import lookup, get_meal, get_IP
-import database
+from helpers import lookup, get_meal, get_IP, get_query
+from database import get_diet, del_meal
 
 # Configure application
 app = Flask(__name__)
@@ -153,7 +153,6 @@ pescatarian = ['burger', 'chicken']
 def home():
     # User reached route via POST (as by submitting a form via POST)
     global intolerances
-    global diets
 
     if request.method == "POST":
         user_id=get_user()
@@ -162,15 +161,8 @@ def home():
         db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the query options
-        global querys
-
         diet = request.form.get("diet")
-        if diet == "vegan" or diet == "vegetarian":
-            for option in vegan:
-                querys.remove(option)
-        elif diet == 'pescatarian':
-            for option in pescatarian:
-                querys.remove(option)
+
 
         allergy =[]
         for intolerance in intolerances:
@@ -184,7 +176,7 @@ def home():
         for meal in range(5):
             meal = str(meal)
             while meal == None or len(meal) <= 1 or meal in meals:
-                query = random.choice(querys)
+                query = get_query(diet)
                 meal =  get_meal(query, diet, allergy)
             meals.append(meal)
 
@@ -251,12 +243,12 @@ def favorite():
 @app.route("/reroll", methods =["POST"])
 def reroll():
     global querys
-
     user_id = get_user()
+    diet = get_diet(user_id)
     idr = request.form.get("reroll")
-    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
+    del_meal(idr, user_id)
     query = random.choice(querys)
-    meal =  get_meal(query, None, None)
+    meal =  get_meal(query, diet, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")

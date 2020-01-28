@@ -47,3 +47,14 @@ def get_IP():
     except:
         return
 
+def get_query(diet):
+    querys = ["pasta", "burger", "salad", "salmon", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel"]
+    vegan = ["burger", "salmon", "chicken"]
+    pescatarian = ['burger', 'chicken']
+    if diet == "vegan" or diet == "vegetarian":
+        for option in vegan:
+            querys.remove(option)
+    elif diet == 'pescatarian':
+        for option in pescatarian:
+            querys.remove(option)
+    return random.choice(querys)
