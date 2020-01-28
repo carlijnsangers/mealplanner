@@ -248,8 +248,8 @@ def reroll():
     idr = request.form.get("reroll")
     database.del_meal(idr, user_id)
     diet = database.get_diet(user_id)
-    query = database.get_query(diet)
-    meal =  database.get_meal(query, diet, None)
+    query = get_query(diet)
+    meal =  get_meal(query, diet, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
