@@ -293,8 +293,8 @@ def update_preferences(allergy, diet):
     if check:
         db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user, allergy=allergy, diet=diet)
     else:
-        db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet",
-                user_id=user, allergy=', '.join(allergy), diet=diet)
+        db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
+                user_id=user, allergy=allergy, diet=diet)
     return
 
 def preferences(user):
