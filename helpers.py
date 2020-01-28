@@ -8,7 +8,7 @@ key = "1fa0943622124891a2991ba8f9a89e9c"
 
 
 def get_meal(query, diet, intolerances):
-    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=66782ca4d8e24d71a170b2629ecd82fb")
+    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=4cdca9ad5513419483bc98d82a504284")
     meal = response.json()
 
     if "results" in meal:
@@ -29,8 +29,8 @@ def get_meal(query, diet, intolerances):
 
 
 def lookup(idr):
-    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=66782ca4d8e24d71a170b2629ecd82fb")
-    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=66782ca4d8e24d71a170b2629ecd82fb")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=4cdca9ad5513419483bc98d82a504284")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=4cdca9ad5513419483bc98d82a504284")
     rep = response.json()
     ing = ingredients.json()
     return{

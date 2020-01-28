@@ -48,7 +48,7 @@ def update_menu(meal, user_id):
 
 # verwijder item van menu
 def del_meal(idr, user_id):
-    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id", idr=idr, user_id=user_id)
+    db.execute("DELETE FROM meal WHERE id = :idr AND user_id=:user_id LIMIT 1", idr=idr, user_id=user_id)
     return
 
 # Verwijder het hele menu
