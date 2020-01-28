@@ -7,7 +7,8 @@
 {% block main %}
 
 <link href="/static/style.css" rel="stylesheet">
-<body class = "recipe">
+
+<body>
 <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
         <img src="{{data[0].image}}" alt="image recipe"> <br>
         <font color="white">
@@ -16,7 +17,7 @@
             <button type="button" class="btn btn-primary btn-sm" onclick="share()" data-toggle="tooltip" data-placement="right" title="Share">
                 <img src="/static/share.png" alt="share" height=16px width=16px > </button>
 
-            <button type="button" class="btn btn-primary btn-sm" name="favorite" id="favorite" value="{{idr}}"onclick="fav(this.value)"> Favorite</button>
+            <button type="button" class="btn btn-primary btn-sm" name="idr" id="1" onclick="fav(this.id)"> Favorite</button>
 
 
         </h4>
@@ -41,27 +42,14 @@
         function share() {
             alert(window.location.href);
         }
-
         function fav(idr){
             url="/favorite";
-            $.ajax(
-                {
-                    type: "POST",
-                    url: url,
-                    data: {'idr' : idr}
-                });
-            if (document.getElementById("favorite").innerHTML == "Unfavorite"){
-                document.getElementById("favorite").innerHTML = "Favorite";
-                document.getElementById("favorite").style.backgroundColor = "";
-                document.getElementById("favorite").style.borderColor = "";
-                document.getElementById("favorite").style.boxShadow= "";
+            $.post(url, idr);
+            if (document.getElementById(idr).innerHTML == Favorite){
+                document.getElementById(idr).innerHTML = Unfavorite
             }
             else{
-                document.getElementById("favorite").innerHTML = "Unfavorite";
-                document.getElementById("favorite").style.backgroundColor = "red";
-                document.getElementById("favorite").style.borderColor = "red";
-                document.getElementById("favorite").style.boxShadow= "red";
-                //box-shadow: 0 0 0 .2rem rgba(0,123,255,.5)
+                document.getElementById(idr).innerHTML = Favorite
             }
         }
     </script>

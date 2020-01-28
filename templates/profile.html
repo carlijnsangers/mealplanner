@@ -6,13 +6,12 @@
 
 {% block main %}
 
-<body class = "profile">
-  <link href="/static/style.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link href="/static/style.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-
+<body>
       <div class="split links">
         <div class="centered">
           <div class="personal"></div>
@@ -27,16 +26,38 @@
               <div class="recepten"></div>
                 <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
               <h1><center>Saved recipes</center></h1>
+                  {% for meal in favorites %}
+                  <div class="container">
+        <span class="b" >
+            <a href="/recipe?id={{meal['id']}}" target="_blank">
+                <main>
+                    <img src="{{meal["image"]}}">
+                    <div class="c">
+                        {{meal['title']}}
+                    </div>
+                </main>
+             </a>
+        </span>
+
                 </div>
+                {% endfor %}
           </div>
 
       <button id="preferences">Change preferences</button>
       <button id="save">Save preferences</button>
+<<<<<<< HEAD
       <h6 id="allergies"> Allergies: {{intolerances]}}</h6>
       <font color = "black">
               <checkboxes>
                 <p><h6 id="diet"><font color="black">
                   Diet: {{ voorkeuren[diet]}}
+=======
+      <h6 id="allergies"> Allergies: {{voorkeuren[0]['allergy']}}</h6>
+      <font color = "black">
+              <checkboxes>
+                <p><h6 id="diet"><font color="black">
+                  Diet: {{ voorkeuren[0]['diet']}}
+>>>>>>> 51afbbe500b8b835a633cbdd596ea88bc77f79b0
                 </font></h6></p>
 
               <!--<select name="diet" id="diet2">-->
