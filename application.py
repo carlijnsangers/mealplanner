@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import random
 from helpers import lookup, get_meal, get_IP, get_query
-from database import get_diet, get_intolerances,  del_meal, del_meal_plan, update_menu
+import database
 
 # Configure application
 app = Flask(__name__)
@@ -183,7 +183,7 @@ def home():
                 query = get_query(diet)
                 meal =  get_meal(query, diet, allergy)
             meals.append(meal)
-            update_menu(meal, user_id)
+            database.update_menu(meal, user_id)
 
         return redirect("/menu")
 
@@ -200,8 +200,8 @@ def find_home():
 def profile():
     if request.method != "POST":
         user_id = get_user()
-        diet = get_diet(user_id)
-        intolerances = get_intolerances(user_id)
+        diet = database.get_diet(user_id)
+        intolerances = database.get_intolerances(user_id)
         favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
         return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
     else:
@@ -243,13 +243,13 @@ def favorite():
 
 @app.route("/reroll", methods =["POST"])
 def reroll():
-    global querys
+    # global querys
     user_id = get_user()
     idr = request.form.get("reroll")
-    del_meal(idr, user_id)
-    diet = get_diet(user_id)
-    query = get_query(diet)
-    meal =  get_meal(query, diet, None)
+    database.del_meal(idr, user_id)
+    diet = database.get_diet(user_id)
+    query = database.get_query(diet)
+    meal =  database.get_meal(query, diet, None)
     db.execute("INSERT INTO meal (id, title, image, user_id) VALUES (%s, %s, %s, %s)",
                                             (meal["id"], meal["title"], meal["image"], user_id))
     return redirect("/menu")
@@ -259,17 +259,17 @@ def reroll():
 def new_meal_plan():
     user_id = get_user()
 
-    diet = get_diet(user_id)
+    diet = database.get_diet(user_id)
     print(diet)
-    intolerances = get_intolerances(user_id)
+    intolerances = database.get_intolerances(user_id)
     print(intolerances)
-    del_meal_plan(user_id)
+    database.del_meal_plan(user_id)
     for food in range(5):
         query = get_query(diet)
         print(query)
         meal =  get_meal(query, diet, intolerances)
         print(meal)
-        update_menu(meal, user_id)
+        database.update_menu(meal, user_id)
 
     return redirect("/menu")
 
