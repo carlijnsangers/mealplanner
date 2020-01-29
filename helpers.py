@@ -9,19 +9,19 @@ def get_meal(query, diet, intolerances):
     response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
     meal = response.json()
 
-    # selects a random result
+    # Selects a random result
     if "results" in meal:
         if len(meal['results']) >1:
             number = random.randint(1, len(meal['results'])) -1
         else:
             number = 0
 
-        # if there are 0 results then it sends another query
+        # If there are 0 results then it sends another query and tries again
         if len(meal['results']) == 0:
             query = get_query(diet)
             return get_meal(query, diet, intolerances)
 
-        # return result in specific format
+        # Return result in specific format
         return {
             "id": meal["results"][number]["id"],
             "meal": meal["results"][number]["title"],
@@ -30,12 +30,12 @@ def get_meal(query, diet, intolerances):
         }
     return
 
-# query for the ingredients en steps of recipe
+# Query for the ingredients en steps of recipe
 def lookup(idr):
     response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
     ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
 
-    # return results in a specific format
+    # Return results in a specific format
     rep = response.json()
     ing = ingredients.json()
     return{
@@ -43,7 +43,7 @@ def lookup(idr):
         "ingredients": ing["ingredients"]
     }
 
-# get the ip of the user so results can be saved
+# Get the ip of the user so results can be saved
 def get_IP():
     try:
         host_name = socket.gethostname()
@@ -52,15 +52,18 @@ def get_IP():
     except:
         return
 
-# returns a random recipe ingredient and removes ingredients which conflict with diet
+# Returns a random recipe ingredient and removes ingredients which conflict with diet
 def get_query(diet):
     querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili", "steak", "broccoli"]
     vegan = ["burger", "chicken", "schnitzel", "steak"]
     pescatarian = ['burger', 'chicken', "schnitzel", "steak"]
+
     if diet == "vegan" or diet == "vegetarian":
         for option in vegan:
             querys.remove(option)
+
     elif diet == 'pescatarian':
         for option in pescatarian:
             querys.remove(option)
+
     return random.choice(querys)
