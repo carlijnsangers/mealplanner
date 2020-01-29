@@ -127,7 +127,7 @@ def register():
             check = database.check(get_IP(), "meal")
             print(check)
             if len(check) == 1:
-                database.ip_to_id(session['user_id'])
+                database.ip_to_id(session['user_id'], "meal")
                 return redirect("/menu")
 
         # Redirect to home page
