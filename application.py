@@ -183,13 +183,10 @@ def home():
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 def find_home():
     global diets
     global intolerances
-    check = database.check(get_IP(), "meal")
-    if len(check) == 1:
-        return redirect("/menu")
     return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
@@ -262,7 +259,6 @@ def reroll():
 
     # Get a new meal
     intolerances = database.get_intolerances(user_id)
-    intolerances = intolerances.replace(", ", ",")
     diet = database.get_diet(user_id)
     query = get_query(diet)
     meal =  get_meal(query, diet, intolerances)
@@ -288,7 +284,6 @@ def new_meal_plan():
 
     # Search for intolerances in database
     intolerances = database.get_intolerances(user_id)
-    intolerances = intolerances.replace(", ", ",")
 
     # Create 5 meals and puts them into the database
     for food in range(5):

@@ -8,49 +8,44 @@
 
 <link href="/static/style.css" rel="stylesheet">
 
-<body>
-    <div class="split links">
-        <div class="centered">
-            <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
-                <h1><center>My personal page</center></h1>
-            </div>
-        </div>
+
+<div class="container-fluid">
+  <div class="row align-items-start">
+    <div class="col col-sm-3">
+      <h2><font color="white">
+          My page
+      </font></h2>
+      <span class="e">
+      <div class=>
+          Diet: {{diet}}
+      </div>
+      <div>
+          Intolerances: {{intolerances}}
+      </div>
+      <br>
+      <div class="c">
+      <form action="/" method="post">
+            <form group>
+                <button type="submit" class="btn btn-primary btn-sm" > Change preferences</button>
+            </form>
+      </form>
+      </div>
+      </span>
     </div>
-    <div class="split rechts">
-        <div class="centered">
-            <div class="jumbotron" style="background-color:rgba(46,139,87,0.8)">
-                <h1><center>My favorite recipes</center></h1>
-                {% for meal in favorites %}
-                    <div class="container">
-                        <div class="centered">
-                            <span class="d" >
-                                <a href="/recipe?id={{meal['id']}}" target="_blank">
-                                    <main>
-                                        <img src="{{meal["image"]}}">
-                                        <div class="c">
-                                            {{meal['title']}}
-                                        </div>
-                                    </main>
-                                 </a>
-                            </span>
-                        </div>
+    <div class="col col-sm-9" >
+
+        <h2><font color="white"> My favorites recipes</font></h2>
+        {% for meal in favorites %}
+            <span class="d" >
+                <a href="/recipe?id={{meal['id']}}" target="_blank">
+                    <img src="{{meal["image"]}}">
+                    <div class="c">
+                        {{meal['title']}}
                     </div>
-                {% endfor %}
-          </div>
-
-      <button id="preferences">Change preferences</button>
-      <button id="save">Save preferences</button>
-      <h6 id="allergies"><font color = "white"> Allergies: {{ intolerances }}</font></h6>
-                <p><h6 id="diet"><font color="white">
-                  Diet: {{ diet  }}
-                </font></h6></p>
-
-              <!--<select name="diet" id="diet2">-->
-              <!--    {% for diet in diets %}-->
-              <!--    <option value="{{diet}}" name="diet">{{diet}} </option>-->
-              <!--    {% endfor %}-->
-              <!--</select>-->
-
-</body>
+                </a>
+            </span>
+        {% endfor %}
+    </div>
+  </div>
 
 {% endblock %}
