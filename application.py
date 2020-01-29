@@ -124,7 +124,6 @@ def register():
 
             # Check if the user already made a menu, and if so display that menu
             check = database.check(get_IP(), "meal")
-            print(check)
             if len(check) == 1:
                 database.ip_to_id(session['user_id'], "meal")
                 database.ip_to_id(session['user_id'], "preferences")
@@ -297,10 +296,10 @@ def reroll():
     query = get_query(diet)
     meal =  get_meal(query, diet, intolerances)
 
-    # insert meal into database
+    # Insert meal into database
     database.update_menu(meal, user_id)
 
-    # redirect to menu
+    # Redirect to menu
     return redirect("/menu")
 
 @app.route("/new_meal_plan", methods =["POST"])
@@ -330,18 +329,17 @@ def new_meal_plan():
 
 # functies
 def get_user():
-    # returnt current user
+    # Returns current user
     if "user_id" in session:
         return session['user_id']
     else:
         return get_IP()
 
-
 def update_preferences(allergy, diet):
-    # current user
+    # Current user
     user = get_user()
 
-    #checks of user set preferences before and otherwise update add
+    # Checks if user set preferences before and update otherwise add
     check = database.check(user, "preferences")
     if check:
         database.update_pref(user, allergy, diet)
