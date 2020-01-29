@@ -6,7 +6,7 @@ import socket
 
 
 def get_meal(query, diet, intolerances):
-    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=3013a64567e848db9de9b6f545e781e9")
+    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=bc24b56b1aa744eb9a7812d3f1f65cfa")
     meal = response.json()
 
     if "results" in meal:
@@ -28,8 +28,8 @@ def get_meal(query, diet, intolerances):
 
 
 def lookup(idr):
-    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=3013a64567e848db9de9b6f545e781e9")
-    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=3013a64567e848db9de9b6f545e781e9")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=bc24b56b1aa744eb9a7812d3f1f65cfa")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=bc24b56b1aa744eb9a7812d3f1f65cfa")
     rep = response.json()
     ing = ingredients.json()
     return{
@@ -46,7 +46,7 @@ def get_IP():
         return
 
 def get_query(diet):
-    querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili", "steak"]
+    querys = ["pasta", "burger", "salad", "chicken", "potatoes", "rice", "pizza", "lasagne", "nasi", "risotto", "schnitzel", "cauliflower", "spinach", "spaghetti", "chili", "steak", "broccoli"]
     vegan = ["burger", "chicken", "schnitzel", "steak"]
     pescatarian = ['burger', 'chicken', "schnitzel", "steak"]
     if diet == "vegan" or diet == "vegetarian":
