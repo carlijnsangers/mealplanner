@@ -60,7 +60,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
-        flash("Logged in", category='succes')
 
         # Redirect naar menu als bestaat
         user = get_user()
@@ -225,6 +224,8 @@ def recipe():
         idr = request.args.get("id")
         recipe = lookup(idr)
         data = database.get_recipe(idr)
+        if not data:
+            data = database.get_fav_idr(session['user_id'], idr)
         # data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
         favorite = False
         if "user_id" in session:
@@ -232,6 +233,7 @@ def recipe():
             # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session['user_id'], idr=idr)
             if check:
                 favorite = True
+        print(data)
         return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
 
     else:
