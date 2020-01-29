@@ -16,7 +16,8 @@ def get_meal(query, diet, intolerances):
             number = 0
 
         if len(meal['results']) == 0:
-            return {"id":158185,"title":"Chickpea and Broccoli Bowl with Tahini Sauce","image":"https://spoonacular.com/recipeImages/158185-312x231.jpg","imageType":"jpg"}
+            query = get_query(diet)
+            return get_meal(query, diet, intolerances)
         return {
             "id": meal["results"][number]["id"],
             "meal": meal["results"][number]["title"],
