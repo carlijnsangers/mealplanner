@@ -52,8 +52,6 @@ def login():
 
         # Query database for username
         rows = database.user_in_db(request.form.get('username'))
-        # rows = db.execute("SELECT * FROM users WHERE username = :username",
-        #                  username=request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -62,13 +60,14 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
+        flash("Logged in", category='succes')
 
         # Redirect naar menu als bestaat
         user = get_user()
         menu = database.check(user, "meal")
-        # menu = db.execute("SELECT * FROM meal WHERE user_id=:user LIMIT 1", user=user)
         if menu:
             return redirect("/menu")
+
         # Redirect user to home page
         return redirect("/")
 
@@ -143,7 +142,7 @@ def register():
 # Nieuwe programma's
 ####################################################
 
-#global variables
+# Global variables
 intolerances = ["tree nut", "gluten", "peanut", "egg", "soy", "grain", "seafood", "dairy"]
 diets = ["no diet", "vegetarian", "pescetarian", "vegan"]
 
@@ -159,7 +158,6 @@ def home():
 
         # Delete the old recipes
         database.del_meal_plan(user_id)
-        #db.execute("DELETE FROM meal WHERE user_id = :user_id", user_id=user_id)
 
         # Get all the query options
         diet = request.form.get("diet")
@@ -171,7 +169,6 @@ def home():
         allergy = ",".join(allergy)
 
         update_preferences(allergy, diet)
-        # meals = {"id":214959,"title":"Macaroni cheese in 4 easy steps","image":"https://spoonacular.com/recipeImages/214959-312x231.jpg","imageType":"jpg"},{"id":1118472,"title":"Baked Macaroni and Cheese","image":"https://spoonacular.com/recipeImages/1118472-312x231.jpg","imageType":"jpg"},{"id":633672,"title":"Baked Macaroni With Bolognese Sauce","image":"https://spoonacular.com/recipeImages/633672-312x231.jpg","imageType":"jpg"},{"id":668066,"title":"Ultimate macaroni cheese","image":"https://spoonacular.com/recipeImages/668066-312x231.jpg","imageType":"jpg"}
         meals = []
         for meal in range(5):
             meal = str(meal)
@@ -191,6 +188,9 @@ def home():
 def find_home():
     global diets
     global intolerances
+    check = database.check(get_IP(), "meal")
+    if len(check) == 1:
+        return redirect("/menu")
     return render_template("home.html", diets=diets, intolerances = intolerances)
 
 
