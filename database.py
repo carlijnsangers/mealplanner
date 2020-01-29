@@ -84,7 +84,7 @@ def del_fav(user_id, idr):
 # add a favorite by user
 def add_fav(user_id, idr):
     data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
-    db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
+    db.execute("INSERT INTO favorites (user_id, id, image, title) VALUES (:user_id, :idr, :image, :title)",
             user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 

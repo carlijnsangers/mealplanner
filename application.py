@@ -37,7 +37,6 @@ def login():
     # Forget any user_id
     session.clear()
 
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
         # Ensure username was submitted
@@ -169,7 +168,10 @@ def home():
                 allergy.append(intolerance)
         allergy = ",".join(allergy)
 
+        # Puts intolerances and diet into database
         update_preferences(allergy, diet)
+
+        # Creates a list of 5 meals and puts them into the database
         meals = []
         for meal in range(5):
             meal = str(meal)
@@ -182,9 +184,11 @@ def home():
         return redirect("/menu")
 
     else:
+        # Renders template with diet and intolerance variable
         return render_template("home.html", diets=diets, intolerances=intolerances)
 
 
+# Renders the home template with diet and intolerances
 @app.route("/", methods=["GET", "POST"])
 def find_home():
     global diets
@@ -194,12 +198,20 @@ def find_home():
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
+
+    # Check if the user is logged in
     if "user_id" not in session:
         return redirect("/login")
+
+    # Get the user id
     user_id = get_user()
+
+    # Get diet, intolerances and favorites from database
     diet = database.get_diet(user_id)
     intolerances = database.get_intolerances(user_id)
     favorites = database.get_favorites(user_id)
+
+    # Renders template with variables
     return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
 
 
@@ -212,23 +224,38 @@ def menu():
     # Get saved meals from database
     meals = database.get_menu(user_id)
 
+    # Renders template with meals
     return render_template("menu.html", meals=meals)
 
 
 @app.route("/recipe", methods =["GET", "POST"])
 def recipe():
+
+    # User reached route via POST (as by submitting a form via POST)
     if request.method=="GET":
+
+        # Get the recipe id
         idr = request.args.get("id")
+
+        # Lookup the required data with the recipe
         recipe = lookup(idr)
+
+        # Get the recipe image and name
         data = database.get_recipe(idr)
+
+        # Get the data from favorites table in database if the data is not in meals table
         if not data:
             data = database.get_fav_idr(session['user_id'], idr)
+
+        # If meal already in favorites, display unfavorite instead of favorite
         favorite = False
         if "user_id" in session:
             check = database.get_fav_idr(session['user_id'], idr)
             if check:
                 favorite = True
-        return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
+
+        # Renders template with variables
+        return render_template("recipe.html", recipe=recipe, data=data, id=idr, favorite=favorite)
 
     else:
         return redirect("/")
@@ -237,20 +264,25 @@ def recipe():
 @app.route("/favorite", methods= ['GET', "POST"])
 def favorite():
 
-    # print(request.form['idr'])
+    # Get recipe id and user id
     idr = request.form['idr']
     user_id=session['user_id']
+
+    # Check if entry in favorites
     check = database.get_fav_idr(user_id, idr)
+
+    # If it exist, erase from database
     if check:
         database.del_fav(user_id, idr)
+
+    # If it does not exist, add to
     else:
         database.add_fav(user_id, idr)
-    return
+    return "200"
 
 
 @app.route("/reroll", methods =["POST"])
 def reroll():
-    global querys
 
     # Get the user id
     user_id = get_user()
@@ -304,6 +336,7 @@ def get_user():
     else:
         return get_IP()
 
+
 def update_preferences(allergy, diet):
     # current user
     user = get_user()
@@ -315,14 +348,3 @@ def update_preferences(allergy, diet):
     else:
         database.add_pref(user, allergy, diet)
     return
-
-def errorhandler(e):
-    """Handle error"""
-    if not isinstance(e, HTTPException):
-        e = InternalServerError()
-        return ("Stringerror")
-    # return apology(e.name, e.code)
-
-# Listen for errors
-for code in default_exceptions:
-    app.errorhandler(code)(errorhandler)
