@@ -14,3 +14,16 @@ Comments
 Overzetten functies app -> helpers
 
 van favorite naar recept idr meegeven
+
+{% for meal in favorites %}
+                <div class="container">
+                    <span class="d" >
+                        <a href="/recipe?id={{meal['id']}}" target="_blank">
+                            <img src="{{meal["image"]}}">
+                            <div class="c">
+                                {{meal['title']}}
+                            </div>
+                        </a>
+                    </span>
+                </div>
+            {% endfor %}
