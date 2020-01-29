@@ -1,19 +1,8 @@
-profielpagina opmaak
-
-Test of 0 results nog error geeft
-Test get_meal voor errors
-testen favorite (functie en kleur van knop)
-Testen favorite wanneer je pagina bezoekt van een recept dat je al als favorite hebt
-
-stylesheet fixen
-reroll fixen onclick="this.disabled=true;" werkt in firefox, maar niet in chrome
-uitbreiden querys
-
 Alles testen
 Comments
 Overzetten functies app -> helpers
+In db zorgen dat alle column namen kloppen
+HTML nesting etc.
+Comments in HTML
 
-van favorite naar recept idr meegeven
-
-preferences update when ip to id
 overbodige files weghalen
