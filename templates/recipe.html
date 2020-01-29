@@ -49,10 +49,11 @@
     </div>
 </body>
 <script>
+// Gives current url for sharing
     function share2() {
-        alert(window.location.href);
+        alert("Recipe link: " + window.location.href);
     }
-
+// This sends a request to the server with data
     function fav(idr){
         url="/favorite";
         $.ajax(
@@ -61,6 +62,8 @@
                 url: url,
                 data: {'idr' : idr}
             });
+
+        // changes HTML style depending on innerHTML
         if (document.getElementById("favorite").innerHTML == "Unfavorite"){
             document.getElementById("favorite").innerHTML = "Favorite";
             document.getElementById("favorite").style.backgroundColor = "";
@@ -70,8 +73,6 @@
             document.getElementById("favorite").innerHTML = "Unfavorite";
             document.getElementById("favorite").style.backgroundColor = "red";
             document.getElementById("favorite").style.borderColor = "red";
-            document.getElementById("favorite").style.boxShadow= "red";
-            //box-shadow: 0 0 0 .2rem rgba(0,123,255,.5)
         }
     }
 </script>

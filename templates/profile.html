@@ -8,44 +8,40 @@
 
 <link href="/static/style.css" rel="stylesheet">
 
-
 <div class="container-fluid">
-  <div class="row align-items-start">
-    <div class="col col-sm-3">
-      <h2><font color="white">
-          My page
-      </font></h2>
-      <span class="e">
-      <div class=>
-          Diet: {{diet}}
-      </div>
-      <div>
-          Intolerances: {{intolerances}}
-      </div>
-      <br>
-      <div class="c">
-      <form action="/" method="post">
-            <form group>
-                <button type="submit" class="btn btn-primary btn-sm" > Change preferences</button>
-            </form>
-      </form>
-      </div>
-      </span>
-    </div>
-    <div class="col col-sm-9" >
-
-        <h2><font color="white"> My favorites recipes</font></h2>
-        {% for meal in favorites %}
-            <span class="d" >
-                <a href="/recipe?id={{meal['id']}}" target="_blank">
-                    <img src="{{meal["image"]}}">
-                    <div class="c">
-                        {{meal['title']}}
-                    </div>
-                </a>
+    <div class="row align-items-start">
+        <div class="col col-sm-3">
+            <h2><font color="white">
+                My page
+            </font></h2>
+            <span class="e">
+                Diet: {{diet}}
+                Intolerances: {{intolerances}}
+                <br>
+                <div class="c">
+                    <form action="/" method="post">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-sm" > Change preferences</button>
+                        </div>
+                    </form>
+                </div>
             </span>
-        {% endfor %}
+        </div>
+        <div class="col col-sm-9" >
+            <h2><font color="white">
+                My favorites recipes
+            </font></h2>
+            {% for meal in favorites %}
+                <span class="d" >
+                    <a href="/recipe?id={{meal['id']}}" target="_blank">
+                        <img src="{{meal["image"]}}">
+                        <div class="c">
+                            {{meal['title']}}
+                        </div>
+                    </a>
+                </span>
+            {% endfor %}
+        </div>
     </div>
-  </div>
-
+</div>
 {% endblock %}

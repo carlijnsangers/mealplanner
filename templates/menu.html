@@ -40,18 +40,11 @@
                     <div class="a">
                         <button type="button" class="btn btn-primary btn-sm" id="{{meal['id']}}" onclick="share(this.id)" data-toggle="tooltip" data-placement="right" title="Share">
                         <img src="/static/share.png" alt="share" height=16px width=16px ></button>
-
                     </div>
                 </footer>
             </span>
         </div>
     {% endfor %}
 </body>
-<script>
-    function share(clicked) {
-        var id = clicked;
-        var url = "/recipe?id=";
-        alert("Recipe link: "  + window.location.hostname + url + id );
-    }
-</script>
+
 {% endblock %}

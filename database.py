@@ -3,7 +3,7 @@
 from helpers import get_IP
 from cs50 import SQL
 
-db = SQL("sqlite:///test.db")
+db = SQL("sqlite:///mealplanner.db")
 
 # checks if user in users
 def user_in_db(username):
