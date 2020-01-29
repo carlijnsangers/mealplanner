@@ -74,12 +74,12 @@ def get_favorites(user_id):
 
 # get favorite by idr and user
 def get_fav_idr(user_id, idr):
-    favorite = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+    favorite = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND id=:idr", user_id=user_id, idr=idr)
     return favorite
 
 # remove a favorite
 def del_fav(user_id, idr):
-    db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
+    db.execute("DELETE FROM favorites WHERE user_id=:user_id AND id=:idr", user_id=user_id, idr=idr)
     return
 
 # add a favorite

@@ -60,7 +60,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
-        flash("Logged in", category='succes')
 
         # Redirect naar menu als bestaat
         user = get_user()
@@ -199,7 +198,6 @@ def profile():
     diet = database.get_diet(user_id)
     intolerances = database.get_intolerances(user_id)
     favorites = database.get_favorites(user_id)
-    # favorites = db.execute("SELECT * FROM favorites WHERE user_id=:user_id", user_id=user_id)
     return render_template("profile.html", diet=diet, intolerances=intolerances, favorites=favorites)
 
 
@@ -212,7 +210,6 @@ def menu():
     # Get saved meals from database
     meals = database.get_menu(user_id)
 
-    # meals = db.execute("SELECT image, title, id FROM meal WHERE user_id=:user_id", user_id = user_id)
     return render_template("menu.html", meals=meals)
 
 
@@ -222,11 +219,11 @@ def recipe():
         idr = request.args.get("id")
         recipe = lookup(idr)
         data = database.get_recipe(idr)
-        # data = db.execute("SELECT image, title FROM meal WHERE id = :idr LIMIT 1", idr=idr)
+        if not data:
+            data = database.get_fav_idr(session['user_id'], idr)
         favorite = False
         if "user_id" in session:
             check = database.get_fav_idr(session['user_id'], idr)
-            # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session['user_id'], idr=idr)
             if check:
                 favorite = True
         return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
@@ -242,15 +239,10 @@ def favorite():
     idr = request.form['idr']
     user_id=session['user_id']
     check = database.get_fav_idr(user_id, idr)
-    # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     if check:
         database.del_fav(user_id, idr)
-        # db.execute("DELETE FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=user_id, idr=idr)
     else:
         database.add_fav(user_id, idr)
-        # data = db.execute("SELECT image, title FROM meal WHERE id=:idr LIMIT 1", idr=idr)
-        # db.execute("INSERT INTO favorites (user_id, idr, image, title) VALUES (:user_id, :idr, :image, :title)",
-        #        user_id=user_id, idr=idr, image=data[0]["image"], title=data[0]['title'])
     return
 
 
@@ -315,15 +307,11 @@ def update_preferences(allergy, diet):
     user = get_user()
 
     #checks of user set preferences before and otherwise update add
-    # check = db.execute("SELECT * FROM preferences WHERE id=:user_id", user_id=user)
     check = database.check(user, "preferences")
     if check:
         database.update_pref(user, allergy, diet)
-        #db.execute("UPDATE preferences SET allergy=:allergy, diet=:diet WHERE id=:user_id", user_id=user, allergy=allergy, diet=diet)
     else:
         database.add_pref(user, allergy, diet)
-        # db.execute("INSERT INTO preferences (id, allergy, diet) VALUES (:user_id, :allergy, :diet)",
-        #         user_id=user, allergy=allergy, diet=diet)
     return
 
 def errorhandler(e):

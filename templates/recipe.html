@@ -15,10 +15,10 @@
         <h4>
             {{data[0].title}}
             <br>
-            <button type="button" class="btn btn-primary btn-sm" onclick="share()" data-toggle="tooltip" data-placement="right" title="Share">
+            <button type="button" class="btn btn-primary btn-sm" onclick="share2()" data-toggle="tooltip" data-placement="right" title="Share">
                 <img src="/static/share.png" alt="share" height=16px width=16px > </button>
             {% if session.user_id %}
-            <button type="button" class="btn btn-primary btn-sm" name="idr" id="favorite" value="{{ idr }}" onclick="fav(this.value)">
+            <button type="button" class="btn btn-primary btn-sm" name="idr" id="favorite" value="{{ id }}" onclick="fav(this.value)">
             {% if favorite == True %}
             Unfavorite
             {% else %}
@@ -49,7 +49,7 @@
     </div>
 </body>
 <script>
-    function share() {
+    function share2() {
         alert(window.location.href);
     }
 
