@@ -233,7 +233,6 @@ def recipe():
             # check = db.execute("SELECT * FROM favorites WHERE user_id=:user_id AND idr=:idr", user_id=session['user_id'], idr=idr)
             if check:
                 favorite = True
-        print(data)
         return render_template("recipe.html", recipe=recipe, data=data, idr=idr, favorite=favorite)
 
     else:
