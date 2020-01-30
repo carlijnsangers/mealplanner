@@ -37,3 +37,9 @@ Application.py: Hierin staan de routes van de website en wat er per route gebeur
 Helpers.py: Bevat vaak gebruikte functies die geen database query bevatten
 
 Database.py: Bevat de functies voor de database querys
+
+
+FILMPJE MEALPLANNER YOUTUBE:
+
+https://www.youtube.com/watch?v=eX6Zgl1sVRQ&feature=youtu.be
+
