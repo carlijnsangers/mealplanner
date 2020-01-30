@@ -6,7 +6,7 @@ import socket
 
 # Sends a query to spoonacular api with a query, intolerances and diet
 def get_meal(query, diet, intolerances):
-    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=fe53161518c44fc6a54adbec072fbd41")
+    response = requests.get(f"https://api.spoonacular.com/recipes/complexSearch?query={(query)}&type=main%20course&instructionsRequired=true&intolerances={(intolerances)}&diet={(diet)}&number=5&apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
     meal = response.json()
 
     # Selects a random result
@@ -32,8 +32,8 @@ def get_meal(query, diet, intolerances):
 
 # Query for the ingredients en steps of recipe
 def lookup(idr):
-    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=fe53161518c44fc6a54adbec072fbd41")
-    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=fe53161518c44fc6a54adbec072fbd41")
+    response = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/analyzedInstructions?apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
+    ingredients = requests.get(f"https://api.spoonacular.com/recipes/{(idr)}/ingredientWidget.json?apiKey=3aa0cd6f99c54e13aea0fa5a127afcc6")
 
     # Return results in a specific format
     rep = response.json()
